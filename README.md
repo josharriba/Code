@@ -45,12 +45,12 @@ We will be developing a personal finance app for Android mobile devices. The app
     - Select the APK file from where you have saved it on your computer and click OK.
     - Navigate through the login screen and start to use the app
         - You can either use sample login info that we will provide or create a new account to start using the app.
+<<<<<<< HEAD
 
- Authors
+# Authors
 - Edward Sitar: esitar@email.sc.edu
 - Joshua Arriba: jarriba@email.sc.edu 
 - Andrew Knighton: andrewkm@email.sc.edu 
 - Daneatrian Robinson: drr2@email.sc.edu
 - Larry Gunter: guntela@email.sc.edu
-<<<<<<< HEAD
-
+>>>>>>> ae5a820a6190fd50e7fb597e5778b6362cde23bf
