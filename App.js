@@ -15,6 +15,7 @@ import {
   StyleSheet,
   Text,
   useColorScheme,
+  Image,
   View,
 } from 'react-native';
 
@@ -70,6 +71,8 @@ const App: () => Node = () => {
           style={{
             backgroundColor: isDarkMode ? Colors.black : Colors.white,
           }}>
+            <Image source={{uri: 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/51/Mr._Smiley_Face.svg/414px-Mr._Smiley_Face.svg.png'}}
+      style={styles.img} />
           <Section title="Step One">
             Edit <Text style={styles.highlight}>App.js</Text> to change this
             screen and then come back to see your edits.
@@ -106,6 +109,11 @@ const styles = StyleSheet.create({
   },
   highlight: {
     fontWeight: '700',
+  },
+  img: {
+    height: 100,
+    width: 100,
+    resizeMode: 'center',
   },
 });
 
