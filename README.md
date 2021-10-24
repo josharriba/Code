@@ -1,5 +1,6 @@
 ---
-# Project Name
+
+# Orco Financial Management App
 
 We will be developing a personal finance app for Android mobile devices. The app will allow users to keep track of their savings and expenses as well as invest in the stock market and learn more about the financial world with up-to-date news articles that are uploaded into the app.
 > Description: https://github.com/SCCapstone/Orco/wiki/Project-Description
