@@ -6,14 +6,14 @@ We will be developing a personal finance app for Android mobile devices. The app
 - [Design](https://github.com/SCCapstone/Orco/wiki/Design)
 
 ## External Requirements
-In order to build this project you first have to install:
-    1. [Node.js](https://nodejs.org/en/)
+- In order to build this project you first have to install:
+    1. Node.js [install](https://nodejs.org/en/)
         - This can be installed with Chocolately (if you have that installed) with the following command:
             > choco install -y node.js.install
-    2. [Java Development Kit]
+    2. Java Development Kit [install](https://www.oracle.com/java/technologies/downloads/)
         - This can also be installed using Chocolatey with the following command:
             > choco install -y node.js.install openjdk8
-    3. [Android studio](https://developer.android.com/studio)
+    3. Android Studio [install](https://developer.android.com/studio)
           - Install the Android SDK and the Android Virtual Device
 
 ## Setup
