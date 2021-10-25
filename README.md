@@ -6,6 +6,7 @@ We will be developing a personal finance app for Android mobile devices. The app
 - [Design](https://github.com/SCCapstone/Orco/wiki/Design)
 
 ## External Requirements
+
 - In order to build this project you first have to install:
     1. Node.js [install](https://nodejs.org/en/)
         - This can be installed with Chocolately (if you have that installed) with the following command:
@@ -15,6 +16,7 @@ We will be developing a personal finance app for Android mobile devices. The app
             > choco install -y node.js.install openjdk8
     3. Android Studio [install](https://developer.android.com/studio)
           - Install the Android SDK and the Android Virtual Device
+          - React-Native prefers the usage of Android SDK 10(Q)
 
 ## Setup
 
@@ -31,7 +33,7 @@ We will be developing a personal finance app for Android mobile devices. The app
     - Click Edit
     - Click New and add the path to the platform-tools to the list. The default is:
         - %LOCALAPPDATA%\Android\Sdk\platform-tools
-
+- For more detailed information please go to https://reactnative.dev/docs/environment-setup
 ## Running
 
 - Clone the github repo and cd into the created directory \Orco
@@ -47,8 +49,9 @@ We will be developing a personal finance app for Android mobile devices. The app
         - You can either use sample login info that we will provide or create a new account to start using the app.
 
 # Authors
+
 - Edward Sitar: esitar@email.sc.edu
 - Joshua Arriba: jarriba@email.sc.edu 
-- Andrew Knighton: andrewkm@email.sc.edu 
+- Andrew McCaffrey: andrewkm@email.sc.edu
 - Daneatrian Robinson: drr2@email.sc.edu
 - Larry Gunter: guntela@email.sc.edu
