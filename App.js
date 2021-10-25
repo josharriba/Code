@@ -1,5 +1,5 @@
 /**
- * Sample React Native App
+ * A Sample React Native App
  * https://github.com/facebook/react-native
  *
  * @format
@@ -120,5 +120,6 @@ const styles = StyleSheet.create({
     resizeMode: 'center',
   },
 });
+
 
 export default App;
