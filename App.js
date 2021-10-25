@@ -73,9 +73,9 @@ const App: () => Node = () => {
           }}>
             <Image source={{uri: 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/51/Mr._Smiley_Face.svg/414px-Mr._Smiley_Face.svg.png'}}
       style={styles.img} />
-          <Section title="Step One">
+          <Section title="Step 1">
             Edit <Text style={styles.highlight}>App.js</Text> to change this
-            screen and then come back to see your edits. Testing changes.
+            screen and then come back to see your edits. Testing more changes.
           </Section>
           <Section title="See Your Changes">
             <ReloadInstructions />
