@@ -15,8 +15,8 @@ We will be developing a personal finance app for Android mobile devices. The app
         - This can also be installed using Chocolatey with the following command:
             > choco install -y node.js.install openjdk8
     3. Gradle [install](https://gradle.org/install/)
-        -This can also be installed using Chocolatey with the following command:
-           > choco install gradle
+        - This can also be installed using Chocolatey with the following command:
+            > choco install gradle
     4. Android Studio [install](https://developer.android.com/studio)
           - Install the Android SDK and the Android Virtual Device
           - React-Native prefers the usage of Android SDK 10(Q)
