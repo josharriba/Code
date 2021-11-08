@@ -79,11 +79,7 @@ const App: () => Node = () => {
       style={styles.img} />
           <Section title="Step 1">
             Edit <Text style={styles.highlight}>App.js</Text> to change this
-<<<<<<< HEAD
             screen and then come back to see your edits. Testing more changes.
-=======
-            screen and then come back to see your edits. Testing changes. More changes.
->>>>>>> edward_branch
           </Section>
           <Section title="See Your Changes">
             <ReloadInstructions />
