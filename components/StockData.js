@@ -20,10 +20,10 @@ class StockData extends React.Component {
     const pointerToThis = this;
     console.log(pointerToThis);
     const API_KEY = 'HGJWFG4N8AQ66ICD';
-    let StockSymbol = 'FB';
+    // let StockSymbol = 'FB';
     let API_Call = `https://www.alphavantage.co/query?function=TIME_SERIES_DAILY_ADJUSTED&symbol=msft&outputsize=compact&apikey=ER1D6MX3FXC0EQJE`;
-    let stockChartXValuesFunction = [];
-    let stockChartYValuesFunction = [];
+    let XValues = [];
+    let YValues = [];
 
     fetch(API_Call)
       .then(
@@ -31,19 +31,19 @@ class StockData extends React.Component {
           return response.json();
         }
       )
-      .then(
-        function(data) {
-          console.log(data);
+       .then(
+         function(data) {
+           console.log(data);
 
           for (var key in data['Time Series (Daily)']) {
-            stockChartXValuesFunction.push(key);
-            stockChartYValuesFunction.push(data['Time Series (Daily)'][key]['1. open']);
+            XValues.push(key);
+            YValues.push(data['Time Series (Daily)'][key]['1. open']);
           }
 
           // console.log(stockChartXValuesFunction);
           pointerToThis.setState({
-            stockChartXValues: stockChartXValuesFunction,
-            stockChartYValues: stockChartYValuesFunction
+            stockChartXValues: XValues,
+            stockChartYValues: YValues
           });
         }
       )
@@ -52,7 +52,6 @@ class StockData extends React.Component {
   render() {
     return (
       <View>
-        <Text>Stock Market</Text>
         <Plotly
           data={[
             {

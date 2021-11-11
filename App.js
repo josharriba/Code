@@ -17,11 +17,11 @@ import {
   TextInput
 } from 'react-native';
 
-import LoginScreen from './screens/LoginScreen'
-import HomeScreen from './screens/HomeScreen'
-import StocksScreen from './screens/StocksScreen'
-import DashboardScreen from './screens/DashboardScreen'
-import FinancesScreen from './screens/FinancesScreen'
+import LoginScreen from './screens/LoginScreen';
+import HomeScreen from './screens/HomeScreen';
+import StocksScreen from './screens/StocksScreen';
+import DashboardScreen from './screens/DashboardScreen';
+import FinancesScreen from './screens/FinancesScreen';
 
 const Stack = createNativeStackNavigator();
 
