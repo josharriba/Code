@@ -17,6 +17,9 @@ class DashboardScreen extends React.Component {
             <Button title="Finances"
             onPress={() => this.props.navigation.navigate('Finances')}
             />
+            <Button title="Profile"
+            onPress={() => this.props.navigation.navigate('Profile')}
+            />
         </View>
         );
     }

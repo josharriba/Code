@@ -1,7 +1,8 @@
+//profile page 
 import React from 'react';
   import { StyleSheet, Button, Text, View, TouchableHighlight, TextInput, StackNavigator } from 'react-native';
 
-class FinancesScreen extends React.Component {
+class ProfileScreen extends React.Component {
     render() {
       return(
         <View style={{flex: 1, alignItems:'center', justifyContent:'center'}}>
@@ -17,12 +18,9 @@ class FinancesScreen extends React.Component {
             <Button title="Dashboard"
             onPress={() => this.props.navigation.navigate('Dashboard')}
             />
-            <Button title="Profile"
-            onPress={() => this.props.navigation.navigate('Profile')}
-            />
         </View>
         );
     }
 }
 
-export default FinancesScreen
+export default ProfileScreen
