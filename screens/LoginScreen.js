@@ -31,9 +31,18 @@ import React from 'react';
             email: '', 
             password: ''
           })
-          this.props.navigation.navigate('Home')
+          this.props.navigation.navigate('Home');
         })
-        .catch(error => this.setState({ errorMessage: error.message }))
+        .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message; 
+        if(errorCode === 'auth/wrong-password') {
+          alert('Invalid Password. Please try again!')
+        }
+        if(errorCode === 'auth/invalid-user-token' || errorCode === 'auth/user-token-expired' || errorCode === 'auth/invalid-email') {
+          alert('Invalid email. Please try again!')
+        }
+        });
       }
     }
   
@@ -56,7 +65,6 @@ import React from 'react';
       <Button title="Login"
         onPress={() => {
           this.login();
-        {this.props.navigation.navigate('Home')}
         }
       } />
 
