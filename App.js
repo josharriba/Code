@@ -7,9 +7,10 @@
  * 
  */
 
-import React from "react";
+import React, {useEffect, useState} from "react";
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import auth from '@react-native-firebase/auth'
 import {
   Button,
   Text,
@@ -23,10 +24,28 @@ import StocksScreen from './screens/StocksScreen';
 import DashboardScreen from './screens/DashboardScreen';
 import FinancesScreen from './screens/FinancesScreen';
 import ProfileScreen from './screens/ProfileScreen';
+import SignupScreen from './screens/SignupScreen'
 
 const Stack = createNativeStackNavigator();
 
 const App = () => {
+
+  const [initializing, setInitializing] = useState(true);
+  const [user, setUser] = useState();
+
+  function onAuthStateChanged(user) {
+    setUser(user);
+    if (initializing) 
+      setInitializing(false);
+  }
+  useEffect(() => {
+    const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
+    return subscriber;
+  }, []);
+
+  if(initializing) return null;
+
+  
   return (
      <NavigationContainer>
         <Stack.Navigator initialRouteName={"Login"}
@@ -47,6 +66,7 @@ const App = () => {
           <Stack.Screen name="Dashboard" component={DashboardScreen} />
           <Stack.Screen name="Finances" component={FinancesScreen} />
           <Stack.Screen name="Profile" component={ProfileScreen} />
+          <Stack.Screen name="Signup" component={SignupScreen} />
         </Stack.Navigator>
       </NavigationContainer>
   );

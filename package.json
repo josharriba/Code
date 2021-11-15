@@ -11,6 +11,8 @@
   },
   "dependencies": {
     "@react-native-community/cli-platform-android": "^6.1.0",
+    "@react-native-firebase/app": "^13.0.1",
+    "@react-native-firebase/auth": "^13.0.1",
     "@react-navigation/native": "^6.0.6",
     "@react-navigation/native-stack": "^6.2.5",
     "alphavantage": "^2.3.0",
