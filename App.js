@@ -11,6 +11,7 @@ import React, {useEffect, useState} from "react";
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import auth from '@react-native-firebase/auth'
+import firestore from '@react-native-firebase/firestore'
 import {
   Button,
   Text,
@@ -24,9 +25,12 @@ import StocksScreen from './screens/StocksScreen';
 import DashboardScreen from './screens/DashboardScreen';
 import FinancesScreen from './screens/FinancesScreen';
 import ProfileScreen from './screens/ProfileScreen';
-import SignupScreen from './screens/SignupScreen'
+import SignupScreen from './screens/SignupScreen';
+
 
 const Stack = createNativeStackNavigator();
+const usersCollection = firestore().collection('Users');
+
 
 const App = () => {
 
@@ -45,7 +49,6 @@ const App = () => {
 
   if(initializing) return null;
 
-  
   return (
      <NavigationContainer>
         <Stack.Navigator initialRouteName={"Login"}

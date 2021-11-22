@@ -1,5 +1,5 @@
 import React from 'react';
-  import { StyleSheet, View, Button, TextInput, } from 'react-native';
+  import { Alert, StyleSheet, View, Button, TextInput, } from 'react-native';
   import auth from '@react-native-firebase/auth';
 
   class LoginScreen extends React.Component {
@@ -56,11 +56,11 @@ import React from 'react';
           onChangeText={(input) => this.updateInput(input, 'email')}
             />
       <TextInput
-                placeholder="Password"
-                placeholderTextColor = 'black'
-                value = {this.state.password}
-                onChangeText={(input) => this.updateInput(input, 'password')}
-                secureTextEntry={true}
+              placeholder="Password"
+              placeholderTextColor = 'black'
+              value = {this.state.password}
+              onChangeText={(input) => this.updateInput(input, 'password')}
+              secureTextEntry={true}
             />
       <Button title="Login"
         onPress={() => {
