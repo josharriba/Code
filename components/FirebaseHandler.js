@@ -14,15 +14,8 @@ class FirebaseHandler extends React.Component {
     doLogin(email, password) {
         auth()
         .signInWithEmailAndPassword(email, password)
-        .then((res) => {
-          //console.log(res)
-          
-          console.log('User logged in successfully')
-        //   this.setState({
-        //     email: '', 
-        //     password: ''
-        //   })
-          
+        .then((res) => {   
+          console.log('User logged in successfully')          
         })
         .catch((error) => {
             const errorCode = error.code;
@@ -34,18 +27,21 @@ class FirebaseHandler extends React.Component {
               alert('Invalid email. Please try again!')
             }   
         });
-        currentUser = auth().currentUser.uid;
-        currentUserData = userList.doc(auth().currentUser.uid);
+        currentUser = auth().currentUser.email;
+        currentUserData = userList.doc(currentUser);
         console.log(currentUser);
         console.log(currentUserData);
     }
 
     doSignup(email, password, name, age) {
-        userList.add({
+        userList.doc(email).set({
             name: name,
             email: email,
             age: age
         }) 
+        .then(() => {   
+            console.log('User logged  in successfully')          
+        })
         /* password must meet google's requirements for security
             the userList.add will still run if the auth() fails because password does not meet requirements
         */
@@ -57,13 +53,14 @@ class FirebaseHandler extends React.Component {
         .catch((error) => {
             const errorCode = error.code;
             const errorMessage = error.message; 
-            if(errorCode === 'auth/wrong-password') {
-              alert('Invalid Password. Please try again!')
-            }
-            if(errorCode === 'auth/invalid-user-token' || errorCode === 'auth/user-token-expired' || errorCode === 'auth/invalid-email') {
-              alert('Invalid email. Please try again!')
-            }
         });
+    }
+
+    getName() {
+        doc = currentUserData.get();
+        if(doc.exists) {
+            console.log('Document data:', doc.data());
+        }
     }
 }
 

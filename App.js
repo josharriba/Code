@@ -26,6 +26,7 @@ import DashboardScreen from './screens/DashboardScreen';
 import FinancesScreen from './screens/FinancesScreen';
 import ProfileScreen from './screens/ProfileScreen';
 import SignupScreen from './screens/SignupScreen';
+import db from './components/FirebaseHandler'
 
 
 const Stack = createNativeStackNavigator();
@@ -47,29 +48,6 @@ const App = () => {
   }, []);
 
   if(initializing) return null;
-  
-  // if(auth().currentUser==null){
-  //   return(
-  //     <NavigationContainer> 
-  //         <Stack.Navigator initialRouteName={"Login"}
-  //         screenOptions= {{
-  //           headerTitleAlign: "center",
-  //           headerStyle: {
-  //             backgroundColor: '#3A7D44'
-  //           },
-  //           headerTitleStyle: {
-  //             color: 'black',
-  //             fontFamily: 'Helvetica',
-  //             fontWeight: 'bold'
-  //           }
-  //         }}>
-  //           <Stack.Screen name="Login" component={LoginScreen} options={{title: 'Welcome! Please Login'}} />
-  //           <Stack.Screen name="Signup" component={SignupScreen} />
-  //         </Stack.Navigator>
-
-  //     </NavigationContainer>
-  //   );
-  // }
   
   return (
      <NavigationContainer>
