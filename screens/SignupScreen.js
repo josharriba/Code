@@ -1,14 +1,11 @@
 import React from 'react';
   import { StyleSheet, View, Button, TextInput, Alert } from 'react-native';
-   import auth from '@react-native-firebase/auth';
-//import firebase from 'firebase'
-import firestore from '@react-native-firebase/firestore'
 
+import db from '../components/FirebaseHandler';
 
   class SignupScreen extends React.Component {
    constructor(){
     super();
-    this.db = firestore().collection('Users');
         this.state = {
             name:'',
             email: '',
@@ -31,21 +28,8 @@ import firestore from '@react-native-firebase/firestore'
             Alert.alert('You must be at least 18 years old to sign up')
         }
         else {
-        this.db.add({
-            name: this.state.name,
-            email: this.state.email,
-            age: this.state.age
-        })
-        auth()
-        .createUserWithEmailAndPassword(this.state.email, this.state.password)
-        .then((res) => {
-            console.log('New user registered successfully')
-            // res.user.updateProfile({
-            //     name: this.state.name,
-            //     email: this.state.email,
-            //     age: this.state
-            // })
-            console.log('New user registered successfully')
+            db.doSignup(this.state.email, this.state.password, this.state.name, this.state.age);
+
             this.setState({
                 name: '',
                 email: '',
@@ -53,8 +37,6 @@ import firestore from '@react-native-firebase/firestore'
                 age: ''
             })
             this.props.navigation.navigate('Home')
-        })
-        .catch(error => this.setState({errorMessage: error.message}))
         }
     }
 

@@ -29,14 +29,13 @@ import SignupScreen from './screens/SignupScreen';
 
 
 const Stack = createNativeStackNavigator();
-const usersCollection = firestore().collection('Users');
-
+const userData = firestore().collection('Users');
 
 const App = () => {
 
   const [initializing, setInitializing] = useState(true);
   const [user, setUser] = useState();
-
+    
   function onAuthStateChanged(user) {
     setUser(user);
     if (initializing) 
@@ -48,7 +47,30 @@ const App = () => {
   }, []);
 
   if(initializing) return null;
+  
+  // if(auth().currentUser==null){
+  //   return(
+  //     <NavigationContainer> 
+  //         <Stack.Navigator initialRouteName={"Login"}
+  //         screenOptions= {{
+  //           headerTitleAlign: "center",
+  //           headerStyle: {
+  //             backgroundColor: '#3A7D44'
+  //           },
+  //           headerTitleStyle: {
+  //             color: 'black',
+  //             fontFamily: 'Helvetica',
+  //             fontWeight: 'bold'
+  //           }
+  //         }}>
+  //           <Stack.Screen name="Login" component={LoginScreen} options={{title: 'Welcome! Please Login'}} />
+  //           <Stack.Screen name="Signup" component={SignupScreen} />
+  //         </Stack.Navigator>
 
+  //     </NavigationContainer>
+  //   );
+  // }
+  
   return (
      <NavigationContainer>
         <Stack.Navigator initialRouteName={"Login"}
