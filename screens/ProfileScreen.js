@@ -31,9 +31,6 @@ signOut = () => {
             <Button title="Home"
             onPress={() => this.props.navigation.navigate('Home')}
             />
-            <Button title="Login"
-            onPress={() => this.props.navigation.navigate('Login')}
-            />
             <Button title="Stocks"
             onPress={() => this.props.navigation.navigate('Stocks')}
             />
@@ -48,6 +45,6 @@ signOut = () => {
         </View>
         );
     }
-}
+  }
 
 export default ProfileScreen

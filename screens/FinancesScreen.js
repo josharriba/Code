@@ -8,8 +8,8 @@ class FinancesScreen extends React.Component {
             <Button title="Home"
             onPress={() => this.props.navigation.navigate('Home')}
             />
-            <Button title="Login"
-            onPress={() => this.props.navigation.navigate('Login')}
+            <Button title="Budgeting"
+            onPress={() => this.props.navigation.navigate('Budgeting')}
             />
             <Button title="Stocks"
             onPress={() => this.props.navigation.navigate('Stocks')}

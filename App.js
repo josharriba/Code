@@ -24,6 +24,7 @@ import HomeScreen from './screens/HomeScreen';
 import StocksScreen from './screens/StocksScreen';
 import DashboardScreen from './screens/DashboardScreen';
 import FinancesScreen from './screens/FinancesScreen';
+import BudgetingScreen from './screens/BudgetingScreen';
 import ProfileScreen from './screens/ProfileScreen';
 import SignupScreen from './screens/SignupScreen';
 import db from './components/FirebaseHandler'
@@ -70,6 +71,7 @@ const App = () => {
           <Stack.Screen name="Stocks" component={StocksScreen} />
           <Stack.Screen name="Dashboard" component={DashboardScreen} />
           <Stack.Screen name="Finances" component={FinancesScreen} />
+          <Stack.Screen name="Budgeting" component={BudgetingScreen} />
           <Stack.Screen name="Profile" component={ProfileScreen} />
           <Stack.Screen name="Signup" component={SignupScreen} />
         </Stack.Navigator>
