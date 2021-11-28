@@ -36,6 +36,8 @@ const App = () => {
 
   const [initializing, setInitializing] = useState(true);
   const [user, setUser] = useState();
+
+  db.onStartup();
     
   function onAuthStateChanged(user) {
     setUser(user);
