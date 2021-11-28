@@ -20,6 +20,11 @@ deleteAccount = () => {
   this.props.navigation.navigate('Login');
 }
 
+signOut = () => {
+  db.signOut();
+  this.props.navigation.navigate('Login');
+}
+
     render() {
       return(
         <View style={{flex: 1, alignItems:'center', justifyContent:'center'}}>
@@ -34,6 +39,9 @@ deleteAccount = () => {
             />
             <Button title="Dashboard"
             onPress={() => this.props.navigation.navigate('Dashboard')}
+            />
+            <Button title="Sign out"
+            onPress={() => this.signOut()}
             />
             <Button title="Delete Account" onPress={() => this.deleteAccountAlert()}
             />

@@ -1,15 +1,21 @@
 import React from 'react';
   import { StyleSheet, Button, Text, View, TouchableHighlight, TextInput, StackNavigator } from 'react-native';
   import firestore from '@react-native-firebase/firestore'
-
+import db from '../components/FirebaseHandler'
 
 class HomeScreen extends React.Component {  
+
+  signOut = () => {
+    db.signOut();
+    this.props.navigation.navigate('Login');
+  }
+
     render() {
       return(
         <View style={{flex: 1, alignItems:'center', justifyContent:'center'}}> 
         <Text Welcome />
-            <Button title="Login"
-            onPress={() => this.props.navigation.navigate('Login')}
+            <Button title="Sign Out"
+            onPress={() => () => this.signOut()}
             />
             <Button title="Stocks"
             onPress={() => this.props.navigation.navigate('Stocks')}

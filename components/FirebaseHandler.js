@@ -73,6 +73,11 @@ class FirebaseHandler extends React.Component {
         })
     }
 
+    signOut() {
+        auth().signOut()
+        .then(() => console.log('User signed out!'));
+    }
+
     getName() {
         doc = currentUserData.get();
         if(doc.exists) {
