@@ -36,7 +36,7 @@ import db from '../components/FirebaseHandler';
                 password: '',
                 age: ''
             })
-            this.props.navigation.navigate('Home')
+            this.props.navigation.navigate('Login')
         }
     }
 

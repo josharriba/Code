@@ -13,6 +13,7 @@ class FirebaseHandler extends React.Component {
         userList = firestore().collection('Users');
         currUser = null;
         currentUserData = null;
+        transactions = null;
     }
 
     doLogin(email, password) {
@@ -37,6 +38,7 @@ class FirebaseHandler extends React.Component {
         });
         this.currUser = auth().currentUser.email;
         this.currentUserData = userList.doc(currUser);
+        transactions = this.currentUserData.collection("Transactions");
         console.log(this.currUser);
         console.log(this.currentUserData);
     }
@@ -53,6 +55,13 @@ class FirebaseHandler extends React.Component {
         .then(() => {   
             console.log('User signed up successfully')          
         })
+        .catch((error) => {
+            const errorMessage = error.message; 
+            alert(errorMessage);
+            throw error;
+        });
+
+
         auth()
         .createUserWithEmailAndPassword(email, password)
         .then((res) => {
@@ -61,6 +70,8 @@ class FirebaseHandler extends React.Component {
         .catch((error) => {
             const errorCode = error.code;
             const errorMessage = error.message; 
+            alert(errorMessage);
+            throw error;
         });
     }
 
@@ -76,6 +87,14 @@ class FirebaseHandler extends React.Component {
     signOut() {
         auth().signOut()
         .then(() => console.log('User signed out!'));
+    }
+
+    enterTransaction(date, description, amount) {
+       userList.doc(auth().currentUser.email).collection('Transactions').add({
+            date: date,
+            description: description,
+            amount: amount
+         });
     }
 
     getName() {

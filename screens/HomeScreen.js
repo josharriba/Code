@@ -12,7 +12,7 @@ class HomeScreen extends React.Component {
 
     render() {
       return(
-        <View style={{flex: 1, alignItems:'center', justifyContent:'center'}}> 
+        <View style={{padding:10, flex: 1, alignItems:'center', justifyContent:'center'}}> 
         <Text Welcome />
             <Button title="Sign Out"
             onPress={() => () => this.signOut()}
