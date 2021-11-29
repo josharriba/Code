@@ -1,5 +1,5 @@
 import React from 'react';
-  import { StyleSheet, Modal, Button, Text, View, TouchableHighlight, TextInput, StackNavigator } from 'react-native';
+  import { Alert, StyleSheet, Modal, Button, Text, View, TouchableHighlight, TextInput, StackNavigator } from 'react-native';
 import db from '../components/FirebaseHandler'
 
 
@@ -20,7 +20,8 @@ class FinancesScreen extends React.Component {
       date: '',
       description: '',
       amount: ''
-  })
+    })
+    Alert.alert('Transaction successfully recorded. You can view your recent transactions in the Dashboard');
   }
 
   updateInput = (val, prop) => {

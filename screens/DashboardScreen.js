@@ -1,8 +1,12 @@
 import React from 'react';
-  import { StyleSheet, Button, Text, View, TouchableHighlight, TextInput, StackNavigator } from 'react-native';
+  import { StyleSheet, Button, Text, View, FlatList, Item, TextInput, StackNavigator } from 'react-native';
+import db from '../components/FirebaseHandler'
 
 class DashboardScreen extends React.Component {
+  
+  transactions = db.getTransactions();  
     render() {
+      {transactions}
       return(
         <View style={{flex: 1, alignItems:'center', justifyContent:'center'}}>
             <Button title="Home"

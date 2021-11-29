@@ -13,7 +13,7 @@ class FirebaseHandler extends React.Component {
         userList = firestore().collection('Users');
         currUser = null;
         currentUserData = null;
-        transactions = null;
+        transactions = [];
     }
 
     doLogin(email, password) {
@@ -38,7 +38,6 @@ class FirebaseHandler extends React.Component {
         });
         this.currUser = auth().currentUser.email;
         this.currentUserData = userList.doc(currUser);
-        transactions = this.currentUserData.collection("Transactions");
         console.log(this.currUser);
         console.log(this.currentUserData);
     }
@@ -95,6 +94,37 @@ class FirebaseHandler extends React.Component {
             description: description,
             amount: amount
          });
+    }
+
+    /*if the transaction already exists in the transactions list, 
+        we dont need to add it again
+        
+
+        can use .orderBy(date) and .limit(#OfTransactionsToShow)
+    */
+    getTransactions() {
+        userList.doc(auth().currentUser.email)
+        .collection('Transactions').get()
+        .then(querySnapshot => {
+            querySnapshot.forEach(doc => {
+                const{date, description, amount} = doc.data();
+                transactions.push({
+                    date, 
+                    description, 
+                    amount
+                }); 
+            });
+            this.setState({
+                data : transactions,
+            });
+        })
+        .catch((error) => {
+            const errorCode = error.code;
+            const errorMessage = error.message; 
+            alert(errorMessage);
+            throw error;
+        });
+        console.log(transactions);
     }
 
     getName() {
