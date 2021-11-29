@@ -4,6 +4,10 @@ import React from 'react';
 import db from '../components/FirebaseHandler'
 
 class HomeScreen extends React.Component {  
+  constructor() {
+    super();
+    this.name = '';
+  }
 
   signOut = () => {
     db.signOut();
@@ -11,9 +15,10 @@ class HomeScreen extends React.Component {
   }
 
     render() {
+      this.name = db.getName();
       return(
         <View style={{padding:10, flex: 1, alignItems:'center', justifyContent:'center'}}> 
-        <Text Welcome />
+        <Text {...this.name}/>
             <Button title="Sign Out"
             onPress={() => () => this.signOut()}
             />

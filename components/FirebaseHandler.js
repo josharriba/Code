@@ -114,9 +114,6 @@ class FirebaseHandler extends React.Component {
                     amount
                 }); 
             });
-            this.setState({
-                data : transactions,
-            });
         })
         .catch((error) => {
             const errorCode = error.code;
@@ -128,11 +125,16 @@ class FirebaseHandler extends React.Component {
     }
 
     getName() {
-        doc = currentUserData.get();
-        if(doc.exists) {
-            console.log('Document data:', doc.data());
-        }
+        userList.doc(auth().currentUser.email)
+        .get()
+        .then(documentSnapshot => {
+            if(documentSnapshot.exists) {
+                console.log(documentSnapshot.data().name);
+            }
+            return documentSnapshot.data().name
+        });
     }
+
 }
 
 const db = new FirebaseHandler();
