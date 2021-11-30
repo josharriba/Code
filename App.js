@@ -32,25 +32,28 @@ import db from './components/FirebaseHandler'
 
 const Stack = createNativeStackNavigator();
 const userData = firestore().collection('Users');
-
+ 
 const App = () => {
 
   const [initializing, setInitializing] = useState(true);
   const [user, setUser] = useState();
 
   db.onStartup();
-    
+  
   function onAuthStateChanged(user) {
     setUser(user);
-    if (initializing) 
+    if (initializing) { 
       setInitializing(false);
+    }
   }
   useEffect(() => {
     const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
     return subscriber;
   }, []);
 
-  if(initializing) return null;
+  if(initializing) { 
+    return null;
+  }
   
   return (
      <NavigationContainer>

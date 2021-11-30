@@ -14,7 +14,11 @@ class FirebaseHandler extends React.Component {
         currUser = null;
         currentUserData = null;
         transactions = [];
+        flag = false;      
+        loggedIn = false;
     }
+    /*
+        moved auth for login to LoginScreen
 
     doLogin(email, password) {
         // console.log(email)
@@ -23,8 +27,14 @@ class FirebaseHandler extends React.Component {
         // this.currentUserData = null;
         auth()
         .signInWithEmailAndPassword(email, password)
-        .then((res) => {   
-          console.log('User logged in successfully')          
+        .then((res) => {
+            this.loggedIn = true; 
+            this.currUser = auth().currentUser.email;
+            this.currentUserData = userList.doc(currUser);
+            this.flag = true;
+            console.log(this.currUser);
+            console.log(this.currentUserData);    
+            console.log('User logged in successfully')
         })
         .catch((error) => {
             const errorCode = error.code;
@@ -36,11 +46,8 @@ class FirebaseHandler extends React.Component {
               Alert.alert('Invalid email. Please try again!')
             }   
         });
-        this.currUser = auth().currentUser.email;
-        this.currentUserData = userList.doc(currUser);
-        console.log(this.currUser);
-        console.log(this.currentUserData);
     }
+    */
 
     /* password must meet google's requirements for security
         the userList.add will still run if the auth() fails because password does not meet requirements

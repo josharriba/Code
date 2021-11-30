@@ -1,14 +1,16 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
   import { Alert, StyleSheet, View, Button, TextInput, } from 'react-native';
-  
+  import auth from '@react-native-firebase/auth'
 import db from '../components/FirebaseHandler';
+import { withNavigation } from 'react-navigation';
 
   class LoginScreen extends React.Component {
    constructor(){
     super();
         this.state = {
           email: '',
-          password: ''
+          password: '', 
+          flag: false
         }  
       }
 
@@ -23,15 +25,34 @@ import db from '../components/FirebaseHandler';
         Alert.alert('Enter email and password to signin')
       } 
       else {
-        db.doLogin(this.state.email, this.state.password);
+        //db.doLogin(this.state.email, this.state.password)
+         auth()
+        .signInWithEmailAndPassword(this.state.email, this.state.password)
+        .then((res) => {
+            this.currUser = auth().currentUser.email;
+            this.currentUserData = userList.doc(currUser);
+            this.props.navigation.navigate('Home');
+            console.log(this.currUser);
+            console.log(this.currentUserData);    
+            console.log('User logged in successfully')
+        })
+        .catch((error) => {
+            const errorCode = error.code;
+            const errorMessage = error.message; 
+            if(errorCode === 'auth/wrong-password' || errorCode == 'auth/invalid-password') {
+              Alert.alert('Invalid Password. Please try again!')
+            }
+            if(errorCode === 'auth/invalid-user-token' || errorCode === 'auth/user-token-expired' || errorCode === 'auth/invalid-email') {
+              Alert.alert('Invalid email. Please try again!')
+            }   
+        });
         this.setState({
           email: '', 
           password: ''
         })
-        this.props.navigation.navigate('Home');
       }
     }
-  
+
   render() {
    return (
     <View>
