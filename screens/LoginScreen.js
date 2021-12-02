@@ -30,10 +30,8 @@ import { withNavigation } from 'react-navigation';
         .signInWithEmailAndPassword(this.state.email, this.state.password)
         .then((res) => {
             this.currUser = auth().currentUser.email;
-            this.currentUserData = userList.doc(currUser);
-            this.props.navigation.navigate('Home');
-            console.log(this.currUser);
-            console.log(this.currentUserData);    
+            userName  = db.getName();
+            this.props.navigation.navigate('Home', {username: userName}); 
             console.log('User logged in successfully')
         })
         .catch((error) => {

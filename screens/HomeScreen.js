@@ -4,9 +4,12 @@ import React from 'react';
 import db from '../components/FirebaseHandler'
 
 class HomeScreen extends React.Component {  
-  constructor() {
-    super();
-    this.name = '';
+  constructor(props) {
+    super(props);
+    db.getName(); 
+    this.state= {
+      name: db.name
+    } 
   }
 
   signOut = () => {
@@ -15,13 +18,14 @@ class HomeScreen extends React.Component {
   }
 
     render() {
-      this.name = db.getName();
       return(
-        <View style={{padding:10, flex: 1, alignItems:'center', justifyContent:'center'}}> 
-        <Text {...this.name}/>
-            <Button title="Sign Out"
-            onPress={() => () => this.signOut()}
-            />
+        <View style={{padding:5, flex: 1, alignItems:'center'}}> 
+          <Text style={{fontSize: 20, fontWeight: 'bold', padding:50 }}>  
+            Welcome, {this.state.name} !
+          </Text>
+            <Button title="Profile"
+            onPress={() => this.props.navigation.navigate('Profile')}
+            /> 
             <Button title="Stocks"
             onPress={() => this.props.navigation.navigate('Stocks')}
             />
@@ -31,8 +35,8 @@ class HomeScreen extends React.Component {
             <Button title="Finances"
             onPress={() => this.props.navigation.navigate('Finances')}
             />
-            <Button title="Profile"
-            onPress={() => this.props.navigation.navigate('Profile')}
+             <Button title="Sign Out"
+            onPress={() => () => this.signOut()}
             />
         </View>
         );
