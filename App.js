@@ -1,23 +1,18 @@
 /**
  * Orco Financial Manager App
- * 
+ *
  * TODO add info here
- * 
- * 
- * 
+ *
+ *
+ *
  */
 
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useState} from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import auth from '@react-native-firebase/auth'
-import firestore from '@react-native-firebase/firestore'
-import {
-  Button,
-  Text,
-  View,
-  TextInput
-} from 'react-native';
+import auth from '@react-native-firebase/auth';
+import firestore from '@react-native-firebase/firestore';
+import {Button, Text, View, TextInput} from 'react-native';
 
 import LoginScreen from './screens/LoginScreen';
 import HomeScreen from './screens/HomeScreen';
@@ -27,22 +22,21 @@ import FinancesScreen from './screens/FinancesScreen';
 import BudgetingScreen from './screens/BudgetingScreen';
 import ProfileScreen from './screens/ProfileScreen';
 import SignupScreen from './screens/SignupScreen';
-import db from './components/FirebaseHandler'
-
+import db from './components/FirebaseHandler';
+import NewsScreen from './screens/NewsScreen';
 
 const Stack = createNativeStackNavigator();
 const userData = firestore().collection('Users');
- 
-const App = () => {
 
+const App = () => {
   const [initializing, setInitializing] = useState(true);
   const [user, setUser] = useState();
 
   db.onStartup();
-  
+
   function onAuthStateChanged(user) {
     setUser(user);
-    if (initializing) { 
+    if (initializing) {
       setInitializing(false);
     }
   }
@@ -51,34 +45,40 @@ const App = () => {
     return subscriber;
   }, []);
 
-  if(initializing) { 
+  if (initializing) {
     return null;
   }
-  
+
   return (
-     <NavigationContainer>
-        <Stack.Navigator initialRouteName={"Login"}
-          screenOptions= {{
-            headerTitleAlign: "center",
-            headerStyle: {
-              backgroundColor: '#3A7D44'
-            },
-            headerTitleStyle: {
-              color: 'black',
-              fontFamily: 'Helvetica',
-              fontWeight: 'bold'
-            }
-          }}>
-          <Stack.Screen name="Home" component={HomeScreen} />
-          <Stack.Screen name="Login" component={LoginScreen} options={{title: 'Welcome! Please Login'}}/>
-          <Stack.Screen name="Stocks" component={StocksScreen} />
-          <Stack.Screen name="Dashboard" component={DashboardScreen} />
-          <Stack.Screen name="Finances" component={FinancesScreen} />
-          <Stack.Screen name="Budgeting" component={BudgetingScreen} />
-          <Stack.Screen name="Profile" component={ProfileScreen} />
-          <Stack.Screen name="Signup" component={SignupScreen} />
-        </Stack.Navigator>
-      </NavigationContainer>
+    <NavigationContainer>
+      <Stack.Navigator
+        initialRouteName={'Login'}
+        screenOptions={{
+          headerTitleAlign: 'center',
+          headerStyle: {
+            backgroundColor: '#3A7D44',
+          },
+          headerTitleStyle: {
+            color: 'black',
+            fontFamily: 'Helvetica',
+            fontWeight: 'bold',
+          },
+        }}>
+        <Stack.Screen name="Home" component={HomeScreen} />
+        <Stack.Screen
+          name="Login"
+          component={LoginScreen}
+          options={{title: 'Welcome! Please Login'}}
+        />
+        <Stack.Screen name="Stocks" component={StocksScreen} />
+        <Stack.Screen name="Dashboard" component={DashboardScreen} />
+        <Stack.Screen name="Finances" component={FinancesScreen} />
+        <Stack.Screen name="Budgeting" component={BudgetingScreen} />
+        <Stack.Screen name="Profile" component={ProfileScreen} />
+        <Stack.Screen name="Signup" component={SignupScreen} />
+        <Stack.Screen name="News" component={NewsScreen} />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 };
 
