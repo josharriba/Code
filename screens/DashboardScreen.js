@@ -12,13 +12,24 @@ import {
 import db from '../components/FirebaseHandler';
 
 class DashboardScreen extends React.Component {
-  transactions = db.getTransactions();
+  constructor() {
+    super();
+    db.getTransactions();
+    this.state = {
+      transactions: JSON.stringify(db.transactions),
+    };
+    console.log(transactions);
+  }
+
   render() {
     {
       transactions;
     }
     return (
-      <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+      <View style={{flex: 1, alignItems: 'center'}}>
+        <Text style={{fontSize: 20, fontWeight: 'bold'}}>
+          Recent Transactions: {this.state.transactions}
+        </Text>
         <Button
           title="Home"
           onPress={() => this.props.navigation.navigate('Home')}

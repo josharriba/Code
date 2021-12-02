@@ -7,13 +7,13 @@ class FirebaseHandler extends React.Component {
    
     constructor(){
         super();
+        transactions = [];
     }
 
     onStartup() {
         userList = firestore().collection('Users');
         currUser = null;
         currentUserData = null;
-        transactions = [];
         flag = false;      
         loggedIn = false;
     }
@@ -110,6 +110,7 @@ class FirebaseHandler extends React.Component {
         can use .orderBy(date) and .limit(#OfTransactionsToShow)
     */
     getTransactions() {
+       //console.log(auth().currentUser.email)
         userList.doc(auth().currentUser.email)
         .collection('Transactions').get()
         .then(querySnapshot => {
@@ -128,17 +129,16 @@ class FirebaseHandler extends React.Component {
             alert(errorMessage);
             throw error;
         });
-        console.log(transactions);
+        //console.log(transactions);
     }
 
     getName() {
         userList.doc(auth().currentUser.email)
         .get()
         .then(documentSnapshot => {
-            if(documentSnapshot.exists) {
-                console.log(documentSnapshot.data().name);
-            }
-            return documentSnapshot.data().name
+            //console.log(documentSnapshot.data().name);
+            this.name = documentSnapshot.data().name
+            return this.name;
         });
     }
 
