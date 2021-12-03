@@ -1,6 +1,6 @@
 import React from 'react';
-import Plotly from 'react-native-plotly';
-import {View,Text} from 'react-native';
+//import Plotly from 'react-native-plotly';
+import {View, Text, StyleSheet} from 'react-native';
 // import Plot from 'react-plotly.js';
 
 class StockData extends React.Component {
@@ -19,40 +19,43 @@ class StockData extends React.Component {
   fetchStock() {
     const pointerToThis = this;
     console.log(pointerToThis);
-    const API_KEY = 'HGJWFG4N8AQ66ICD';
+    const API_KEY = 'ER1D6MX3FXC0EQJE';
     // let StockSymbol = 'FB';
-    let API_Call = `https://www.alphavantage.co/query?function=TIME_SERIES_DAILY_ADJUSTED&symbol=msft&outputsize=compact&apikey=ER1D6MX3FXC0EQJE`;
-    let XValues = [];
-    let YValues = [];
+    let API_Call = `https://www.alphavantage.co/query?function=TIME_SERIES_DAILY_ADJUSTED&symbol=msft&outputsize=compact&apikey=${API_KEY}`;
+    let stockChartXValuesFunction = [];
+    let stockChartYValuesFunction = [];
 
     fetch(API_Call)
-      .then(
-        function(response) {
-          return response.json();
-        }
-      )
-       .then(
-         function(data) {
-           console.log(data);
+      .then(function (response) {
+        return response.json();
+      })
+      .then(function (data) {
+        console.log(data);
 
-          for (var key in data['Time Series (Daily)']) {
-            XValues.push(key);
-            YValues.push(data['Time Series (Daily)'][key]['1. open']);
-          }
-
-          // console.log(stockChartXValuesFunction);
-          pointerToThis.setState({
-            stockChartXValues: XValues,
-            stockChartYValues: YValues
-          });
+        for (var key in data['Time Series (Daily)']) {
+          stockChartXValuesFunction.push(key);
+          stockChartYValuesFunction.push(
+            data['Time Series (Daily)'][key]['1. open']
+          );
         }
-      )
+
+        console.log(stockChartXValuesFunction);
+
+        pointerToThis.setState({
+          stockChartXValues: stockChartXValuesFunction,
+          stockChartYValues: stockChartYValuesFunction
+        });
+      });
   }
 
   render() {
     return (
       <View>
-        <Plotly
+        <Text style={styles.titleText}> Stock Prices {'\n'}</Text>
+        <Text style={styles.ticker}> AAPL: Apple </Text>
+        <Text style={styles.subtitle}> Date: {this.state.stockChartXValues[0]}</Text>
+        <Text style={styles.subtitle}> Price: {this.state.stockChartYValues[0]}</Text>
+        {/* <Plotly
           data={[
             {
               x: this.state.stockChartXValues,
@@ -63,11 +66,27 @@ class StockData extends React.Component {
             }
           ]}
           layout={{title: 'MSFT Stock Data', autosize: true}}
-        />
+        /> */}
       </View>
-    )
+    );
   }
 }
 
 export default StockData;
 
+const styles = StyleSheet.create({
+  titleText: {
+    fontFamily: 'sans-serif',
+    fontSize: 20,
+    fontWeight: 'bold',
+  },
+  ticker: {
+    fontFamily: 'sans-serif',
+    fontSize: 15,
+    fontWeight: 'bold',
+  },
+  subtitle: {
+    fontFamily: 'sans-serif',
+    fontSize: 15,
+  }
+});
