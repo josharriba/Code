@@ -30,9 +30,7 @@ export default function NewsScreen() {
             <View>
               <View style={styles.newsContainer}>
                 <Text style={styles.newstitle}>{item.title}</Text>
-                <Text style={styles.date}>
-                  {moment(item.publishedAt).format('lll')}
-                </Text>
+                <Text style={styles.date}>{item.publishedAt}</Text>
                 <Text style={styles.newsDescriptions}>{item.description}</Text>
               </View>
             </View>
