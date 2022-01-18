@@ -52,7 +52,7 @@ class StockData extends React.Component {
     return (
       <View>
         <Text style={styles.titleText}> Stock Prices {'\n'}</Text>
-        <Text style={styles.ticker}> AAPL: Apple </Text>
+        <Text style={styles.ticker}> MSFT: Microsoft </Text>
         <Text style={styles.subtitle}> Date: {this.state.stockChartXValues[0]}</Text>
         <Text style={styles.subtitle}> Price: {this.state.stockChartYValues[0]}</Text>
         {/* <Plotly
