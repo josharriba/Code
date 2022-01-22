@@ -33,6 +33,7 @@
     "@react-native-community/eslint-config": "^2.0.0",
     "@react-native-community/masked-view": "0.1.0",
     "babel-jest": "^27.3.1",
+    "detox": "^19.4.2",
     "eslint": "^7.32.0",
     "jest": "^27.4.7",
     "metro-react-native-babel-preset": "^0.66.2",
