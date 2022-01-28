@@ -4,6 +4,7 @@ import React, {useEffect, useState} from 'react';
 import db from '../components/FirebaseHandler';
 import { withNavigation } from 'react-navigation';
 
+
   class LoginScreen extends React.Component {
    constructor(){
     super();

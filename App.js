@@ -25,6 +25,8 @@ import SignupScreen from './screens/SignupScreen';
 import db from './components/FirebaseHandler';
 import NewsScreen from './screens/NewsScreen';
 
+import colors from './assets/colors/colors';
+
 const Stack = createNativeStackNavigator();
 const userData = firestore().collection('Users');
 
@@ -56,12 +58,11 @@ const App = () => {
         screenOptions={{
           headerTitleAlign: 'center',
           headerStyle: {
-            backgroundColor: '#3A7D44',
+            backgroundColor: colors.secondary,
           },
           headerTitleStyle: {
-            color: 'black',
-            fontFamily: 'Helvetica',
-            fontWeight: 'bold',
+            color: colors.background,
+            fontFamily: 'Montsesrrat-Light',
           },
         }}>
         <Stack.Screen name="Home" component={HomeScreen} />
