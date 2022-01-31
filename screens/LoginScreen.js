@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
-  import { Alert, StyleSheet, View, Button, TextInput, } from 'react-native';
-  import auth from '@react-native-firebase/auth'
+import { Alert, StyleSheet, View, Button, TextInput, } from 'react-native';
+import auth from '@react-native-firebase/auth';
 import db from '../components/FirebaseHandler';
 import { withNavigation } from 'react-navigation';
 
