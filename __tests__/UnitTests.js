@@ -1,5 +1,5 @@
 import SignupScreen from '../screens/SignupScreen';
-describe(SignupScreen.registerNewUser.age, () => {
+describe(SignupScreen.registerNewUser, () => {
     test("age should be 22", () => {
         const input = [
             { id: 1, age: "17" },
