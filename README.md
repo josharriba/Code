@@ -52,6 +52,16 @@ We will be developing a personal finance app for Android mobile devices. The app
     - Navigate through the login screen and start to use the app
         - You can either use sample login info that we will provide or create a new account to start using the app.
 
+# Testing
+
+- We will be using Jest and Detox for testing. Make sure you pull the latest changes from github, and run npm install to make sure your packages are up to date. 
+- To build the app and run the behavioral tests, you can use the following commands:
+    > detox build -c android
+    and
+    > detox test -c android
+- To run the unit tests with Jest, you can use the following command:
+    > npm test
+
 # Authors
 
 - Edward Sitar: esitar@email.sc.edu
