@@ -56,19 +56,23 @@ import { withNavigation } from 'react-navigation';
    return (
     <View>
        <TextInput
+           testID='emailTest'
            placeholder="Email"
            placeholderTextColor = 'black'
            value = {this.state.email}
           onChangeText={(input) => this.updateInput(input, 'email')}
             />
       <TextInput
+              testID='passwordTest'
               placeholder="Password"
               placeholderTextColor = 'black'
               value = {this.state.password}
               onChangeText={(input) => this.updateInput(input, 'password')}
               secureTextEntry={true}
             />
-      <Button title="Login"
+      <Button 
+        testID='loginButton'
+        title="Login"
         onPress={() => {
           this.login();
         }

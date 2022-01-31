@@ -8,8 +8,9 @@
       "binaryPath": "SPECIFY_PATH_TO_YOUR_APP_BINARY"
     },
     "android": {
+      "build": "cd android && gradlew assembleRelease -DtestBuildType=release && cd ..",
       "type": "android.apk",
-      "binaryPath": "SPECIFY_PATH_TO_YOUR_APP_BINARY"
+      "binaryPath": "android/app/build/outputs/apk/release/app-release.apk"
     }
   },
   "devices": {
@@ -22,7 +23,7 @@
     "emulator": {
       "type": "android.emulator",
       "device": {
-        "avdName": "Pixel_3a_API_30_x86"
+        "avdName": "Pixel_2_API_30"
       }
     }
   },

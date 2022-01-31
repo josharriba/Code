@@ -11,7 +11,7 @@ We will be developing a personal finance app for Android mobile devices. The app
     1. Node.js [install](https://nodejs.org/en/)
         - This can be installed with Chocolately (if you have that installed) with the following command:
             > choco install -y node.js.install
-            > make sure to have the LTS version of Nodejs not the Current Version
+        - Make sure to have the LTS version of Nodejs not the Current Version
     2. Java Development Kit [install](https://www.oracle.com/java/technologies/downloads/)
         - This can also be installed using Chocolatey with the following command:
             > choco install -y node.js.install openjdk8
@@ -51,6 +51,22 @@ We will be developing a personal finance app for Android mobile devices. The app
     - Select the APK file from where you have saved it on your computer and click OK.
     - Navigate through the login screen and start to use the app
         - You can either use sample login info that we will provide or create a new account to start using the app.
+
+# Testing
+
+- We will be using Jest and Detox for testing. Make sure you pull the latest changes from github, and run npm install to make sure your packages are up to date. 
+- Our unit tests are located in /__ tests__ 
+- Out behavioral tests are located in /e2e 
+
+- To build the app and run the behavioral tests, you can use the following commands:
+    > detox build -c android
+    >
+    > detox test -c android
+
+- To run the unit tests with Jest, you can use the following command:
+    > npm test
+
+- We were having trouble with the Detox setup, so the detox test command may fail. We are currently working on fixing the issues. 
 
 # Authors
 
