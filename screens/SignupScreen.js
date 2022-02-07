@@ -1,7 +1,9 @@
 import React from 'react';
-  import { StyleSheet, View, Button, TextInput, Alert } from 'react-native';
+  import { StyleSheet,Text, TouchableOpacity, View, Button, TextInput, Alert } from 'react-native';
 
 import db from '../components/FirebaseHandler';
+import colors from './assets/colors/colors';
+import { Colors } from 'react-native/Libraries/NewAppScreen';
 
   class SignupScreen extends React.Component {
    constructor(){
@@ -42,41 +44,91 @@ import db from '../components/FirebaseHandler';
 
   render() {
    return (
-        <View>
-            <TextInput
+        <View style = {styles.container}>
+            <TextInput style = {styles.text}
             placeholder="Name"
-            placeholderTextColor = 'black'
+            placeholderTextColor = {colors.primary}
             value = {this.state.name}
             onChangeText={(input) => this.updateInput(input, 'name')}
                 />
-        <TextInput
+        <TextInput style = {styles.text}
             placeholder="Email"
-            placeholderTextColor = 'black'
+            placeholderTextColor = {colors.primary}
             value = {this.state.email}
             onChangeText={(input) => this.updateInput(input, 'email')}
                 />
-        <TextInput
+        <TextInput style = {styles.text}
             placeholder="Password"
-            placeholderTextColor = 'black'
+            placeholderTextColor = {colors.primary}
             value = {this.state.password}
             onChangeText={(input) => this.updateInput(input, 'password')}
             maxLength={18}
             secureTextEntry={true}
                 />
-      <TextInput
+      <TextInput style = {styles.text}
            placeholder="Age"
-           placeholderTextColor = 'black'
+           placeholderTextColor = {colors.primary}
            value = {this.state.age}
            onChangeText={(input) => this.updateInput(input, 'age')}
             />
-        <Button title="Finish"
+
+    <TouchableOpacity
+          style={styles.buttonContainer}
+          onPress={() => {this.registerNewUser()}}
+        >
+      <Text style={styles.buttonText}>finish</Text>
+      </TouchableOpacity>
+
+        {/* <Button title="Finish"
+            color = {colors.secondary}
             onPress={() => {
             this.registerNewUser()
             }
-        } />
+        } /> */}
         </View>
   );
  }
 }
 
+const styles = StyleSheet.create({
+    container: {
+      flex: 1,
+      padding: 24,
+      backgroundColor: "white",
+      fontFamily: 'Montserrat-Medium'
+    },
+    buttonContainer: {
+        elevation: 7,
+        backgroundColor: colors.background,
+        borderRadius: 10,
+        paddingVertical: 10,
+        paddinghorizontal: 14
+    },
+    buttonText: {
+        padding: 5,
+        marginLeft: '40%',
+        fontFamily: "Montserrat-Medium",
+        fontSize: 20,
+        color: colors.secondary
+    },
+        button: {
+        backgroundColor: colors.primary
+    },
+    text: {
+        fontSize: 15,
+        fontFamily: "Montserrat-Medium"
+    },
+    title: {
+      //marginTop: 16,
+      //paddingVertical: 8,
+     // borderWidth: 4,
+      //borderColor: "#20232a",
+      //borderRadius: 6,
+      //backgroundColor: "#61dafb",
+     // color: "#20232a",
+      //textAlign: "center",
+      //fontSize: 30,
+      //fontWeight: "bold"
+    }
+  });
 export default SignupScreen;
