@@ -25,8 +25,9 @@
  import SignupScreen from './screens/SignupScreen';
  import db from './components/FirebaseHandler';
  import NewsScreen from './screens/NewsScreen';
- 
  import colors from './assets/colors/colors';
+ 
+ //import colors from './screens/assets/colors/colors';
  
  const Stack = createNativeStackNavigator();
  const userData = firestore().collection('Users');
