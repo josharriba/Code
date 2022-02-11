@@ -7,7 +7,9 @@ class FirebaseHandler extends React.Component {
    
     constructor(){
         super();
-        transactions = [];
+        this.state= {
+            trans: []
+        }
     }
 
     onStartup() {
@@ -109,28 +111,34 @@ class FirebaseHandler extends React.Component {
 
         can use .orderBy(date) and .limit(#OfTransactionsToShow)
     */
-    getTransactions() {
-       //console.log(auth().currentUser.email)
-        userList.doc(auth().currentUser.email)
-        .collection('Transactions').get()
-        .then(querySnapshot => {
-            querySnapshot.forEach(doc => {
-                const{date, description, amount} = doc.data();
-                transactions.push({
-                    date, 
-                    description, 
-                    amount
-                }); 
-            });
-        })
-        .catch((error) => {
-            const errorCode = error.code;
-            const errorMessage = error.message; 
-            alert(errorMessage);
-            throw error;
-        });
-        //console.log(transactions);
-    }
+    // getTransactions() {
+    //    //console.log(auth().currentUser.email)
+    //    transactions = [];
+    //     userList.doc(auth().currentUser.email)
+    //     .collection('Transactions').get()
+    //     .then(querySnapshot => {
+    //         querySnapshot.forEach(doc => {
+    //             const{date, description, amount} = doc.data();
+    //             transactions.push({
+    //                 date, 
+    //                 description, 
+    //                 amount
+    //             }); 
+    //         });
+    //         this.state.trans = transactions;
+    //         // this.setState({
+    //         //     trans: transactions,
+    //         // });
+    //        //console.log(this.state.trans);
+    //     })
+    //     .catch((error) => {
+    //         const errorCode = error.code;
+    //         const errorMessage = error.message; 
+    //         alert(errorMessage);
+    //         throw error;
+    //     });
+    //     //console.log(transactions);
+    // }
 
     getName() {
         userList.doc(auth().currentUser.email)

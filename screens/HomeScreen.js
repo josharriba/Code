@@ -18,6 +18,7 @@ class HomeScreen extends React.Component {
     this.state = {
       name: db.name,
     };
+    console.log(db.name)
   }
 
   signOut = () => {
@@ -25,11 +26,11 @@ class HomeScreen extends React.Component {
     this.props.navigation.navigate('Login');
   };
 
-  render() {
+ render() {
     return (
       <View style={{padding: 5, flex: 1, alignItems: 'center'}}>
         <Text style={{fontSize: 20, fontWeight: 'bold', padding: 50}}>
-          Welcome, {this.state.name} !
+          Welcome, {db.name} !
         </Text>
         <Button
           title="Profile"

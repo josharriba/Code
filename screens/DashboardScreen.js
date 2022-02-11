@@ -10,26 +10,26 @@ import {
   StackNavigator,
 } from 'react-native';
 import db from '../components/FirebaseHandler';
+import Transactions from '../components/Transactions'
 
 class DashboardScreen extends React.Component {
   constructor() {
     super();
-    db.getTransactions();
-    this.state = {
-      transactions: JSON.stringify(db.transactions),
-    };
-    console.log(transactions);
+    //trans.getTransactions();
+    // db.getTransactions();
+    // this.state = {
+    //   transactions: toString(db.state.trans)
+    // };
+    // console.log(db.state.trans)
   }
 
   render() {
-    {
-      transactions;
-    }
     return (
       <View style={{flex: 1, alignItems: 'center'}}>
-        <Text style={{fontSize: 20, fontWeight: 'bold'}}>
-          Recent Transactions: {this.state.transactions}
-        </Text>
+        {/* <Text style={{fontSize: 20, fontWeight: 'bold'}}>
+          Recent Transactions: {toString(db.state.trans)}
+        </Text> */}
+        <Transactions/> 
         <Button
           title="Home"
           onPress={() => this.props.navigation.navigate('Home')}
