@@ -109,14 +109,22 @@ const styles = StyleSheet.create({
         marginLeft: '40%',
         fontFamily: "Montserrat-Medium",
         fontSize: 20,
-        color: colors.secondary
+        color: colors.primary
     },
         button: {
         backgroundColor: colors.primary
     },
     text: {
         fontSize: 15,
-        fontFamily: "Montserrat-Medium"
+        fontFamily: "Montserrat-Medium",
+        height: 45, width: "100%",
+        paddingHorizontal: 20,
+        borderRadius: 5,
+        borderColor: 'lightgray',
+        borderWidth: 1,
+        marginBottom: 15,
+        //backgroundColor: 'lightgray'
+        
     },
     title: {
       //marginTop: 16,
