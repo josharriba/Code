@@ -143,7 +143,13 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: 15,
-    fontFamily: "Montserrat-Medium"
+    fontFamily: "Montserrat-Medium",
+    height: 50, width: "100%",
+    borderRadius: 5,
+    paddingHorizontal: 20,
+    borderColor: 'lightgray',
+    borderWidth: 1,
+    marginBottom: 20,
   },
   title: {
     //marginTop: 16,
