@@ -21,7 +21,7 @@ class StockData extends React.Component {
     console.log(pointerToThis);
     const API_KEY = 'ER1D6MX3FXC0EQJE';
     // let StockSymbol = 'FB';
-    let API_Call = `https://www.alphavantage.co/query?function=TIME_SERIES_DAILY_ADJUSTED&symbol=msft&outputsize=compact&apikey=${API_KEY}`;
+    let API_Call = `https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=msft&outputsize=compact&apikey=${API_KEY}`;
     let stockChartXValuesFunction = [];
     let stockChartYValuesFunction = [];
 
