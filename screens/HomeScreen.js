@@ -10,6 +10,7 @@ import {
 } from 'react-native';
 import firestore from '@react-native-firebase/firestore';
 import db from '../components/FirebaseHandler';
+import auth from '@react-native-firebase/auth'
 
 class HomeScreen extends React.Component {
   constructor(props) {
@@ -22,7 +23,8 @@ class HomeScreen extends React.Component {
   }
 
   signOut = () => {
-    db.signOut();
+    //db.signOut();
+    auth().signOut().then(() => console.log('User signed out!'))
     this.props.navigation.navigate('Login');
   };
 
@@ -52,7 +54,7 @@ class HomeScreen extends React.Component {
           title="News"
           onPress={() => this.props.navigation.navigate('News')}
         />
-        <Button title="Sign Out" onPress={() => () => this.signOut()} />
+        <Button title="Sign Out" onPress={() => this.signOut()} />
       </View>
     );
   }
