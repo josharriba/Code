@@ -2,7 +2,10 @@ import React from 'react';
 //import Plotly from 'react-native-plotly';
 import {View, Text, StyleSheet, TextInput, Button, Alert} from 'react-native';
 import colors from '../assets/colors/colors';
+import db from './FirebaseHandler'
 // import Plot from 'react-plotly.js';
+import auth from '@react-native-firebase/auth';
+import firestore from '@react-native-firebase/firestore'
 
 class StockData extends React.Component {
   constructor(props) {
@@ -10,9 +13,34 @@ class StockData extends React.Component {
     this.state = {
       stockChartXValues: [],
       stockChartYValues: [], 
-      stockSymbol: ''
+      stockSymbol: '', 
+      favorites: []
     }
   }
+
+  addFavorite() {
+    db.addFavoriteStock(this.state.stockSymbol);
+  }
+
+  getFavoriteStocks() {
+    firestore().collection('Users').doc(auth().currentUser.email)
+    .collection('Favorite Stocks').get()
+    .then(querySnapshot => {
+        querySnapshot.forEach(doc => {
+            const{symbol} = doc.data();
+            this.state.favorites.push({
+                symbol
+            }); 
+        });
+        console.log(this.state.favorites);
+    })
+    .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message; 
+        alert(errorMessage);
+        throw error;
+    });
+}
 
   updateInput = (val, prop) => {
     const state = this.state;
@@ -79,6 +107,11 @@ class StockData extends React.Component {
             title="Search stock" 
             onPress={() => this.fetchStock()}>
           </Button>
+          <Button 
+            style={styles.buttonContainer} 
+            title="Show my favorite stocks" 
+            onPress={() => this.getFavoriteStocks()}>
+          </Button>
         </View>
       );
     }
@@ -94,6 +127,16 @@ class StockData extends React.Component {
           style={styles.buttonContainer} 
           title="Search stock" 
           onPress={() => this.fetchStock()}>
+        </Button>
+        <Button 
+          style={styles.buttonContainer} 
+          title="Add to favorites" 
+          onPress={() => this.addFavorite()}>
+        </Button>
+        <Button 
+          style={styles.buttonContainer} 
+          title="Show my favorite stocks" 
+          onPress={() => this.getFavoriteStocks()}>
         </Button>
         <Text style={styles.titleText}> Stock Prices {'\n'}</Text>
         <Text style={styles.ticker}> Symbol: {this.state.stockSymbol} </Text>

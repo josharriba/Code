@@ -105,6 +105,15 @@ class FirebaseHandler extends React.Component {
          });
     }
 
+    addFavoriteStock(symbol) {
+        userList.doc(auth().currentUser.email).collection('Favorite Stocks').add({
+            symbol: symbol
+        }, {merge: true})
+        console.log("successfully added stock to favorites")
+    }
+
+   
+
     /*if the transaction already exists in the transactions list, 
         we dont need to add it again
         
