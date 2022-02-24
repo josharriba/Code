@@ -9,6 +9,7 @@ import {
   Image,
   Spinner,
 } from 'native-base';
+import colors from './assets/colors/colors';
 
 export default function NewsScreen() {
   const [newsData, setNewsData] = useState([]);
@@ -29,9 +30,11 @@ export default function NewsScreen() {
           renderItem={({item}) => (
             <View>
               <View style={styles.newsContainer}>
-                <Text style={styles.newstitle}>{item.title}</Text>
-                <Text style={styles.date}>{item.publishedAt}</Text>
-                <Text style={styles.newsDescriptions}>{item.description}</Text>
+                <View style={styles.newsBox}>
+                <Text style={styles.newsBox.newstitle}>{item.title}</Text>
+                <Text style={styles.newsBox.date}>{item.publishedAt}</Text>
+                <Text style={styles.newsBox.newsDescriptions}>{item.description}</Text>
+                </View>
               </View>
             </View>
           )}
@@ -44,18 +47,30 @@ export default function NewsScreen() {
 
 const styles = StyleSheet.create({
   newsContainer: {
-    padding: 10,
+    backgroundColor: "grey",
+    padding: 1,
   },
+  newsBox: {
+    padding: 10,
+    paddingBottom: 10,
+    backgroundColor: "white",
+    //borderBottomColor: "lightgrey",
   newstitle: {
+    fontFamily: "Montserrat-SemiBold",
     fontSize: 18,
     marginTop: 10,
     fontWeight: '600',
+    //backgroundColor: "lightgrey",
+    //borderRadius: 10,
   },
   newsDescriptions: {
     fontSize: 16,
     marginTop: 10,
+    //backgroundColor: "lightgrey"
   },
   date: {
     fontSize: 14,
+    //backgroundColor: "lightgrey"
   },
+}
 });

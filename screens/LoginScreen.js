@@ -59,13 +59,13 @@ import { Colors } from 'react-native/Libraries/NewAppScreen';
     <View style = {styles.container}>
        <TextInput style = {styles.text}
            placeholder="Email"
-           placeholderTextColor = {colors.primary}
+           placeholderTextColor = {"lightgray"}
            value = {this.state.email}
           onChangeText={(input) => this.updateInput(input, 'email')}
             />
       <TextInput style = {styles.text}
               placeholder="Password"
-              placeholderTextColor = {colors.primary}
+              placeholderTextColor = {"lightgray"}
               value = {this.state.password}
               onChangeText={(input) => this.updateInput(input, 'password')}
               secureTextEntry={true}
@@ -73,25 +73,11 @@ import { Colors } from 'react-native/Libraries/NewAppScreen';
       <View style = {styles.container}>
 
       <TouchableOpacity
-          style={styles.buttonContainer}
+          style={styles.buttonContainer2}
           onPress={() => {this.login();}} 
         >
       <Text style={styles.buttonText}>login</Text>
         
-      {/* <Button 
-        color={colors.secondary} 
-        textColor={colors.background} 
-        title="Login"
-        titleStyle={{
-          fontFamily: "Montserrat-Medium",
-          color: colors.background,
-          fontSize: 10,
-      }}
-        onPress={() => {
-          this.login();
-        }
-      } 
-      /> */}
       </TouchableOpacity>
       </View>
       
@@ -125,7 +111,22 @@ const styles = StyleSheet.create({
     backgroundColor: colors.background,
     borderRadius: 10,
     paddingVertical: 10,
-    paddinghorizontal: 14
+    paddinghorizontal: 14,
+    width: 300,
+    position: 'absolute',
+        top: 270,
+        left: 46,
+  },
+  buttonContainer2: {
+    elevation: 8,
+    backgroundColor: colors.background,
+    borderRadius: 10,
+    paddingVertical: 10,
+    paddinghorizontal: 10,
+    width: 300,
+    position: 'absolute',
+        top: 23,
+        left: 22,
   },
   buttonText: {
     padding: 5,
@@ -136,7 +137,7 @@ const styles = StyleSheet.create({
   },
   buttonText2: {
     padding: 5,
-    marginLeft: '30%',
+    marginLeft: '25%',
     fontFamily: "Montserrat-Medium",
     fontSize: 20,
     color: colors.primary
@@ -147,9 +148,11 @@ const styles = StyleSheet.create({
     height: 50, width: "100%",
     borderRadius: 5,
     paddingHorizontal: 20,
-    borderColor: 'lightgray',
-    borderWidth: 1,
-    marginBottom: 20,
+    borderBottomColor: 'lightgray',
+    borderBottomWidth: 1,
+    borderBottomLeftRadius: 10,
+    borderBottomRightRadius: 10,
+    marginBottom: 20
   },
   title: {
     //marginTop: 16,

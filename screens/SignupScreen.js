@@ -47,19 +47,19 @@ import { Colors } from 'react-native/Libraries/NewAppScreen';
         <View style = {styles.container}>
             <TextInput style = {styles.text}
             placeholder="Name"
-            placeholderTextColor = {colors.primary}
+            placeholderTextColor = {"lightgray"}
             value = {this.state.name}
             onChangeText={(input) => this.updateInput(input, 'name')}
                 />
         <TextInput style = {styles.text}
             placeholder="Email"
-            placeholderTextColor = {colors.primary}
+            placeholderTextColor = {"lightgray"}
             value = {this.state.email}
             onChangeText={(input) => this.updateInput(input, 'email')}
                 />
         <TextInput style = {styles.text}
             placeholder="Password"
-            placeholderTextColor = {colors.primary}
+            placeholderTextColor = {"lightgray"}
             value = {this.state.password}
             onChangeText={(input) => this.updateInput(input, 'password')}
             maxLength={18}
@@ -67,7 +67,7 @@ import { Colors } from 'react-native/Libraries/NewAppScreen';
                 />
       <TextInput style = {styles.text}
            placeholder="Age"
-           placeholderTextColor = {colors.primary}
+           placeholderTextColor = {"lightgray"}
            value = {this.state.age}
            onChangeText={(input) => this.updateInput(input, 'age')}
             />
@@ -98,11 +98,14 @@ const styles = StyleSheet.create({
       fontFamily: 'Montserrat-Medium'
     },
     buttonContainer: {
-        elevation: 7,
+        position: 'absolute',
+        top: 300,
+        left: 45,
         backgroundColor: colors.background,
         borderRadius: 10,
         paddingVertical: 10,
-        paddinghorizontal: 14
+        paddinghorizontal: 20,
+        width: 300
     },
     buttonText: {
         padding: 5,
@@ -120,8 +123,10 @@ const styles = StyleSheet.create({
         height: 45, width: "100%",
         paddingHorizontal: 20,
         borderRadius: 5,
-        borderColor: 'lightgray',
-        borderWidth: 1,
+        borderBottomColor: 'lightgray',
+        borderBottomWidth: 1,
+        borderBottomLeftRadius: 10,
+        borderBottomRightRadius: 10,
         marginBottom: 15,
         //backgroundColor: 'lightgray'
         
