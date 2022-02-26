@@ -159,6 +159,22 @@ class FirebaseHandler extends React.Component {
         });
     }
 
+    getPhoneNum() {
+        userList.doc(auth().currentUser.email)
+        .get()
+        .then(documentSnapshot => {
+            this.phoneNum = documentSnapshot.data().phoneNum
+        })
+    }
+
+    getAddress() {
+        userList.doc(auth().currentUser.email)
+        .get()
+        .then(documentSnapshot => {
+            this.address = documentSnapshot.data().address
+        })
+    }   
+
 }
 
 const db = new FirebaseHandler();
