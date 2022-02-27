@@ -106,7 +106,7 @@ class FirebaseHandler extends React.Component {
     }
 
     addFavoriteStock(symbol) {
-        userList.doc(auth().currentUser.email).collection('Favorite Stocks').add({
+        userList.doc(auth().currentUser.email).collection('Favorite Stocks').doc(symbol).set({
             symbol: symbol
         }, {merge: true})
         console.log("successfully added stock to favorites")

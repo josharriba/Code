@@ -1,11 +1,12 @@
 import React from 'react';
 //import Plotly from 'react-native-plotly';
-import {View, Text, StyleSheet, TextInput, Button, Alert} from 'react-native';
+import {View, Text, StyleSheet, TextInput, Button, Alert, FlatList, Modal} from 'react-native';
 import colors from '../assets/colors/colors';
 import db from './FirebaseHandler'
 // import Plot from 'react-plotly.js';
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore'
+
 
 class StockData extends React.Component {
   constructor(props) {
@@ -14,39 +15,119 @@ class StockData extends React.Component {
       stockChartXValues: [],
       stockChartYValues: [], 
       stockSymbol: '', 
-      favorites: []
+      favorites: [], 
+      modalVisible: false, 
+      favoritesCalled: false
     }
+  }
+
+  setModalVisible = (visible) => {
+    this.setState({modalVisible: visible});
   }
 
   addFavorite() {
     db.addFavoriteStock(this.state.stockSymbol);
   }
 
+
+  // getFavoriteStocks() {
+  //   const [loading, setLoading] = useState(true);
+  //   const [favoriteList, setFavorites] = useState([]);
+
+  //   useEffect(() => {
+  //     const subscriber = firestore().collection('Users').doc(auth().currentUser.email)
+  //     .collection('Favorite Stocks').onSnapshot(querySnapshot => {
+  //       const favoriteList = [];
+  //       querySnapshot.forEach(documentSnapshot => {
+  //         favoriteList.push({
+  //           ...documentSnapshot.data() 
+  //         });
+  //       });
+  //       setFavorites(favoriteList);
+  //       setLoading(false);
+  //     });
+  //     return () => subscriber();
+  //   }, []);
+
+  //   if (loading) {
+  //     return <ActivityIndicator />;
+  //   }
+
+  //   return (
+  //     <FlatList
+  //       data={favoriteList}
+  //       renderItem={({ item }) => (
+  //         <View style={{ height: 50, flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+
+  //           <Text>Symbol: {item.symbol}</Text>
+  //         </View>
+  //       )}
+  //     />
+  //   );
+  // }
+
   getFavoriteStocks() {
-    firestore().collection('Users').doc(auth().currentUser.email)
-    .collection('Favorite Stocks').get()
-    .then(querySnapshot => {
-        querySnapshot.forEach(doc => {
-            const{symbol} = doc.data();
-            this.state.favorites.push({
-                symbol
-            }); 
-        });
-        console.log(this.state.favorites);
-    })
-    .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message; 
-        alert(errorMessage);
-        throw error;
+    if(this.state.favoritesCalled == true) {
+      this.setState({
+        favorites: []
+      });
+      this.setModalVisible(true);
+      firestore().collection('Users').doc(auth().currentUser.email)
+      .collection('Favorite Stocks').get()
+      .then(querySnapshot => {
+          querySnapshot.forEach(doc => {
+              const{symbol} = doc.data();
+              this.state.favorites.push({
+                  symbol
+              }); 
+          });
+          //console.log(this.state.favorites);
+      })
+      .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message; 
+          alert(errorMessage);
+          throw error;
+      });
+      this.mapFavorites();
+    }
+    else {
+      this.state.favoritesCalled = true;
+      
+      this.setModalVisible(true);
+      firestore().collection('Users').doc(auth().currentUser.email)
+      .collection('Favorite Stocks').get()
+      .then(querySnapshot => {
+          querySnapshot.forEach(doc => {
+              const{symbol} = doc.data();
+              this.state.favorites.push({
+                  symbol
+              }); 
+          });
+          //console.log(this.state.favorites);
+      })
+      .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message; 
+          alert(errorMessage);
+          throw error;
+      });
+      this.mapFavorites();
+    }
+  }
+
+  mapFavorites() {
+    this.state.favoriteList = this.state.favorites.map(function(item) {
+      return item['symbol'];
     });
-}
+    console.log(this.state.favoriteList);
+  }
 
   updateInput = (val, prop) => {
     const state = this.state;
     state[prop] = val;
     this.setState(state);
-}
+  }
 
   componentDidMount() {
     this.fetchStock();
@@ -91,9 +172,31 @@ class StockData extends React.Component {
   }
 
   render() {
+    const{modalVisible} = this.state;
     if(this.state.stockSymbol == '') {
       return (
         <View style = {styles.container}>
+          <Modal
+          animationType="slide"
+          visible={modalVisible}
+          presentationStyle="fullScreen"
+          onRequestClose={() => {
+            Alert.alert("Modal has been closed.");
+            this.setModalVisible(!modalVisible);
+          }}
+          >
+            <Text styles={styles.title}> Favorites:</Text>
+            <Text style={styles.modalText}> 
+              {JSON.stringify(this.state.favoriteList, null, 5)}</Text>
+            
+            <Button
+            title="close"
+                onPress={() => this.setModalVisible(!modalVisible)}
+              >
+                <Text style={styles.textStyle}>Hide Modal</Text>
+              </Button>
+           
+          </Modal>
           <TextInput 
             style={styles.buttonContainer}
             placeholder="Search for a stock by entering the stock symbol" 
@@ -118,6 +221,27 @@ class StockData extends React.Component {
     else {
       return (
         <View style = {styles.container}>
+          <Modal
+          animationType="slide"
+          visible={modalVisible}
+          presentationStyle="fullScreen"
+          onRequestClose={() => {
+            Alert.alert("Modal has been closed.");
+            this.setModalVisible(!modalVisible);
+          }}
+          >
+            <Text styles={styles.title}> Favorites:</Text>
+            <Text style={styles.modalText}> 
+              {JSON.stringify(this.state.favoriteList)}</Text>
+            
+            <Button
+            title="close"
+                onPress={() => this.setModalVisible(!modalVisible)}
+              >
+                <Text style={styles.textStyle}>Hide Modal</Text>
+              </Button>
+           
+          </Modal>
         <TextInput 
           placeholder="Search for a stock by entering the stock symbol" 
           value = {this.state.stockSymbol} 
@@ -166,7 +290,7 @@ export default StockData;
 const styles = StyleSheet.create({
   titleText: {
     fontFamily: 'sans-serif',
-    fontSize: 20,
+    fontSize: 100,
     fontWeight: 'bold',
   },
   ticker: {
@@ -219,16 +343,26 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     marginBottom: 20,
   },
+  modalText: {
+    fontSize: 15,
+    fontFamily: "Montserrat-Medium",
+    height: "90%", width: "100%",
+    borderRadius: 5,
+    paddingHorizontal: 20,
+    borderColor: 'lightgray',
+    borderWidth: 1,
+    marginBottom: 20,
+  },
   title: {
-    //marginTop: 16,
-    //paddingVertical: 8,
-   // borderWidth: 4,
-    //borderColor: "#20232a",
-    //borderRadius: 6,
-    //backgroundColor: "#61dafb",
-   // color: "#20232a",
-    //textAlign: "center",
-    //fontSize: 30,
-    //fontWeight: "bold"
+    marginTop: 16,
+    paddingVertical: 8,
+    borderWidth: 4,
+    borderColor: "#20232a",
+    borderRadius: 6,
+    backgroundColor: "#61dafb",
+    color: "#20232a",
+    textAlign: "center",
+    fontSize: 100,
+    fontWeight: "bold"
   }
 });
