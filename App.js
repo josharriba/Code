@@ -56,9 +56,7 @@
    }
  
    return (
-
-    <MainContainer/>
-
+     <MainContainer> </MainContainer>
     //  <NavigationContainer>
     //    <Stack.Navigator
     //      initialRouteName={'Login'}
@@ -87,6 +85,7 @@
     //      <Stack.Screen name="Signup" component={SignupScreen} />
     //      <Stack.Screen name="News" component={NewsScreen} />
     //    </Stack.Navigator>
+      
     //  </NavigationContainer>
    );
  };
