@@ -4,6 +4,7 @@ import {
   Button,
   Text,
   View,
+  TouchableOpacity,
   FlatList,
   Item,
   TextInput,
@@ -138,26 +139,31 @@ class DashboardScreen extends React.Component {
               <Text style={styles.modalText}> 
               {this.state.amounts}</Text> */}
             
-          <Button
+          <TouchableOpacity
+            style={styles.buttonContainer1}
             title="close"
                 onPress={() => this.setModalVisible(!modalVisible)}
               >
-                <Text style={styles.textStyle}>Hide Modal</Text>
-              </Button>
+                <Text style={styles.text}>Close</Text>
+              </TouchableOpacity>
            
           </Modal>
         {/* <Text style={{fontSize: 20, fontWeight: 'bold'}}>
           Recent Transactions: {toString(db.state.trans)}
         </Text> */}
         <Button
+          style={styles.buttonContainer}
           title="Show Transactions"
           onPress={() => this.getTransactions()}
         />
-        <Button
-          title="Home"
-          onPress={() => this.props.navigation.navigate('Home')}
-        />
-        <Button
+        <TouchableOpacity 
+            style={styles.buttonContainer} 
+            title="Home"
+            onPress={() => this.props.navigation.navigate('Home')}
+            >
+              <Text style={styles.buttonText}>Home</Text>
+              </TouchableOpacity>
+        {/* <Button
           title="Login"
           onPress={() => this.props.navigation.navigate('Login')}
         />
@@ -176,7 +182,7 @@ class DashboardScreen extends React.Component {
         <Button
           title="News"
           onPress={() => this.props.navigation.navigate('News')}
-        />
+        /> */}
       </View>
     );
   }
@@ -186,7 +192,7 @@ export default DashboardScreen;
 
 const styles = StyleSheet.create({
   titleText: {
-    fontFamily: 'sans-serif',
+    fontFamily: 'Montserrat-SemiBold',
     fontSize: 100,
     fontWeight: 'bold',
   },
@@ -210,18 +216,36 @@ const styles = StyleSheet.create({
     backgroundColor: "gray"
   },
   buttonContainer: {
+    position: 'absolute',
+      top: 580,
+      left: 45,
+      backgroundColor: colors.background,
+      borderRadius: 10,
+      paddingVertical: 10,
+      paddinghorizontal: 20,
+      width: 300
+  },
+  buttonContainer1: {
+    position: 'absolute',
+      top: 590,
+      left: 45,
     elevation: 8,
-    backgroundColor: colors.background,
+    backgroundColor: colors.secondary,
     borderRadius: 10,
     paddingVertical: 10,
-    paddingHorizontal: 14
+    paddingHorizontal: 14,
+    marginTop: 4,
+    marginBottom: 4,
+    width: 300
   },
   buttonText: {
-    padding: 5,
-    marginLeft: '40%',
-    fontFamily: "Montserrat-Medium",
-    fontSize: 20,
-    color: colors.primary
+    textAlign: 'center',
+    justifyContent: 'center',
+      padding: 5,
+      //marginLeft: '40%',
+      fontFamily: "Montserrat-Medium",
+      fontSize: 20,
+      color: colors.primary
   },
   buttonText2: {
     padding: 5,
@@ -231,14 +255,11 @@ const styles = StyleSheet.create({
     color: colors.primary
   },
   text: {
+    textAlign: 'center',
+    justifyContent: 'center',
     fontSize: 15,
     fontFamily: "Montserrat-Medium",
-    height: 50, width: "100%",
-    borderRadius: 5,
-    paddingHorizontal: 20,
-    borderColor: 'lightgray',
-    borderWidth: 1,
-    marginBottom: 20,
+    color: colors.background,
   },
   modalText: {
     fontSize: 15,
@@ -251,6 +272,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   title: {
+    fontFamily: "Montserrat-SemiBold",
     marginTop: 16,
     paddingVertical: 8,
     borderWidth: 4,
@@ -260,6 +282,6 @@ const styles = StyleSheet.create({
     color: "#20232a",
     textAlign: "center",
     fontSize: 100,
-    fontWeight: "bold"
+   // fontWeight: "bold"
   }
 });
