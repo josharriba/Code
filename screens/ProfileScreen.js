@@ -1,6 +1,6 @@
 //profile page 
 import React from 'react';
-  import { StyleSheet, Button, Text, View, TouchableHighlight, TextInput, StackNavigator, Alert } from 'react-native';
+  import { StyleSheet, Button, Text, View, TouchableOpacity, TouchableHighlight, TextInput, StackNavigator, Alert } from 'react-native';
 import db from '../components/FirebaseHandler'
 import colors from './assets/colors/colors';
 import auth from '@react-native-firebase/auth';
@@ -96,50 +96,57 @@ class ProfileScreen extends React.Component {
         <View style={{flex: 1, alignItems:'center', justifyContent:'center'}}>
           <Text style={styles.text}>Name: {this.state.name}</Text>
           <TextInput 
-            style={styles.buttonContainer}
-            placeholder="Update your name" 
-            placeholderTextColor={colors.secondary}
+            style={styles.textContainer}
+            placeholder="update your name" 
             value = {this.state.nameInput} 
             onChangeText={(input) => this.updateInput(input, 'nameInput')}>
           </TextInput>
-          <Button 
+          <TouchableOpacity 
+            style={styles.buttonContainer1}
             color={colors.primary}
             title="Update name" 
             onPress={() => this.updateName()}>
-          </Button>
+              <Text style={styles.buttonText2}>Update Name</Text>
+          </TouchableOpacity>
 
-          <Text style={styles.text}>Phone Number: {this.state.phoneNum}</Text>
+          <Text style={styles.text1}>Phone Number: {this.state.phoneNum}</Text>
           <TextInput 
-            style={styles.buttonContainer}
-            placeholder="Update your phone number" 
-            placeholderTextColor={colors.secondary}
+            style={styles.textContainer}
+            placeholder="update your phone number" 
             value = {this.state.phoneNumInput} 
             onChangeText={(input) => this.updateInput(input, 'phoneNumInput')}>
           </TextInput> 
-          <Button 
+          <TouchableOpacity 
+            style={styles.buttonContainer1}
             color={colors.primary}
             title="Update phone number" 
             onPress={() => this.updatePhoneNum()}>
-          </Button> 
+              <Text style={styles.buttonText2}>Update Phone Number</Text>
+          </TouchableOpacity> 
 
-          <Text style={styles.text}>Address: {this.state.address}</Text>
+          <Text style={styles.text2}>Address: {this.state.address}</Text>
           <TextInput 
-            style={styles.buttonContainer}
-            placeholder="Update your address" 
-            placeholderTextColor={colors.secondary}
+            style={styles.textContainer}
+            placeholder="update your address" 
             value = {this.state.addressInput} 
             onChangeText={(input) => this.updateInput(input, 'addressInput')}>
           </TextInput>
-          <Button 
+          <TouchableOpacity 
+            style={styles.buttonContainer1}
             color={colors.primary}
             title="Update address" 
             onPress={() => this.updateAddress()}>
-          </Button>
+              <Text style={styles.buttonText2}>Update Address</Text>
+          </TouchableOpacity>
 
-            <Button title="Home"
+          <TouchableOpacity 
+            style={styles.buttonContainer} 
+            title="Home"
             onPress={() => this.props.navigation.navigate('Home')}
-            />
-            <Button title="Stocks"
+            >
+              <Text style={styles.buttonText}>Home</Text>
+          </TouchableOpacity>
+            {/* <Button title="Stocks"
             onPress={() => this.props.navigation.navigate('Stocks')}
             />
             <Button title="Dashboard"
@@ -149,7 +156,7 @@ class ProfileScreen extends React.Component {
             onPress={() => this.signOut()}
             />
             <Button title="Delete Account" onPress={() => this.deleteAccountAlert()}
-            />
+            /> */}
         </View>
         );
     }
@@ -158,17 +165,51 @@ class ProfileScreen extends React.Component {
   const styles = StyleSheet.create({
     container: {
       flex: 1,
-      padding: 40,
+      padding: 24,
       //paddingVertical: 10,
       backgroundColor: "white"
     },
+    textContainer: {
+      textAlign: 'center',
+      justifyContent: 'center',
+      fontSize: 14,
+      fontFamily: "Montserrat-Medium",
+      height: 50, width: "100%",
+      borderRadius: 5,
+      paddingHorizontal: 20,
+      borderBottomColor: 'lightgray',
+      borderBottomWidth: .8,
+      borderBottomLeftRadius: 100,
+      borderBottomRightRadius: 100,
+      marginBottom: 20
+    },
     buttonContainer: {
-      elevation: 8,
+      position: 'absolute',
+      top: 600,
+      left: 45,
       backgroundColor: colors.background,
       borderRadius: 10,
-      paddingVertical: 7,
+      paddingVertical: 10,
+      paddinghorizontal: 20,
+      width: 300
+    },
+    buttonContainer1: {
+      elevation: 8,
+      backgroundColor: colors.secondary,
+      borderRadius: 8,
+      paddingVertical: 10,
       paddingHorizontal: 14,
-      marginBottom: 7
+      marginTop: 4,
+      marginBottom: 4
+    },
+    buttonText: {
+      textAlign: 'center',
+      justifyContent: 'center',
+        padding: 5,
+        //marginLeft: '40%',
+        fontFamily: "Montserrat-Medium",
+        fontSize: 20,
+        color: colors.primary
     },
     buttonContainer2: {
       elevation: 8,
@@ -186,11 +227,12 @@ class ProfileScreen extends React.Component {
       color: colors.primary
     },
     buttonText2: {
-      padding: 5,
-      marginLeft: '35%',
-      fontFamily: "Montserrat-Medium",
-      fontSize: 17,
-      color: colors.primary
+        textAlign: 'center',
+        justifyContent: 'center',
+        fontSize: 15,
+        fontFamily: "Montserrat-Medium",
+        color: colors.background,
+        //marginLeft: '30%'
     },
     buttonText3: {
       padding: 5,
@@ -200,15 +242,43 @@ class ProfileScreen extends React.Component {
       color: colors.primary
     },
     text: {
+      position: 'absolute',
+      top: 20,
+      marginTop: 20,
+      //textAlign: 'center',
+      justifyContent: 'center',
       fontSize: 15,
-      fontFamily: "Montserrat-Bold",
-      height: 50, width: "100%",
+      fontFamily: "Montserrat-SemiBold",
+      height: 40, width: "100%",
       borderRadius: 5,
       paddingHorizontal: 20,
-      marginLeft: '25%',
-      //borderColor: 'lightgray',
-      //borderWidth: 1,
-      
+      marginLeft:'30%'
+    },
+    text1: {
+      position: 'absolute',
+      top: 50,
+      marginTop: 20,
+      //textAlign: 'center',
+      justifyContent: 'center',
+      fontSize: 15,
+      fontFamily: "Montserrat-SemiBold",
+      height: 40, width: "100%",
+      borderRadius: 5,
+      paddingHorizontal: 20,
+      marginLeft:'30%'
+    },
+    text2: {
+      position: 'absolute',
+      top: 80,
+      marginTop: 20,
+      //textAlign: 'center',
+      justifyContent: 'center',
+      fontSize: 15,
+      fontFamily: "Montserrat-SemiBold",
+      height: 40, width: "100%",
+      borderRadius: 5,
+      paddingHorizontal: 20,
+      marginLeft:'30%'
     }
   });
 export default ProfileScreen
