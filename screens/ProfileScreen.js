@@ -93,7 +93,7 @@ class ProfileScreen extends React.Component {
 
     render() {
       return(
-        <View style={{flex: 1, alignItems:'center', backgroundColor: "white", justifyContent:'center'}}>
+        <View style={styles.container}>
           <Text style={styles.text}>Name: {this.state.name}</Text>
           <TextInput 
             style={styles.textContainer}
@@ -146,6 +146,14 @@ class ProfileScreen extends React.Component {
             >
               <Text style={styles.buttonText}>Home</Text>
           </TouchableOpacity>
+
+          <TouchableOpacity 
+            style={styles.buttonContainer2} 
+            title="Delete Account"
+            onPress={() => this.deleteAccountAlert()}
+            >
+              <Text style={styles.buttonText3}>Delete Account</Text>
+          </TouchableOpacity>
             {/* <Button title="Stocks"
             onPress={() => this.props.navigation.navigate('Stocks')}
             />
@@ -157,6 +165,8 @@ class ProfileScreen extends React.Component {
             />
             <Button title="Delete Account" onPress={() => this.deleteAccountAlert()}
             /> */}
+
+
         </View>
         );
     }
@@ -165,9 +175,11 @@ class ProfileScreen extends React.Component {
   const styles = StyleSheet.create({
     container: {
       flex: 1,
-      padding: 24,
+      alignItems:'center', 
+      backgroundColor: "white", 
+      justifyContent:'center'
+      
       //paddingVertical: 10,
-      backgroundColor: "white"
     },
     textContainer: {
       textAlign: 'center',
@@ -212,12 +224,15 @@ class ProfileScreen extends React.Component {
         color: colors.primary
     },
     buttonContainer2: {
-      elevation: 8,
-      backgroundColor: colors.background,
+      position: 'absolute',
+      top: 130,
+      left: 35,
+      elevation: 2,
+      backgroundColor: "darkred",
       borderRadius: 10,
-      paddingVertical: 10,
-      paddingHorizontal: 14,
-      marginBottom: 29
+      paddingVertical: 6,
+      paddingHorizontal: 10,
+      marginBottom: 0
     },
     buttonText1: {
       padding: 5,
@@ -235,11 +250,13 @@ class ProfileScreen extends React.Component {
         //marginLeft: '30%'
     },
     buttonText3: {
-      padding: 5,
-      marginLeft: '33%',
+      textAlign: 'center',
+      justifyContent: 'center',
+      padding: 2,
+      //marginLeft: '33%',
       fontFamily: "Montserrat-Medium",
-      fontSize: 17,
-      color: colors.primary
+      fontSize: 11,
+      color: "white"
     },
     text: {
       position: 'absolute',
