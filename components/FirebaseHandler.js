@@ -105,6 +105,15 @@ class FirebaseHandler extends React.Component {
          });
     }
 
+    addFavoriteStock(symbol) {
+        userList.doc(auth().currentUser.email).collection('Favorite Stocks').doc(symbol).set({
+            symbol: symbol
+        }, {merge: true})
+        console.log("successfully added stock to favorites")
+    }
+
+   
+
     /*if the transaction already exists in the transactions list, 
         we dont need to add it again
         
@@ -149,6 +158,22 @@ class FirebaseHandler extends React.Component {
             return this.name;
         });
     }
+
+    getPhoneNum() {
+        userList.doc(auth().currentUser.email)
+        .get()
+        .then(documentSnapshot => {
+            this.phoneNum = documentSnapshot.data().phoneNum
+        })
+    }
+
+    getAddress() {
+        userList.doc(auth().currentUser.email)
+        .get()
+        .then(documentSnapshot => {
+            this.address = documentSnapshot.data().address
+        })
+    }   
 
 }
 

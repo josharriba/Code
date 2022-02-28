@@ -8,28 +8,151 @@ import {
   Item,
   TextInput,
   StackNavigator,
+  Modal
 } from 'react-native';
 import db from '../components/FirebaseHandler';
 import Transactions from '../components/Transactions'
+import colors from '../assets/colors/colors';
+import auth from '@react-native-firebase/auth';
+import firestore from '@react-native-firebase/firestore'
 
 class DashboardScreen extends React.Component {
   constructor() {
     super();
     //trans.getTransactions();
     // db.getTransactions();
-    // this.state = {
-    //   transactions: toString(db.state.trans)
-    // };
+     this.state = {
+       transactions: [], 
+       modalVisible: false,
+       transactionsCalled: false, 
+       dates: [],
+       descriptions: [],
+       amounts: [], 
+       trans: []
+     };
     // console.log(db.state.trans)
   }
 
+  setModalVisible = (visible) => {
+    this.setState({modalVisible: visible});
+  }
+
+  getTransactions() {
+    if(this.state.transactionsCalled == true) {
+      this.setState({
+        transactions: []
+      });
+      this.setModalVisible(true);
+      //console.log(auth().currentUser.email)
+      firestore().collection('Users').doc(auth().currentUser.email)
+      .collection('Transactions').get()
+      .then(querySnapshot => {
+          querySnapshot.forEach(doc => {
+              const{date, description, amount} = doc.data();
+              this.state.transactions.push({
+                  date, 
+                  description, 
+                  amount
+              }); 
+          });
+        this.mapTransactions();
+      })
+      .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message; 
+          alert(errorMessage);
+          throw error;
+      });
+    }
+    else{
+      this.state.transactionsCalled = true;
+      this.setModalVisible(true);
+      firestore().collection('Users').doc(auth().currentUser.email)
+      .collection('Transactions').get()
+      .then(querySnapshot => {
+          querySnapshot.forEach(doc => {
+              const{date, description, amount} = doc.data();
+              this.state.transactions.push({
+                  date, 
+                  description, 
+                  amount
+              }); 
+          });
+        this.mapTransactions();
+      })
+      .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message; 
+          alert(errorMessage);
+          throw error;
+      });
+    }
+  }
+
+ mapTransactions() {
+  this.state.dates = this.state.transactions.map(function(item) {
+    return item['date'];
+  });
+
+  this.state.descriptions = this.state.transactions.map(function(item) {
+    return item['description'];
+  });
+
+  this.state.amounts = this.state.transactions.map(function(item) {
+    return item['amount'];
+  });
+
+  this.state.trans = this.state.transactions.map(function(item) {
+    console.log(item);
+    return item
+  });
+  //console.log(this.state.transactions);
+  // console.log(this.state.amounts);
+  // console.log(this.state.dates);
+  // console.log(this.state.descriptions)
+}
+
   render() {
+    const{modalVisible} = this.state;
     return (
       <View style={{flex: 1, alignItems: 'center'}}>
+        <Modal
+          animationType="slide"
+          visible={modalVisible}
+          presentationStyle="fullScreen"
+          onRequestClose={() => {
+            Alert.alert("Modal has been closed.");
+            this.setModalVisible(!modalVisible);
+          }}
+          >
+            <Text styles={styles.title}> Transactions: </Text>
+            <Text styles={styles.modalText}>
+              {JSON.stringify(this.state.trans)}
+            </Text>
+            {/* <Text style={styles.modalText}> 
+              {this.state.dates}</Text>
+
+              <Text style={styles.modalText}> 
+              {this.state.descriptions}</Text>
+
+              <Text style={styles.modalText}> 
+              {this.state.amounts}</Text> */}
+            
+          <Button
+            title="close"
+                onPress={() => this.setModalVisible(!modalVisible)}
+              >
+                <Text style={styles.textStyle}>Hide Modal</Text>
+              </Button>
+           
+          </Modal>
         {/* <Text style={{fontSize: 20, fontWeight: 'bold'}}>
           Recent Transactions: {toString(db.state.trans)}
         </Text> */}
-        <Transactions/> 
+        <Button
+          title="Show Transactions"
+          onPress={() => this.getTransactions()}
+        />
         <Button
           title="Home"
           onPress={() => this.props.navigation.navigate('Home')}
@@ -60,3 +183,83 @@ class DashboardScreen extends React.Component {
 }
 
 export default DashboardScreen;
+
+const styles = StyleSheet.create({
+  titleText: {
+    fontFamily: 'sans-serif',
+    fontSize: 100,
+    fontWeight: 'bold',
+  },
+  ticker: {
+    fontFamily: 'sans-serif',
+    fontSize: 15,
+    fontWeight: 'bold',
+  },
+  subtitle: {
+    fontFamily: 'sans-serif',
+    fontSize: 15,
+  },
+  container: {
+    flex: 1,
+    padding: 10,
+    backgroundColor: "white"
+  },
+  square: {
+    width: 30,
+    height: 12,
+    backgroundColor: "gray"
+  },
+  buttonContainer: {
+    elevation: 8,
+    backgroundColor: colors.background,
+    borderRadius: 10,
+    paddingVertical: 10,
+    paddingHorizontal: 14
+  },
+  buttonText: {
+    padding: 5,
+    marginLeft: '40%',
+    fontFamily: "Montserrat-Medium",
+    fontSize: 20,
+    color: colors.primary
+  },
+  buttonText2: {
+    padding: 5,
+    marginLeft: '30%',
+    fontFamily: "Montserrat-Medium",
+    fontSize: 20,
+    color: colors.primary
+  },
+  text: {
+    fontSize: 15,
+    fontFamily: "Montserrat-Medium",
+    height: 50, width: "100%",
+    borderRadius: 5,
+    paddingHorizontal: 20,
+    borderColor: 'lightgray',
+    borderWidth: 1,
+    marginBottom: 20,
+  },
+  modalText: {
+    fontSize: 15,
+    fontFamily: "Montserrat-Medium",
+    height: "90%", width: "100%",
+    borderRadius: 5,
+    paddingHorizontal: 20,
+    borderColor: 'lightgray',
+    borderWidth: 1,
+    marginBottom: 20,
+  },
+  title: {
+    marginTop: 16,
+    paddingVertical: 8,
+    borderWidth: 4,
+    borderColor: "#20232a",
+    borderRadius: 6,
+    backgroundColor: "#61dafb",
+    color: "#20232a",
+    textAlign: "center",
+    fontSize: 100,
+    fontWeight: "bold"
+  }
+});
