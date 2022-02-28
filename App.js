@@ -13,6 +13,9 @@
  import auth from '@react-native-firebase/auth';
  import firestore from '@react-native-firebase/firestore';
  import {StyleSheet, Button, Text, View, TextInput} from 'react-native';
+
+ //temp import for tab bar
+ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
  
  
  import LoginScreen from './screens/LoginScreen';
@@ -31,6 +34,18 @@
  
  //import colors from './screens/assets/colors/colors';
  
+
+
+ 
+
+ // const screen names 
+ const homeName = 'Home';
+ const financesName = 'finances';
+ const profileName = 'profile';
+
+ // temp spot for this
+ const Tab = createBottomTabNavigator();
+
  const Stack = createNativeStackNavigator();
  const userData = firestore().collection('Users');
  
@@ -57,37 +72,36 @@
  
    return (
 
-    <MainContainer/>
-
-    //  <NavigationContainer>
-    //    <Stack.Navigator
-    //      initialRouteName={'Login'}
-    //      screenOptions={{
-    //        headerTitleAlign: 'center',
-    //        headerStyle: {
-    //          backgroundColor: "white",
-    //        },
-    //        headerTitleStyle: {
-    //          color: "gray",
-    //          fontFamily: 'Montsesrrat-Medium'
-    //        },
-    //      }}>
-    //      <Stack.Screen name="Home" component={HomeScreen} />
-    //      <Stack.Screen
-    //        name="Login"
-    //        component={LoginScreen}
-    //        options={{title: 'Welcome! Please Login'}}
-    //        fontFamily= 'Montsesrrat-Medium'
-    //      />
-    //      <Stack.Screen name="Stocks" component={StocksScreen} />
-    //      <Stack.Screen name="Dashboard" component={DashboardScreen} />
-    //      <Stack.Screen name="Finances" component={FinancesScreen} />
-    //      <Stack.Screen name="Budgeting" component={BudgetingScreen} />
-    //      <Stack.Screen name="Profile" component={ProfileScreen} />
-    //      <Stack.Screen name="Signup" component={SignupScreen} />
-    //      <Stack.Screen name="News" component={NewsScreen} />
-    //    </Stack.Navigator>
-    //  </NavigationContainer>
+     <NavigationContainer>
+       <Stack.Navigator
+         initialRouteName={'Login'}
+         screenOptions={{
+           headerTitleAlign: 'center',
+           headerStyle: {
+             backgroundColor: "white",
+           },
+           headerTitleStyle: {
+             color: "gray",
+             fontFamily: 'Montsesrrat-Medium'
+           },
+         }}>
+         <Stack.Screen name="Home" component={HomeScreen} />
+         <Stack.Screen
+           name="Login"
+           component={LoginScreen}
+           options={{title: 'Welcome! Please Login'}}
+           fontFamily= 'Montsesrrat-Medium'
+         />
+         <Stack.Screen name="Stocks" component={StocksScreen} />
+         <Stack.Screen name="Dashboard" component={DashboardScreen} />
+         <Stack.Screen name="Finances" component={FinancesScreen} />
+         <Stack.Screen name="Budgeting" component={BudgetingScreen} />
+         <Stack.Screen name="Profile" component={ProfileScreen} />
+         <Stack.Screen name="Signup" component={SignupScreen} />
+         <Stack.Screen name="News" component={NewsScreen} />
+       </Stack.Navigator>
+       
+     </NavigationContainer>
    );
  };
  export default App;

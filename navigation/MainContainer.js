@@ -10,6 +10,8 @@ import HomeScreen from '../screens/HomeScreen';
 import FinancesScreen from '../screens/FinancesScreen';
 import ProfileScreen from '../screens/ProfileScreen';
 import { create } from 'react-test-renderer';
+import { Icon } from 'native-base';
+import LoginScreen from '../screens/LoginScreen';
 
 //Screen Names
 const homeName = 'Home';
@@ -22,7 +24,7 @@ export default function MainContainer() {
     return(
         <NavigationContainer>
             <Tab.Navigator
-              initialRouteName={homeName}
+              initialRouteName={'Login'}
               screenOptions={({route}) => ({
                 tabBarIcon: ({focused, color, size}) => {
                     let iconName;
@@ -36,13 +38,14 @@ export default function MainContainer() {
                         iconName = focused ? 'person' : 'person-outline'
                     }
 
-                    return <Ionicons name={iconName} size={size} color={color}/>
+                    //return <Ionicon name={iconName} size={size} color={color}/>
                 },
               })}>
 
-              <Tab.Screen name={homeName} component={HomeScreen}/>
               <Tab.Screen name={financesName} component={FinancesScreen}/>
+              <Tab.Screen name={homeName} component={HomeScreen}/>
               <Tab.Screen name={profileName} component={ProfileScreen}/>
+              <Tab.Screen name={"Login"} component={LoginScreen}/>
 
             </Tab.Navigator>
         </NavigationContainer>
