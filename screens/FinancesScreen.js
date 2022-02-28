@@ -21,7 +21,7 @@ class FinancesScreen extends React.Component {
       description: '',
       amount: ''
     })
-    Alert.alert('Transaction successfully recorded. You can view your recent transactions in the Dashboard');
+    Alert.alert('Transaction successfully recorded.');
   }
 
   updateInput = (val, prop) => {
@@ -69,6 +69,9 @@ class FinancesScreen extends React.Component {
              <Button title="Enter transaction"
             onPress={() => this.enterTransaction()}
             />
+            <Text>
+              You can view your transactions on the Dashbaord Screen
+            </Text>
         </View>
         );
     }
