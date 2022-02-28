@@ -1,5 +1,11 @@
 import React, {useEffect, useState} from 'react';
-import {View, Text, StyleSheet} from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableNativeFeedback,
+  Linking,
+} from 'react-native';
 import {services} from '../components/services';
 import {
   NativeBaseProvider,
@@ -9,6 +15,7 @@ import {
   Image,
   Spinner,
 } from 'native-base';
+import moment from 'moment';
 
 export default function NewsScreen() {
   const [newsData, setNewsData] = useState([]);
@@ -24,19 +31,41 @@ export default function NewsScreen() {
   return (
     <NativeBaseProvider>
       <ScrollView height={850}>
-        <FlatList
-          data={newsData}
-          renderItem={({item}) => (
-            <View>
-              <View style={styles.newsContainer}>
-                <Text style={styles.newstitle}>{item.title}</Text>
-                <Text style={styles.date}>{item.publishedAt}</Text>
-                <Text style={styles.newsDescriptions}>{item.description}</Text>
+        {newsData.length > 1 ? (
+          <FlatList
+            data={newsData}
+            renderItem={({item}) => (
+              <View>
+                <View style={styles.newsContainer}>
+                  <TouchableNativeFeedback
+                    onPress={() => Linking.openURL(item.url)}>
+                    <Image
+                      width={550}
+                      height={250}
+                      resizeMode={'cover'}
+                      source={{uri: item.urlToImage}}
+                      alt="Alternate Text"
+                    />
+                  </TouchableNativeFeedback>
+                  <Text style={styles.newstitle}>{item.title}</Text>
+                  <Text style={styles.date}>
+                    {' '}
+                    {moment(item.publishedAt).format('lll')}
+                  </Text>
+                  <Text style={styles.newsDescriptions}>
+                    {item.description}
+                  </Text>
+                </View>
+                <Divider my={2} bg="#e0e0e0" />
               </View>
-            </View>
-          )}
-          keyExtractor={item => item.id}
-        />
+            )}
+            keyExtractor={item => item.id}
+          />
+        ) : (
+          <View style={StyleSheetList.spinner}>
+            <Spinner color="danger.400" />
+          </View>
+        )}
       </ScrollView>
     </NativeBaseProvider>
   );
@@ -57,5 +86,11 @@ const styles = StyleSheet.create({
   },
   date: {
     fontSize: 14,
+  },
+  spinner: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: 400,
   },
 });
