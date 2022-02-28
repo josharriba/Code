@@ -1,12 +1,11 @@
 import React from 'react';
 //import Plotly from 'react-native-plotly';
-import {View, Text, StyleSheet, TextInput, Button, Alert, FlatList, Modal} from 'react-native';
+import {View, Text, StyleSheet, TouchableOpacity, TextInput, Button, Alert} from 'react-native';
 import colors from '../assets/colors/colors';
 import db from './FirebaseHandler'
 // import Plot from 'react-plotly.js';
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore'
-
 
 class StockData extends React.Component {
   constructor(props) {
@@ -15,119 +14,39 @@ class StockData extends React.Component {
       stockChartXValues: [],
       stockChartYValues: [], 
       stockSymbol: '', 
-      favorites: [], 
-      modalVisible: false, 
-      favoritesCalled: false
+      favorites: []
     }
-  }
-
-  setModalVisible = (visible) => {
-    this.setState({modalVisible: visible});
   }
 
   addFavorite() {
     db.addFavoriteStock(this.state.stockSymbol);
   }
 
-
-  // getFavoriteStocks() {
-  //   const [loading, setLoading] = useState(true);
-  //   const [favoriteList, setFavorites] = useState([]);
-
-  //   useEffect(() => {
-  //     const subscriber = firestore().collection('Users').doc(auth().currentUser.email)
-  //     .collection('Favorite Stocks').onSnapshot(querySnapshot => {
-  //       const favoriteList = [];
-  //       querySnapshot.forEach(documentSnapshot => {
-  //         favoriteList.push({
-  //           ...documentSnapshot.data() 
-  //         });
-  //       });
-  //       setFavorites(favoriteList);
-  //       setLoading(false);
-  //     });
-  //     return () => subscriber();
-  //   }, []);
-
-  //   if (loading) {
-  //     return <ActivityIndicator />;
-  //   }
-
-  //   return (
-  //     <FlatList
-  //       data={favoriteList}
-  //       renderItem={({ item }) => (
-  //         <View style={{ height: 50, flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-
-  //           <Text>Symbol: {item.symbol}</Text>
-  //         </View>
-  //       )}
-  //     />
-  //   );
-  // }
-
   getFavoriteStocks() {
-    if(this.state.favoritesCalled == true) {
-      this.setState({
-        favorites: []
-      });
-      this.setModalVisible(true);
-      firestore().collection('Users').doc(auth().currentUser.email)
-      .collection('Favorite Stocks').get()
-      .then(querySnapshot => {
-          querySnapshot.forEach(doc => {
-              const{symbol} = doc.data();
-              this.state.favorites.push({
-                  symbol
-              }); 
-          });
-          //console.log(this.state.favorites);
-      })
-      .catch((error) => {
-          const errorCode = error.code;
-          const errorMessage = error.message; 
-          alert(errorMessage);
-          throw error;
-      });
-      this.mapFavorites();
-    }
-    else {
-      this.state.favoritesCalled = true;
-      
-      this.setModalVisible(true);
-      firestore().collection('Users').doc(auth().currentUser.email)
-      .collection('Favorite Stocks').get()
-      .then(querySnapshot => {
-          querySnapshot.forEach(doc => {
-              const{symbol} = doc.data();
-              this.state.favorites.push({
-                  symbol
-              }); 
-          });
-          //console.log(this.state.favorites);
-      })
-      .catch((error) => {
-          const errorCode = error.code;
-          const errorMessage = error.message; 
-          alert(errorMessage);
-          throw error;
-      });
-      this.mapFavorites();
-    }
-  }
-
-  mapFavorites() {
-    this.state.favoriteList = this.state.favorites.map(function(item) {
-      return item['symbol'];
+    firestore().collection('Users').doc(auth().currentUser.email)
+    .collection('Favorite Stocks').get()
+    .then(querySnapshot => {
+        querySnapshot.forEach(doc => {
+            const{symbol} = doc.data();
+            this.state.favorites.push({
+                symbol
+            }); 
+        });
+        console.log(this.state.favorites);
+    })
+    .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message; 
+        alert(errorMessage);
+        throw error;
     });
-    console.log(this.state.favoriteList);
-  }
+}
 
   updateInput = (val, prop) => {
     const state = this.state;
     state[prop] = val;
     this.setState(state);
-  }
+}
 
   componentDidMount() {
     this.fetchStock();
@@ -172,96 +91,55 @@ class StockData extends React.Component {
   }
 
   render() {
-    const{modalVisible} = this.state;
     if(this.state.stockSymbol == '') {
       return (
         <View style = {styles.container}>
-          <Modal
-          animationType="slide"
-          visible={modalVisible}
-          presentationStyle="fullScreen"
-          onRequestClose={() => {
-            Alert.alert("Modal has been closed.");
-            this.setModalVisible(!modalVisible);
-          }}
-          >
-            <Text styles={styles.title}> Favorites:</Text>
-            <Text style={styles.modalText}> 
-              {JSON.stringify(this.state.favoriteList, null, 5)}</Text>
-            
-            <Button
-            title="close"
-                onPress={() => this.setModalVisible(!modalVisible)}
-              >
-                <Text style={styles.textStyle}>Hide Modal</Text>
-              </Button>
-           
-          </Modal>
           <TextInput 
-            style={styles.buttonContainer}
-            placeholder="Search for a stock by entering the stock symbol" 
-            placeholderTextColor={colors.secondary}
+            style={styles.textContainer}
+            placeholder="search stock by entering stock symbol" 
+            placeholderTextColor={"lightgrey"}
             value = {this.state.stockSymbol} 
             onChangeText={(input) => this.updateInput(input, 'stockSymbol')}>
           </TextInput>
-          <Button 
-            style={styles.buttonContainer} 
-            color={colors.primary}
-            title="Search stock" 
+          <TouchableOpacity 
+            style={styles.buttonContainer1} 
+            color={colors.primary} 
             onPress={() => this.fetchStock()}>
-          </Button>
-          <Button 
-            style={styles.buttonContainer} 
+              <Text style={styles.text}>Search Stock</Text>
+          </TouchableOpacity>
+          <TouchableOpacity 
+            style={styles.buttonContainer1} 
             title="Show my favorite stocks" 
             onPress={() => this.getFavoriteStocks()}>
-          </Button>
+              <Text style={styles.text}>Show Favorites</Text>
+          </TouchableOpacity>
         </View>
       );
     }
     else {
       return (
         <View style = {styles.container}>
-          <Modal
-          animationType="slide"
-          visible={modalVisible}
-          presentationStyle="fullScreen"
-          onRequestClose={() => {
-            Alert.alert("Modal has been closed.");
-            this.setModalVisible(!modalVisible);
-          }}
-          >
-            <Text styles={styles.title}> Favorites:</Text>
-            <Text style={styles.modalText}> 
-              {JSON.stringify(this.state.favoriteList)}</Text>
-            
-            <Button
-            title="close"
-                onPress={() => this.setModalVisible(!modalVisible)}
-              >
-                <Text style={styles.textStyle}>Hide Modal</Text>
-              </Button>
-           
-          </Modal>
         <TextInput 
-          placeholder="Search for a stock by entering the stock symbol" 
+          placeholder="search stock by entering stock symbol" 
           value = {this.state.stockSymbol} 
           onChangeText={(input) => this.updateInput(input, 'stockSymbol')}>
         </TextInput>
-        <Button 
-          style={styles.buttonContainer} 
+        <TouchableOpacity 
+          style={styles.buttonContainer1} 
           title="Search stock" 
           onPress={() => this.fetchStock()}>
-        </Button>
-        <Button 
-          style={styles.buttonContainer} 
-          title="Add to favorites" 
+            <Text style={styles.text}>Search Stock</Text>
+        </TouchableOpacity>
+        <TouchableOpacity 
+          style={styles.buttonContainer1}  
           onPress={() => this.addFavorite()}>
-        </Button>
-        <Button 
-          style={styles.buttonContainer} 
-          title="Show my favorite stocks" 
+            <Text style={styles.text}>Add to Favorites</Text>
+        </TouchableOpacity>
+        <TouchableOpacity 
+          style={styles.buttonContainer1} 
           onPress={() => this.getFavoriteStocks()}>
-        </Button>
+            <Text style={styles.text}>Show Favorites</Text>
+        </TouchableOpacity>
         <Text style={styles.titleText}> Stock Prices {'\n'}</Text>
         <Text style={styles.ticker}> Symbol: {this.state.stockSymbol} </Text>
         <Text style={styles.subtitle}> Date: {this.state.stockChartXValues[0]}</Text>
@@ -289,17 +167,24 @@ export default StockData;
 
 const styles = StyleSheet.create({
   titleText: {
-    fontFamily: 'sans-serif',
-    fontSize: 100,
-    fontWeight: 'bold',
+    marginTop: 25,
+    textAlign: 'center',
+    justifyContent: 'center',
+    fontFamily: 'Montserrat-Bold',
+    fontSize: 20,
+    //fontWeight: 'bold',
   },
   ticker: {
-    fontFamily: 'sans-serif',
+    textAlign: 'center',
+    justifyContent: 'center',
+    fontFamily: 'Montserrat-SemiBold',
     fontSize: 15,
-    fontWeight: 'bold',
+    //fontWeight: 'bold',
   },
   subtitle: {
-    fontFamily: 'sans-serif',
+    textAlign: 'center',
+    justifyContent: 'center',
+    fontFamily: 'Montserrat-Light',
     fontSize: 15,
   },
   container: {
@@ -307,10 +192,19 @@ const styles = StyleSheet.create({
     padding: 10,
     backgroundColor: "white"
   },
-  square: {
-    width: 30,
-    height: 12,
-    backgroundColor: "gray"
+  textContainer: {
+    textAlign: 'center',
+    justifyContent: 'center',
+    fontSize: 14,
+    fontFamily: "Montserrat-Medium",
+    height: 50, width: "100%",
+    borderRadius: 5,
+    paddingHorizontal: 20,
+    borderBottomColor: 'lightgray',
+    borderBottomWidth: 1,
+    borderBottomLeftRadius: 10,
+    borderBottomRightRadius: 10,
+    marginBottom: 20
   },
   buttonContainer: {
     elevation: 8,
@@ -319,7 +213,18 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     paddingHorizontal: 14
   },
+  buttonContainer1: {
+    elevation: 8,
+    backgroundColor: colors.secondary,
+    borderRadius: 10,
+    paddingVertical: 10,
+    paddingHorizontal: 14,
+    marginTop: 4,
+    marginBottom: 4
+  },
   buttonText: {
+    //textAlign: 'center',
+    //alignContent: 'flex',
     padding: 5,
     marginLeft: '40%',
     fontFamily: "Montserrat-Medium",
@@ -334,35 +239,23 @@ const styles = StyleSheet.create({
     color: colors.primary
   },
   text: {
+    textAlign: 'center',
+    justifyContent: 'center',
     fontSize: 15,
     fontFamily: "Montserrat-Medium",
-    height: 50, width: "100%",
-    borderRadius: 5,
-    paddingHorizontal: 20,
-    borderColor: 'lightgray',
-    borderWidth: 1,
-    marginBottom: 20,
-  },
-  modalText: {
-    fontSize: 15,
-    fontFamily: "Montserrat-Medium",
-    height: "90%", width: "100%",
-    borderRadius: 5,
-    paddingHorizontal: 20,
-    borderColor: 'lightgray',
-    borderWidth: 1,
-    marginBottom: 20,
+    color: colors.background,
+    //marginLeft: '30%'
   },
   title: {
-    marginTop: 16,
-    paddingVertical: 8,
-    borderWidth: 4,
-    borderColor: "#20232a",
-    borderRadius: 6,
-    backgroundColor: "#61dafb",
-    color: "#20232a",
-    textAlign: "center",
-    fontSize: 100,
-    fontWeight: "bold"
+    //marginTop: 16,
+    //paddingVertical: 8,
+   // borderWidth: 4,
+    //borderColor: "#20232a",
+    //borderRadius: 6,
+    //backgroundColor: "#61dafb",
+   // color: "#20232a",
+    //textAlign: "center",
+    //fontSize: 30,
+    //fontWeight: "bold"
   }
 });
