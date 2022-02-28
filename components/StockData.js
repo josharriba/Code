@@ -152,17 +152,18 @@ class StockData extends React.Component {
             <Text style={styles.modalText}> 
               {JSON.stringify(this.state.favoriteList)}</Text>
             
-            <Button
+            <TouchableOpacity
+            style={styles.buttonContainer1}
             title="close"
                 onPress={() => this.setModalVisible(!modalVisible)}
               >
-                <Text style={styles.textStyle}>Hide Modal</Text>
-              </Button>
+                <Text style={styles.text}>Close</Text>
+              </TouchableOpacity>
            
           </Modal>
           <TextInput 
             style={styles.textContainer}
-            placeholder="search stock by entering stock symbol" 
+            placeholder="Enter stock symbol. (i.e. 'MSFT')" 
             placeholderTextColor={"lightgrey"}
             value = {this.state.stockSymbol} 
             onChangeText={(input) => this.updateInput(input, 'stockSymbol')}>
@@ -198,16 +199,17 @@ class StockData extends React.Component {
             <Text style={styles.modalText}> 
               {JSON.stringify(this.state.favoriteList)}</Text>
             
-            <Button
+            <TouchableOpacity
+            style={styles.buttonContainer1}
             title="close"
                 onPress={() => this.setModalVisible(!modalVisible)}
               >
-                <Text style={styles.textStyle}>Hide Modal</Text>
-              </Button>
+                <Text style={styles.text}>Close</Text>
+              </TouchableOpacity>
            
           </Modal>
         <TextInput 
-          placeholder="search stock by entering stock symbol" 
+          placeholder="Enter stock symbol. (i.e. 'MSFT')"
           value = {this.state.stockSymbol} 
           onChangeText={(input) => this.updateInput(input, 'stockSymbol')}>
         </TextInput>
