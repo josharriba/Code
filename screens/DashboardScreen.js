@@ -116,7 +116,7 @@ class DashboardScreen extends React.Component {
   render() {
     const{modalVisible} = this.state;
     return (
-      <View style={{flex: 1, backgroundColor: "white", alignItems: 'center'}}>
+      <View style={{flex: 1, backgroundColor:"white", alignItems: 'center'}}>
         <Modal
           animationType="slide"
           visible={modalVisible}
