@@ -58,21 +58,21 @@ class FinancesScreen extends React.Component {
             <TextInput 
               style={styles.textContainer}
               placeholder="date"
-              placeholderTextColor="mediumgrey"
+              placeholderTextColor="lightgrey"
               value = {this.state.date}
               onChangeText={(input) => this.updateInput(input, 'date')}
             />
             <TextInput 
               style={styles.textContainer1}
               placeholder="description"
-              placeholderTextColor="mediumgrey"
+              placeholderTextColor="lightgrey"
               value = {this.state.description}
               onChangeText={(input) => this.updateInput(input, 'description')}
             />
             <TextInput 
               style={styles.textContainer2}
               placeholder="amount"
-              placeholderTextColor="mediumgrey"
+              placeholderTextColor="lightgrey"
               value = {this.state.amount}
               onChangeText={(input) => this.updateInput(input, 'amount')}
             />
