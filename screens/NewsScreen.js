@@ -63,7 +63,7 @@ export default function NewsScreen() {
             keyExtractor={item => item.id}
           />
         ) : (
-          <View style={StyleSheetList.spinner}>
+          <View style={StyleSheet.spinner}>
             <Spinner color="danger.400" />
           </View>
         )}
