@@ -22,13 +22,15 @@ import LoginScreen from '../screens/LoginScreen';
  import SignupScreen from '../screens/SignupScreen';
  import NewsScreen from '../screens/NewsScreen';
 
+
  import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore'
 
 const Tab = createBottomTabNavigator();
 
 export default function MainContainer() {
-    if(auth().currentUser == null) {
+    const user = auth().currentUser;
+    if(user) {
         return(
             <NavigationContainer>
                 <Tab.Navigator
@@ -60,6 +62,7 @@ export default function MainContainer() {
                     <Tab.Screen name="Profile" component={ProfileScreen} />
                     <Tab.Screen name="Signup" component={SignupScreen} />
                     <Tab.Screen name="News" component={NewsScreen} />
+                    <Tab.Screen name="Login" component={LoginScreen} />
 
                 </Tab.Navigator>
                 </NavigationContainer>
@@ -87,6 +90,7 @@ export default function MainContainer() {
                     },
                 })}>
 
+                <Tab.Screen name="login" component={LoginScreen}/>
                 <Tab.Screen name={homeName} component={HomeScreen}/>
                 <Tab.Screen name={financesName} component={FinancesScreen}/>
                 <Tab.Screen name={profileName} component={ProfileScreen}/>

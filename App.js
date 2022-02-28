@@ -56,7 +56,7 @@
    }
  
    return (
-     <MainContainer> </MainContainer>
+     <MainContainer></MainContainer>
     //  <NavigationContainer>
     //    <Stack.Navigator
     //      initialRouteName={'Login'}
