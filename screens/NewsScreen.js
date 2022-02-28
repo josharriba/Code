@@ -73,19 +73,31 @@ export default function NewsScreen() {
 
 const styles = StyleSheet.create({
   newsContainer: {
+    backgroundColor: 'grey',
+    padding: 1,
+  },
+  newsBox: {
     padding: 10,
+    paddingBottom: 10,
+    backgroundColor: 'white',
+    borderBottomColor: 'lightgrey',
   },
   newstitle: {
+    fontFamily: 'Montserrat-SemiBold',
     fontSize: 18,
     marginTop: 10,
     fontWeight: '600',
+    backgroundColor: 'lightgrey',
+    borderRadius: 10,
   },
   newsDescriptions: {
     fontSize: 16,
     marginTop: 10,
+    backgroundColor: 'lightgrey',
   },
   date: {
     fontSize: 14,
+    backgroundColor: 'lightgrey',
   },
   spinner: {
     display: 'flex',
