@@ -1,6 +1,6 @@
 import React from 'react';
 //import Plotly from 'react-native-plotly';
-import {View, Text, StyleSheet, TouchableOpacity, TextInput, Button, Alert} from 'react-native';
+import {View, Text, StyleSheet, TouchableOpacity, TextInput, Button, Alert, Modal} from 'react-native';
 import colors from '../assets/colors/colors';
 import db from './FirebaseHandler'
 // import Plot from 'react-plotly.js';
@@ -14,8 +14,14 @@ class StockData extends React.Component {
       stockChartXValues: [],
       stockChartYValues: [], 
       stockSymbol: '', 
-      favorites: []
+      favorites: [], 
+      modalVisible: false,
+      favoritesCalled: false
     }
+  }
+
+  setModalVisible = (visible) => {
+    this.setState({modalVisible: visible});
   }
 
   addFavorite() {
@@ -23,24 +29,62 @@ class StockData extends React.Component {
   }
 
   getFavoriteStocks() {
-    firestore().collection('Users').doc(auth().currentUser.email)
-    .collection('Favorite Stocks').get()
-    .then(querySnapshot => {
-        querySnapshot.forEach(doc => {
-            const{symbol} = doc.data();
-            this.state.favorites.push({
-                symbol
-            }); 
-        });
-        console.log(this.state.favorites);
-    })
-    .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message; 
-        alert(errorMessage);
-        throw error;
+    if(this.state.favoritesCalled == true) {
+      this.setState({
+        favorites: []
+      });
+      this.setModalVisible(true);
+      firestore().collection('Users').doc(auth().currentUser.email)
+      .collection('Favorite Stocks').get()
+      .then(querySnapshot => {
+          querySnapshot.forEach(doc => {
+              const{symbol} = doc.data();
+              this.state.favorites.push({
+                  symbol
+              }); 
+          });
+          //console.log(this.state.favorites);
+      })
+      .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message; 
+          alert(errorMessage);
+          throw error;
+      });
+      this.mapFavorites();
+    }
+    else {
+      this.state.favoritesCalled = true;
+      
+      this.setModalVisible(true);
+      firestore().collection('Users').doc(auth().currentUser.email)
+      .collection('Favorite Stocks').get()
+      .then(querySnapshot => {
+          querySnapshot.forEach(doc => {
+              const{symbol} = doc.data();
+              this.state.favorites.push({
+                  symbol
+              }); 
+          });
+          //console.log(this.state.favorites);
+      })
+      .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message; 
+          alert(errorMessage);
+          throw error;
+      });
+      this.mapFavorites();
+    }
+  }
+
+  mapFavorites() {
+    this.state.favoriteList = this.state.favorites.map(function(item) {
+      return item['symbol'];
     });
-}
+    console.log(this.state.favoriteList);
+  }
+
 
   updateInput = (val, prop) => {
     const state = this.state;
@@ -91,9 +135,31 @@ class StockData extends React.Component {
   }
 
   render() {
+    const {modalVisible} = this.state;
     if(this.state.stockSymbol == '') {
       return (
         <View style = {styles.container}>
+          <Modal
+          animationType="slide"
+          visible={modalVisible}
+          presentationStyle="fullScreen"
+          onRequestClose={() => {
+            Alert.alert("Modal has been closed.");
+            this.setModalVisible(!modalVisible);
+          }}
+          >
+            <Text styles={styles.title}> Favorites:</Text>
+            <Text style={styles.modalText}> 
+              {JSON.stringify(this.state.favoriteList)}</Text>
+            
+            <Button
+            title="close"
+                onPress={() => this.setModalVisible(!modalVisible)}
+              >
+                <Text style={styles.textStyle}>Hide Modal</Text>
+              </Button>
+           
+          </Modal>
           <TextInput 
             style={styles.textContainer}
             placeholder="search stock by entering stock symbol" 
@@ -119,6 +185,27 @@ class StockData extends React.Component {
     else {
       return (
         <View style = {styles.container}>
+          <Modal
+          animationType="slide"
+          visible={modalVisible}
+          presentationStyle="fullScreen"
+          onRequestClose={() => {
+            Alert.alert("Modal has been closed.");
+            this.setModalVisible(!modalVisible);
+          }}
+          >
+            <Text styles={styles.title}> Favorites:</Text>
+            <Text style={styles.modalText}> 
+              {JSON.stringify(this.state.favoriteList)}</Text>
+            
+            <Button
+            title="close"
+                onPress={() => this.setModalVisible(!modalVisible)}
+              >
+                <Text style={styles.textStyle}>Hide Modal</Text>
+              </Button>
+           
+          </Modal>
         <TextInput 
           placeholder="search stock by entering stock symbol" 
           value = {this.state.stockSymbol} 
