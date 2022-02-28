@@ -93,7 +93,7 @@ class ProfileScreen extends React.Component {
 
     render() {
       return(
-        <View style={{flex: 1, alignItems:'center', justifyContent:'center'}}>
+        <View style={{flex: 1, alignItems:'center', backgroundColor: "white", justifyContent:'center'}}>
           <Text style={styles.text}>Name: {this.state.name}</Text>
           <TextInput 
             style={styles.textContainer}
