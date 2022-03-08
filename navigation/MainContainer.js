@@ -24,12 +24,15 @@ import LoginScreen from '../screens/LoginScreen';
 
 
  import auth from '@react-native-firebase/auth';
-import firestore from '@react-native-firebase/firestore'
+import firestore from '@react-native-firebase/firestore';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
 const Tab = createBottomTabNavigator();
+const Stack = createNativeStackNavigator();
 
 export default function MainContainer() {
     const user = auth().currentUser;
+    //user logged in
     if(user) {
         return(
             <NavigationContainer>
@@ -69,45 +72,30 @@ export default function MainContainer() {
             
         )
     }
+    //user not logged in
     else {
          return(
             <NavigationContainer>
-                <Tab.Navigator
-                initialRouteName="Login"
-                screenOptions={({route}) => ({
-                    tabBarIcon: ({focused, color, size}) => {
-                        let iconName;
-                        let rn = route.name;
-
-                        if (rn === homeName)    {
-                            iconName = focused ? 'home' : 'home-outline'
-                        } else if (rn === financesName) {
-                            iconName = focused ? 'card' : 'card-outline'
-                        } else if (rn === profileName)  {
-                            iconName = focused ? 'person' : 'person-outline'
-                        }
-                        return <Ionicons name={iconName} size={size} color={color}/>
+                <Stack.Navigator
+                    initialRouteName={'Login'}
+                    screenOptions={{
+                    headerTitleAlign: 'center',
+                    headerStyle: {
+                        backgroundColor: "white",
                     },
-                })}>
-
-                <Tab.Screen name="login" component={LoginScreen}/>
-                <Tab.Screen name={homeName} component={HomeScreen}/>
-                <Tab.Screen name={financesName} component={FinancesScreen}/>
-                <Tab.Screen name={profileName} component={ProfileScreen}/>
-                <Tab.Screen name="Stocks" component={StocksScreen} />
-                        <Tab.Screen
+                    headerTitleStyle: {
+                        color: "gray",
+                        fontFamily: 'Montsesrrat-Medium'
+                    },
+                    }}>
+                    <Stack.Screen name="Home" component={HomeScreen} />
+                    <Stack.Screen
                     name="Login"
                     component={LoginScreen}
                     options={{title: 'Welcome! Please Login'}}
                     fontFamily= 'Montsesrrat-Medium'
-                    />
-                    <Tab.Screen name="Dashboard" component={DashboardScreen} />
-                    <Tab.Screen name="Finances" component={FinancesScreen} />
-                    <Tab.Screen name="Profile" component={ProfileScreen} />
-                    <Tab.Screen name="Signup" component={SignupScreen} />
-                    <Tab.Screen name="News" component={NewsScreen} />
-
-                </Tab.Navigator>
+                />
+                </Stack.Navigator>
             </NavigationContainer>
          )
     }
