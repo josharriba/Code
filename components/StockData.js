@@ -1,6 +1,6 @@
 import React from 'react';
-//import Plotly from 'react-native-plotly';
-import {View, Text, StyleSheet, TouchableOpacity, TextInput, Button, Alert, Modal} from 'react-native';
+import Plot from 'react-native-plotly';
+import {View, ScrollView, Text, StyleSheet, TouchableOpacity, TextInput, Button, Alert, Modal} from 'react-native';
 import colors from '../assets/colors/colors';
 import db from './FirebaseHandler'
 // import Plot from 'react-plotly.js';
@@ -16,7 +16,8 @@ class StockData extends React.Component {
       stockSymbol: '', 
       favorites: [], 
       modalVisible: false,
-      favoritesCalled: false
+      favoritesCalled: false, 
+      timeSeriesType: ''
     }
   }
 
@@ -82,7 +83,7 @@ class StockData extends React.Component {
     this.state.favoriteList = this.state.favorites.map(function(item) {
       return item['symbol'];
     });
-    console.log(this.state.favoriteList);
+   // console.log(this.state.favoriteList);
   }
 
 
@@ -98,7 +99,7 @@ class StockData extends React.Component {
 
   fetchStock() {
     const pointerToThis = this;
-    console.log(pointerToThis);
+    //console.log(pointerToThis);
     const API_KEY = 'ER1D6MX3FXC0EQJE';
     // let StockSymbol = 'FB';
     let API_Call = `https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=${this.state.stockSymbol}&outputsize=compact&apikey=${API_KEY}`;
@@ -115,7 +116,7 @@ class StockData extends React.Component {
         return response.json();
       })
       .then(function (data) {
-        console.log(data);
+       // console.log(data);
  
 
         for (var key in data['Time Series (Daily)']) {
@@ -128,7 +129,8 @@ class StockData extends React.Component {
 
         pointerToThis.setState({
           stockChartXValues: stockChartXValuesFunction,
-          stockChartYValues: stockChartYValuesFunction
+          stockChartYValues: stockChartYValuesFunction, 
+          timeSeriesType: 'Daily'
         });
       });
     
@@ -186,6 +188,7 @@ class StockData extends React.Component {
     else {
       return (
         <View style = {styles.container}>
+          
           <Modal
           animationType="slide"
           visible={modalVisible}
@@ -219,6 +222,54 @@ class StockData extends React.Component {
           onPress={() => this.fetchStock()}>
             <Text style={styles.text}>Search Stock</Text>
         </TouchableOpacity>
+        <Plot
+          data={[
+            {
+              x: this.state.stockChartXValues,
+              y: this.state.stockChartYValues,
+              type: 'scatter',
+              mode: 'lines+markers',
+              marker: {color: colors.primary},
+              name: this.state.stockSymbol, 
+            }
+          ]}
+          layout={{
+            title: this.state.stockSymbol,  
+            xaxis: {
+              autorange: true,  
+              rangeselector: {buttons: [
+                {
+                  count: 1,
+                  label: '1 week',
+                  step: 'week',
+                  stepmode: 'backward'
+                },
+                {
+                  count: 1,
+                  label: '1 month',
+                  step: 'month',
+                  stepmode: 'backward'
+                },
+                {
+                  count: 6,
+                  label: '6 month',
+                  step: 'month',
+                  stepmode: 'backward'
+                },
+                {
+                  count: 12,
+                  label: '1 year',
+                  step: 'month',
+                  stepmode: 'backward'
+                },
+                {step: 'all'}
+              ]},
+            }, 
+            yaxis: {
+              autorange: true
+            }  
+          }}
+        /> 
         <TouchableOpacity 
           style={styles.buttonContainer1}  
           onPress={() => this.addFavorite()}>
@@ -233,18 +284,7 @@ class StockData extends React.Component {
         <Text style={styles.ticker}> Symbol: {this.state.stockSymbol} </Text>
         <Text style={styles.subtitle}> Date: {this.state.stockChartXValues[0]}</Text>
         <Text style={styles.subtitle}> Price: {this.state.stockChartYValues[0]}</Text>
-        {/* <Plotly
-          data={[
-            {
-              x: this.state.stockChartXValues,
-              y: this.state.stockChartYValues,
-              type: 'scatter',
-              mode: 'lines+markers',
-              marker: {color: 'red'},
-            }
-          ]}
-          layout={{title: 'MSFT Stock Data', autosize: true}}
-        /> */}
+       
       </View>
       );
     }
@@ -256,7 +296,7 @@ export default StockData;
 
 const styles = StyleSheet.create({
   titleText: {
-    marginTop: 25,
+    marginTop: 15,
     textAlign: 'center',
     justifyContent: 'center',
     fontFamily: 'Montserrat-Bold',
@@ -286,14 +326,14 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     fontSize: 14,
     fontFamily: "Montserrat-Medium",
-    height: 50, width: "100%",
+    height: 35, width: "100%",
     borderRadius: 5,
     paddingHorizontal: 20,
     borderBottomColor: 'lightgray',
     borderBottomWidth: 1,
     borderBottomLeftRadius: 10,
     borderBottomRightRadius: 10,
-    marginBottom: 20
+    marginBottom: 10
   },
   buttonContainer: {
     elevation: 8,
@@ -306,7 +346,7 @@ const styles = StyleSheet.create({
     elevation: 8,
     backgroundColor: colors.secondary,
     borderRadius: 10,
-    paddingVertical: 10,
+    paddingVertical: 5,
     paddingHorizontal: 14,
     marginTop: 4,
     marginBottom: 4

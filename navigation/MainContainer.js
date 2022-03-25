@@ -37,7 +37,7 @@ export default function MainContainer() {
         return(
             <NavigationContainer>
                 <Tab.Navigator
-                initialRouteName={homeName}
+                initialRouteName={"Login"}
                 screenOptions={({route}) => ({
                     tabBarIcon: ({focused, color, size}) => {
                         let iconName;
@@ -53,12 +53,13 @@ export default function MainContainer() {
 
                         return <Ionicons name={iconName} size={size} color={color}/>
                     },
+                    
                 })}>
 
                 <Tab.Screen name={homeName} component={HomeScreen}/>
                 <Tab.Screen name={financesName} component={FinancesScreen}/>
                 <Tab.Screen name={profileName} component={ProfileScreen}/>
-                <Tab.Screen name="Stocks" component={StocksScreen} />
+                <Tab.Screen name="Stocks" component={StocksScreen} options={{headerShown: false}} />
                     <Tab.Screen name="Dashboard" component={DashboardScreen} />
                     <Tab.Screen name="Finances" component={FinancesScreen} />
                     <Tab.Screen name="Budgeting" component={BudgetingScreen} />
