@@ -51,28 +51,30 @@ class FirebaseHandler extends React.Component {
     }
     */
 
+    checkNewUser(name, email, age) {
+        userList.doc(email).get().then((documentSnapshot) => {
+            if(documentSnapshot.exists) {
+                return;
+            }
+            else {
+                userList.doc(email).set({
+                    name: name,
+                    email: email,
+                    age: age
+                }) 
+            }
+        })
+    }
+
     /* password must meet google's requirements for security
         the userList.add will still run if the auth() fails because password does not meet requirements
     */
     doSignup(email, password, name, age) {
-        userList.doc(email).set({
-            name: name,
-            email: email,
-            age: age
-        }) 
-        .then(() => {   
-            console.log('User signed up successfully')          
-        })
-        .catch((error) => {
-            const errorMessage = error.message; 
-            alert(errorMessage);
-            throw error;
-        });
-
-
+    
         auth()
         .createUserWithEmailAndPassword(email, password)
         .then((res) => {
+            this.checkNewUser(name, email, age);
             console.log('New user registered successfully')            
         })
         .catch((error) => {
@@ -81,6 +83,25 @@ class FirebaseHandler extends React.Component {
             alert(errorMessage);
             throw error;
         });
+
+        // auth()
+        // .signInWithEmailAndPassword(email, password)
+        // .then((res) => { 
+        //     console.log('User logged in successfully')
+        // })
+        // .catch((error) => {
+        //     const errorCode = error.code;
+        //     const errorMessage = error.message; 
+        //     if(errorCode === 'auth/wrong-password' || errorCode == 'auth/invalid-password') {
+        //       Alert.alert('Invalid Password. Please try again!')
+        //     }
+        //     if(errorCode === 'auth/invalid-user-token' || errorCode === 'auth/user-token-expired' || errorCode === 'auth/invalid-email') {
+        //       Alert.alert('Invalid email. Please try again!')
+        //     } 
+        // });
+
+       
+
     }
 
     deleteUser() {

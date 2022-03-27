@@ -57,6 +57,7 @@ import { Colors } from 'react-native/Libraries/NewAppScreen';
             value = {this.state.email}
             onChangeText={(input) => this.updateInput(input, 'email')}
                 />
+                <Text style = {styles.text} >Please enter your password in all lowercase</Text>
         <TextInput style = {styles.text}
             placeholder="Password"
             placeholderTextColor = {"lightgray"}
@@ -65,6 +66,7 @@ import { Colors } from 'react-native/Libraries/NewAppScreen';
             maxLength={18}
             secureTextEntry={true}
                 />
+        <Text style = {styles.text}>Your password must be at least 6 characters long with at least one number</Text>
       <TextInput style = {styles.text}
            placeholder="Age"
            placeholderTextColor = {"lightgray"}
@@ -99,7 +101,7 @@ const styles = StyleSheet.create({
     },
     buttonContainer: {
         position: 'absolute',
-        top: 300,
+        top: 400,
         left: 45,
         backgroundColor: colors.background,
         borderRadius: 10,

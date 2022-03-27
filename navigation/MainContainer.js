@@ -37,7 +37,7 @@ export default function MainContainer() {
         return(
             <NavigationContainer>
                 <Tab.Navigator
-                initialRouteName={"Home"}
+                initialRouteName={"Login"}
                 screenOptions={({route}) => ({
                     tabBarIcon: ({focused, color, size}) => {
                         let iconName;
@@ -66,7 +66,7 @@ export default function MainContainer() {
                     <Tab.Screen name="Profile" component={ProfileScreen} />
                     <Tab.Screen name="Signup" component={SignupScreen} />
                     <Tab.Screen name="News" component={NewsScreen} />
-                    <Tab.Screen name="Login" component={LoginScreen} />
+                    <Tab.Screen name="Login" component={LoginScreen} options={{tabBarStyle: {display: "none"}}} />
 
                 </Tab.Navigator>
                 </NavigationContainer>
@@ -96,6 +96,7 @@ export default function MainContainer() {
                     options={{title: 'Welcome! Please Login'}}
                     fontFamily= 'Montsesrrat-Medium'
                 />
+                <Stack.Screen name="Signup" component={SignupScreen} />
                 </Stack.Navigator>
             </NavigationContainer>
          )
