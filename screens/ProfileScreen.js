@@ -59,6 +59,7 @@ class ProfileScreen extends React.Component {
   }
 
   updateName() {
+    db.getName();
     if(this.state.nameInput == '') {
       Alert.alert('Name cannot be empty')
     }
@@ -66,10 +67,13 @@ class ProfileScreen extends React.Component {
       name: this.state.nameInput
     })
     db.getName()
-    this.state.name = db.name
+    this.setState({
+      name: db.name
+    })
   } 
   
   updatePhoneNum() {
+    db.getPhoneNum();
     if(this.state.phoneNumInput == '') {
       Alert.alert('Phone number cannot be empty')
     }
@@ -77,10 +81,13 @@ class ProfileScreen extends React.Component {
       phoneNum: this.state.phoneNumInput
     })
     db.getPhoneNum()
-    this.state.phoneNum = db.phoneNum
+    this.setState({
+      phoneNum: db.phoneNum
+    })
   }
 
   updateAddress() {
+    db.getAddress();
     if(this.state.addressInput == '') {
       Alert.alert('Address cannot be empty')
     }
@@ -88,7 +95,9 @@ class ProfileScreen extends React.Component {
       address: this.state.addressInput
     })
     db.getAddress()
-    this.state.address = db.address
+    this.setState({
+      address: db.address
+    })
   }
 
     render() {

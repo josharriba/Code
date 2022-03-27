@@ -20,6 +20,7 @@ class StockData extends React.Component {
       timeSeriesType: ''
     }
   }
+  
 
   setModalVisible = (visible) => {
     this.setState({modalVisible: visible});
@@ -40,11 +41,16 @@ class StockData extends React.Component {
       .then(querySnapshot => {
           querySnapshot.forEach(doc => {
               const{symbol} = doc.data();
-              this.state.favorites.push({
-                  symbol
-              }); 
+    
+              this.setState({
+                favorites: this.state.favorites.concat(symbol)
+              })
+
+              // this.state.favorites.push({
+              //     symbol
+              // }); 
           });
-          //console.log(this.state.favorites);
+          console.log(this.state.favorites);
       })
       .catch((error) => {
           const errorCode = error.code;
@@ -52,10 +58,12 @@ class StockData extends React.Component {
           alert(errorMessage);
           throw error;
       });
-      this.mapFavorites();
+     // this.mapFavorites();
     }
     else {
-      this.state.favoritesCalled = true;
+      this.setState({
+        favoritesCalled: true
+      });
       
       this.setModalVisible(true);
       firestore().collection('Users').doc(auth().currentUser.email)
@@ -63,11 +71,16 @@ class StockData extends React.Component {
       .then(querySnapshot => {
           querySnapshot.forEach(doc => {
               const{symbol} = doc.data();
-              this.state.favorites.push({
-                  symbol
-              }); 
+               console.log(symbol)
+              this.setState({
+                favorites: this.state.favorites.concat(symbol)
+              })
+
+              // this.state.favorites.push({
+              //     symbol
+              // }); 
           });
-          //console.log(this.state.favorites);
+          console.log(this.state.favorites);
       })
       .catch((error) => {
           const errorCode = error.code;
@@ -75,15 +88,24 @@ class StockData extends React.Component {
           alert(errorMessage);
           throw error;
       });
-      this.mapFavorites();
+      //this.mapFavorites();
+      this.setState({
+        favoriteList: this.state.favorites
+      })
     }
   }
 
   mapFavorites() {
-    this.state.favoriteList = this.state.favorites.map(function(item) {
+    this.setState({
+      favoriteList: this.state.favorites.map(function(item) {
       return item['symbol'];
-    });
-   // console.log(this.state.favoriteList);
+    })
+     })
+
+    // this.state.favoriteList = this.state.favorites.map(function(item) {
+    //   return item['symbol'];
+    // });
+   console.log(this.state.favoriteList);
   }
 
 
@@ -152,7 +174,7 @@ class StockData extends React.Component {
           >
             <Text styles={styles.title}> Favorites:</Text>
             <Text style={styles.modalText}> 
-              {JSON.stringify(this.state.favoriteList)}</Text>
+              {JSON.stringify(this.state.favorites)}</Text>
             
             <TouchableOpacity
             style={styles.buttonContainer1}
@@ -200,7 +222,7 @@ class StockData extends React.Component {
           >
             <Text styles={styles.title}> Favorites:</Text>
             <Text style={styles.modalText}> 
-              {JSON.stringify(this.state.favoriteList)}</Text>
+              {JSON.stringify(this.state.favorites)}</Text>
             
             <TouchableOpacity
             style={styles.buttonContainer1}

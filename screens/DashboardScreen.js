@@ -66,7 +66,9 @@ class DashboardScreen extends React.Component {
       });
     }
     else{
-      this.state.transactionsCalled = true;
+      this.setState({
+        transactionsCalled: true
+      });
       this.setModalVisible(true);
       firestore().collection('Users').doc(auth().currentUser.email)
       .collection('Transactions').get()
@@ -91,22 +93,43 @@ class DashboardScreen extends React.Component {
   }
 
  mapTransactions() {
-  this.state.dates = this.state.transactions.map(function(item) {
-    return item['date'];
+
+  this.setState({
+    dates: this.state.transactions.map(function(item) {
+      return item['date'];
+    }),
+    
+    descriptions: this.state.transactions.map(function(item) {
+      return item['description'];
+    }),
+
+    amounts: this.state.transactions.map(function(item) {
+      return item['amount'];
+    }),
+
+    trans:  this.state.transactions.map(function(item) {
+      console.log(item);
+      return item
+    })
+
   });
 
-  this.state.descriptions = this.state.transactions.map(function(item) {
-    return item['description'];
-  });
+  // this.state.dates = this.state.transactions.map(function(item) {
+  //   return item['date'];
+  // });
 
-  this.state.amounts = this.state.transactions.map(function(item) {
-    return item['amount'];
-  });
+  // this.state.descriptions = this.state.transactions.map(function(item) {
+  //   return item['description'];
+  // });
 
-  this.state.trans = this.state.transactions.map(function(item) {
-    console.log(item);
-    return item
-  });
+  // this.state.amounts = this.state.transactions.map(function(item) {
+  //   return item['amount'];
+  // });
+
+  // this.state.trans = this.state.transactions.map(function(item) {
+  //   console.log(item);
+  //   return item
+  // });
   //console.log(this.state.transactions);
   // console.log(this.state.amounts);
   // console.log(this.state.dates);
