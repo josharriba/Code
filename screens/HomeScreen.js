@@ -26,6 +26,16 @@ class HomeScreen extends React.Component {
     console.log(db.name)
   }
 
+  componentDidMount() {
+    firestore().collection('Users').doc(auth().currentUser.email)
+        .get()
+        .then(documentSnapshot => {
+           this.setState({
+             name: documentSnapshot.data().name
+           }) 
+        });
+  }
+
   signOut = () => {
     //db.signOut();
     auth().signOut().then(() => console.log('User signed out!'))
