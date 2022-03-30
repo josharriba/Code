@@ -11,25 +11,49 @@ class ProfileScreen extends React.Component {
 
   constructor() {
     super();
-    db.getName();
-    db.getPhoneNum();
-    db.getAddress();
     this.state = {
       name: db.name, 
       phoneNum: db.phoneNum,
-      address: db.address
+      address: db.address, 
+      nameInput: '',
+      phoneNumInput: '',
+      addressInput: '',
     }
   }
 
   componentDidMount() {
-    db.getName();
-    db.getAddress();
-    db.getPhoneNum();
-    this.setState({
-      name: db.name,
-      phoneNum: db.phoneNum, 
-      address: db.address, 
-    })
+    userList = firestore().collection('Users');
+    userList.doc(auth().currentUser.email)
+        .get()
+        .then(documentSnapshot => {
+           this.setState({
+             name: documentSnapshot.data().name
+           }) 
+        });
+    userList.doc(auth().currentUser.email)
+        .get()
+        .then(documentSnapshot => {
+            this.setState({
+              phoneNum: documentSnapshot.data().phoneNum
+            }) 
+        })
+
+    userList.doc(auth().currentUser.email)
+        .get()
+        .then(documentSnapshot => {
+            this.setState({
+              address: documentSnapshot.data().address
+            })
+        })
+    
+    // this.setState({
+    //   name: nameDB,
+    //   phoneNum: phoneDB, 
+    //   address: addressDB, 
+    // })
+    // console.log(this.state.name);
+    // console.log(this.state.address);
+    // console.log(this.state.phoneNum);
   }
   
   deleteAccountAlert = () => {
@@ -68,7 +92,7 @@ class ProfileScreen extends React.Component {
     })
     db.getName()
     this.setState({
-      name: db.name
+      name: this.state.nameInput
     })
   } 
   
@@ -82,7 +106,7 @@ class ProfileScreen extends React.Component {
     })
     db.getPhoneNum()
     this.setState({
-      phoneNum: db.phoneNum
+      phoneNum: this.state.phoneNumInput
     })
   }
 
@@ -96,7 +120,7 @@ class ProfileScreen extends React.Component {
     })
     db.getAddress()
     this.setState({
-      address: db.address
+      address: this.state.addressInput
     })
   }
 
