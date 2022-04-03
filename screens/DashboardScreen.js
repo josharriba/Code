@@ -314,12 +314,19 @@ const styles = StyleSheet.create({
     fontSize: 20,
     color: colors.primary
   },
-  text: {
+  text1: {
     textAlign: 'center',
     justifyContent: 'center',
     fontSize: 15,
     fontFamily: "Montserrat-Medium",
     color: colors.primary,
+  },
+  text: {
+    textAlign: 'center',
+    justifyContent: 'center',
+    fontSize: 15,
+    fontFamily: "Montserrat-Medium",
+    color: colors.background,
   },
   modalText: {
     fontSize: 15,

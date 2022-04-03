@@ -1,6 +1,6 @@
 import React from 'react';
 import Plot from 'react-native-plotly';
-import {View, ScrollView, Text, StyleSheet, TouchableOpacity, TextInput, Button, Alert, Modal} from 'react-native';
+import {View, ScrollView, Text, StyleSheet, TouchableOpacity, TextInput, Button, Alert, Modal, FlatList} from 'react-native';
 import colors from '../assets/colors/colors';
 import db from './FirebaseHandler'
 // import Plot from 'react-plotly.js';
@@ -17,7 +17,8 @@ class StockData extends React.Component {
       favorites: [], 
       modalVisible: false,
       favoritesCalled: false, 
-      timeSeriesType: ''
+      timeSeriesType: '', 
+      favoriteList: ''
     }
   }
   
@@ -108,6 +109,21 @@ class StockData extends React.Component {
    console.log(this.state.favoriteList);
   }
 
+  deleteFavorite(symbol) {
+    const ref = firestore().collection('Users').doc(auth().currentUser.email)
+      .collection('Favorite Stocks').where('symbol', '==', symbol);
+
+    ref.get().then(function(querySnapshot) {
+      querySnapshot.forEach(function(doc) {
+        console.log(doc);
+        doc.ref.delete();
+      });
+    });
+    console.log('Favorite deleted');
+    Alert.alert('Favorite successfully deleted');
+    this.setModalVisible(false);
+  }
+
 
   updateInput = (val, prop) => {
     const state = this.state;
@@ -173,8 +189,15 @@ class StockData extends React.Component {
           }}
           >
             <Text styles={styles.title}> Favorites:</Text>
-            <Text style={styles.modalText}> 
-              {JSON.stringify(this.state.favorites)}</Text>
+            <FlatList 
+                      data={this.state.favorites}
+                      keyExtractor={item => item.id}
+                      renderItem={({item}) => 
+                      <Text style={styles.text1}>
+                        Symbol: {item}
+                        <Button styles= {styles.buttonContainer} title= 'Delete' onPress={() => this.deleteFavorite(item)}> 
+                          Delete favorite</Button>
+                      </Text>}></FlatList>
             
             <TouchableOpacity
             style={styles.buttonContainer1}
@@ -221,8 +244,17 @@ class StockData extends React.Component {
           }}
           >
             <Text styles={styles.title}> Favorites:</Text>
-            <Text style={styles.modalText}> 
-              {JSON.stringify(this.state.favorites)}</Text>
+            <FlatList 
+                      data={this.state.favorites}
+                      keyExtractor={item => item.id}
+                      renderItem={({item}) => 
+                      <Text style={styles.text1}>
+                        Symbol: {item}
+                        <Button styles= {styles.buttonContainer} title= 'Delete' onPress={() => this.deleteFavorite(item)}> 
+                          Delete favorite</Button>
+                      </Text>}></FlatList>
+            {/* <Text style={styles.modalText}> 
+              {JSON.stringify(this.state.favorites)}</Text> */}
             
             <TouchableOpacity
             style={styles.buttonContainer1}
@@ -359,7 +391,7 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     elevation: 8,
-    backgroundColor: colors.background,
+    color: colors.primary,
     borderRadius: 10,
     paddingVertical: 10,
     paddingHorizontal: 14
@@ -395,6 +427,14 @@ const styles = StyleSheet.create({
     fontSize: 15,
     fontFamily: "Montserrat-Medium",
     color: colors.background,
+    //marginLeft: '30%'
+  },
+  text1: {
+    textAlign: 'center',
+    justifyContent: 'center',
+    fontSize: 15,
+    fontFamily: "Montserrat-Medium",
+    color: colors.primary,
     //marginLeft: '30%'
   },
   title: {
