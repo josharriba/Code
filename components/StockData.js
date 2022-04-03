@@ -188,24 +188,35 @@ class StockData extends React.Component {
             this.setModalVisible(!modalVisible);
           }}
           >
-            <Text styles={styles.title}> Favorites:</Text>
+            <View style = {styles.container}>
+              <Text style={styles.favText}>Favorites:</Text>
+            <View style = {styles.favContainer}>
             <FlatList 
                       data={this.state.favorites}
                       keyExtractor={item => item.id}
                       renderItem={({item}) => 
                       <Text style={styles.text1}>
                         Symbol: {item}
-                        <Button styles= {styles.buttonContainer} title= 'Delete' onPress={() => this.deleteFavorite(item)}> 
-                          Delete favorite</Button>
-                      </Text>}></FlatList>
-            
+                        <TouchableOpacity 
+                        styles= {styles.delContainer} 
+                        // color={colors.primary}
+                        // title= "Delete"
+                        onPress={() => this.deleteFavorite(item)}
+                        > 
+                        <Text style={styles.delText}>Delete</Text>
+                          </TouchableOpacity>
+                      </Text>}>
+              </FlatList>
+              </View>
+          
             <TouchableOpacity
-            style={styles.buttonContainer1}
+            style={styles.closeContainer}
             title="close"
                 onPress={() => this.setModalVisible(!modalVisible)}
               >
                 <Text style={styles.text}>Close</Text>
               </TouchableOpacity>
+              </View>
            
           </Modal>
           <TextInput 
@@ -246,21 +257,27 @@ class StockData extends React.Component {
             this.setModalVisible(!modalVisible);
           }}
           >
-            <Text styles={styles.title}> Favorites:</Text>
+              <Text style={styles.favText}>Favorites:</Text>
             <FlatList 
                       data={this.state.favorites}
                       keyExtractor={item => item.id}
                       renderItem={({item}) => 
                       <Text style={styles.text1}>
                         Symbol: {item}
-                        <Button styles= {styles.buttonContainer} title= 'Delete' onPress={() => this.deleteFavorite(item)}> 
-                          Delete favorite</Button>
+                        <TouchableOpacity 
+                        styles= {styles.delContainer} 
+                        // color={colors.primary}
+                        title= "Delete"
+                        onPress={() => this.deleteFavorite(item)}
+                        > 
+                        <Text style={styles.delText}>Delete</Text>
+                          </TouchableOpacity>
                       </Text>}></FlatList>
             {/* <Text style={styles.modalText}> 
               {JSON.stringify(this.state.favorites)}</Text> */}
             
             <TouchableOpacity
-            style={styles.buttonContainer1}
+            style={styles.closeContainer}
             title="close"
                 onPress={() => this.setModalVisible(!modalVisible)}
               >
@@ -379,6 +396,17 @@ const styles = StyleSheet.create({
     padding: 10,
     backgroundColor: "white"
   },
+  favContainer: {
+    position: 'absolute',
+      top: 40,
+     left: 40,
+    justifyContent: 'center',
+    textAlign: 'center',
+    flex: 1,
+    padding: 10,
+    backgroundColor: "white",
+    width: 300
+  },
   textContainer: {
     textAlign: 'center',
     justifyContent: 'center',
@@ -400,7 +428,42 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     paddingHorizontal: 14
   },
+  delContainer: {
+    width: 70,
+    elevation: 8,
+    color: colors.primary,
+    borderRadius: 10,
+    paddingVertical: 10,
+    paddingHorizontal: 14
+  },
   buttonContainer1: {
+    elevation: 8,
+    backgroundColor: colors.secondary,
+    borderRadius: 10,
+    paddingVertical: 5,
+    paddingHorizontal: 14,
+    marginTop: 4,
+    marginBottom: 4
+  },
+  closeContainer: {
+    position: 'absolute',
+      top: 670,
+      left: 75,
+    justifyContent: 'center',
+    elevation: 8,
+    backgroundColor: colors.secondary,
+    borderRadius: 10,
+    paddingVertical: 5,
+    paddingHorizontal: 14,
+    marginTop: 4,
+    marginBottom: 4,
+    width: 250,
+    height: 40
+  },
+  buttonContainer2: {
+    position: 'absolute',
+      top: 100,
+      left: 45,
     elevation: 8,
     backgroundColor: colors.secondary,
     borderRadius: 10,
@@ -451,7 +514,29 @@ const styles = StyleSheet.create({
     color: colors.background,
     //marginLeft: '30%'
   },
+  delText: {
+    textAlign: 'center',
+    justifyContent: 'center',
+    //position: 'absolute',
+      top: 5,
+      left: 10,
+    fontSize: 15,
+    fontFamily: "Montserrat-Medium",
+    color: colors.background,
+    
+  },
   text1: {
+    textAlign: 'center',
+    justifyContent: 'center',
+    fontSize: 15,
+    fontFamily: "Montserrat-Medium",
+    color: colors.primary,
+    //marginLeft: '30%'
+  },
+  favText: {
+    position: 'absolute',
+      top: 10,
+      left: 150,
     textAlign: 'center',
     justifyContent: 'center',
     fontSize: 15,
