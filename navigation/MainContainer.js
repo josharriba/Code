@@ -31,74 +31,45 @@ const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
 
 export default function MainContainer() {
-    const user = auth().currentUser;
+    //const user = auth().currentUser;
     //user logged in
-    if(user) {
-        return(
-            <NavigationContainer>
-                <Tab.Navigator
+
+    return(
+        <NavigationContainer>
+            <Tab.Navigator
                 initialRouteName={"Login"}
                 screenOptions={({route}) => ({
                     tabBarIcon: ({focused, color, size}) => {
                         let iconName;
                         let rn = route.name;
 
-                        if (rn === homeName)    {
-                            iconName = focused ? 'home' : 'home-outline'
-                        } else if (rn === financesName) {
-                            iconName = focused ? 'card' : 'card-outline'
-                        } else if (rn === profileName)  {
-                            iconName = focused ? 'person' : 'person-outline'
+
+                        if (route.name === "Home")    {
+                            iconName = focused ? 'home' : 'home-outline';
+                        } else if (rn === "Stocks") {
+                            iconName = focused ? 'stats-chart-outline' : 'stats-chart-outline';
+                        } else if (rn === "Finances")  {
+                            iconName = focused ? 'cash-outline' : 'cash-outline';
+                        } else if (rn === "Profile")    {
+                            iconName = focused ? 'person' : 'person-outline';
+                        } else if (rn === "Login")  {
+                            iconName = focused ? 'log-in-outline' : 'log-in-outline';
                         }
 
-                        return <Ionicons name={iconName} size={size} color={color}/>
+                        return <Ionicons name={iconName} size={size} color={color}/>;
                     },
-                    
-                })}>
+                
+                })}
+            >
+            <Tab.Screen name="Home" component={HomeScreen}/>
+            <Tab.Screen name="Stocks" component={StocksScreen} options={{headerShown: false}} />
+            <Tab.Screen name="Finances" component={FinancesScreen} />
+            <Tab.Screen name="Profile" component={ProfileScreen} />
+            <Tab.Screen name="Login" component={LoginScreen} options={{tabBarStyle: {display: "none"}}} />
 
-                <Tab.Screen name={homeName} component={HomeScreen}/>
-                <Tab.Screen name={financesName} component={FinancesScreen}/>
-                <Tab.Screen name={profileName} component={ProfileScreen}/>
-                <Tab.Screen name="Stocks" component={StocksScreen} options={{headerShown: false}} />
-                    <Tab.Screen name="Dashboard" component={DashboardScreen} />
-                    <Tab.Screen name="Finances" component={FinancesScreen} />
-                    <Tab.Screen name="Budgeting" component={BudgetingScreen} />
-                    <Tab.Screen name="Profile" component={ProfileScreen} />
-                    <Tab.Screen name="Signup" component={SignupScreen} />
-                    <Tab.Screen name="News" component={NewsScreen} />
-                    <Tab.Screen name="Login" component={LoginScreen} options={{tabBarStyle: {display: "none"}}} />
+            </Tab.Navigator>
+        </NavigationContainer>
+        
+    );
 
-                </Tab.Navigator>
-                </NavigationContainer>
-            
-        )
-    }
-    //user not logged in
-    else {
-         return(
-            <NavigationContainer>
-                <Stack.Navigator
-                    initialRouteName={'Login'}
-                    screenOptions={{
-                    headerTitleAlign: 'center',
-                    headerStyle: {
-                        backgroundColor: "white",
-                    },
-                    headerTitleStyle: {
-                        color: "gray",
-                        fontFamily: 'Montsesrrat-Medium'
-                    },
-                    }}>
-                    <Stack.Screen name="Home" component={HomeScreen} />
-                    <Stack.Screen
-                    name="Login"
-                    component={LoginScreen}
-                    options={{title: 'Welcome! Please Login'}}
-                    fontFamily= 'Montsesrrat-Medium'
-                />
-                <Stack.Screen name="Signup" component={SignupScreen} />
-                </Stack.Navigator>
-            </NavigationContainer>
-         )
-    }
 }
