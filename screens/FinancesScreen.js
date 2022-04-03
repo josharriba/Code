@@ -162,7 +162,7 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     position: 'absolute',
-      top: 580,
+      top: 540,
       left: 45,
       backgroundColor: colors.background,
       borderRadius: 10,
@@ -185,9 +185,8 @@ const styles = StyleSheet.create({
   },
   buttonContainer2: {
     position: 'absolute',
-      top: 500,
+      top: 450,
       left: 45,
-    elevation: 8,
     backgroundColor: "lightgray",
     borderRadius: 10,
     paddingVertical: 10,

@@ -233,7 +233,10 @@ class StockData extends React.Component {
     else {
       return (
         <View style = {styles.container}>
-          
+          <TouchableOpacity 
+            style={styles.stockContainer} 
+            >
+          </TouchableOpacity>
           <Modal
           animationType="slide"
           visible={modalVisible}
@@ -276,6 +279,7 @@ class StockData extends React.Component {
           onPress={() => this.fetchStock()}>
             <Text style={styles.text}>Search Stock</Text>
         </TouchableOpacity>
+        
         <Plot
           data={[
             {
@@ -404,6 +408,24 @@ const styles = StyleSheet.create({
     paddingHorizontal: 14,
     marginTop: 4,
     marginBottom: 4
+  },
+  stockContainer: {
+    textAlign: 'center',
+    justifyContent: 'center',
+    // backgroundColor: colors.background,
+    borderRadius: 10,
+    paddingVertical: 10,
+    paddinghorizontal: 20,
+    width: 300
+  },
+  homeText: {
+    textAlign: 'center',
+    justifyContent: 'center',
+      padding: 5,
+      //marginLeft: '40%',
+      fontFamily: "Montserrat-Medium",
+      fontSize: 20,
+      color: colors.primary
   },
   buttonText: {
     //textAlign: 'center',

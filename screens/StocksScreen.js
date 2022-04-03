@@ -10,14 +10,15 @@ class StocksScreen extends React.Component {
         <View style={styles.container}>
             
           <StockData />
-          <TouchableOpacity 
+          
+          {/*<TouchableOpacity 
             style={styles.buttonContainer} 
             title="Home"
             onPress={() => this.props.navigation.navigate('Home')}
             >
               <Text style={styles.buttonText}>Home</Text>
               </TouchableOpacity>
-             
+      */}
             {/* <TouchableOpacity
             style={styles.buttonContainer1} 
             title="Login"

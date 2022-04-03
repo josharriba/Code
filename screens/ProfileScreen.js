@@ -230,7 +230,7 @@ class ProfileScreen extends React.Component {
     },
     buttonContainer: {
       position: 'absolute',
-      top: 600,
+      top: 550,
       left: 45,
       backgroundColor: colors.background,
       borderRadius: 10,
@@ -258,7 +258,7 @@ class ProfileScreen extends React.Component {
     },
     buttonContainer2: {
       position: 'absolute',
-      top: 130,
+      top: 110,
       left: 35,
       elevation: 2,
       backgroundColor: "darkred",
@@ -293,7 +293,7 @@ class ProfileScreen extends React.Component {
     },
     text: {
       position: 'absolute',
-      top: 20,
+      top: 0,
       marginTop: 20,
       //textAlign: 'center',
       justifyContent: 'center',
@@ -306,7 +306,7 @@ class ProfileScreen extends React.Component {
     },
     text1: {
       position: 'absolute',
-      top: 50,
+      top: 30,
       marginTop: 20,
       //textAlign: 'center',
       justifyContent: 'center',
@@ -319,7 +319,7 @@ class ProfileScreen extends React.Component {
     },
     text2: {
       position: 'absolute',
-      top: 80,
+      top: 60,
       marginTop: 20,
       //textAlign: 'center',
       justifyContent: 'center',
