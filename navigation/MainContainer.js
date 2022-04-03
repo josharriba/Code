@@ -47,13 +47,17 @@ export default function MainContainer() {
                         if (route.name === "Home")    {
                             iconName = focused ? 'home' : 'home-outline';
                         } else if (rn === "Stocks") {
-                            iconName = focused ? 'stats-chart-outline' : 'stats-chart-outline';
+                            iconName = focused ? 'stats-chart' : 'stats-chart-outline';
                         } else if (rn === "Finances")  {
-                            iconName = focused ? 'cash-outline' : 'cash-outline';
+                            iconName = focused ? 'cash' : 'cash-outline';
                         } else if (rn === "Profile")    {
                             iconName = focused ? 'person' : 'person-outline';
                         } else if (rn === "Login")  {
-                            iconName = focused ? 'log-in-outline' : 'log-in-outline';
+                            iconName = focused ? 'log-in' : 'log-in-outline';
+                        } else if (rn === "Dashboard")  {
+                            iconName = focused ? 'clipboard' : 'clipboard-outline';
+                        } else if (rn === "News")   {
+                            iconName = focused ? 'newspaper' : 'newspaper-outline';
                         }
 
                         return <Ionicons name={iconName} size={size} color={color}/>;
@@ -66,6 +70,8 @@ export default function MainContainer() {
             <Tab.Screen name="Finances" component={FinancesScreen} />
             <Tab.Screen name="Profile" component={ProfileScreen} />
             <Tab.Screen name="Login" component={LoginScreen} options={{tabBarStyle: {display: "none"}}} />
+            <Tab.Screen name="Dashboard" component={DashboardScreen} />
+            <Tab.Screen name="News" component={NewsScreen} />
 
             </Tab.Navigator>
         </NavigationContainer>
