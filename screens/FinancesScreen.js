@@ -84,8 +84,7 @@ class FinancesScreen extends React.Component {
               <Text style={styles.text}>Enter Transaction</Text>
               </TouchableOpacity>
             <Text
-              style={styles.textContainer3}
-              style={styles.text1}>
+              style={[styles.textContainer3,styles.text1]}>
               You can view your transactions on the Dashboard Screen
             </Text>
         </View>
