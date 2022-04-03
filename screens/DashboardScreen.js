@@ -9,7 +9,8 @@ import {
   Item,
   TextInput,
   StackNavigator,
-  Modal
+  Modal, 
+  Alert
 } from 'react-native';
 import db from '../components/FirebaseHandler';
 import Transactions from '../components/Transactions'
@@ -108,11 +109,12 @@ class DashboardScreen extends React.Component {
     }),
 
     trans:  this.state.transactions.map(function(item) {
-      console.log(item);
+      //console.log(item);
       return item
     })
 
   });
+  console.log(this.state.trans)
 
   // this.state.dates = this.state.transactions.map(function(item) {
   //   return item['date'];
@@ -134,7 +136,22 @@ class DashboardScreen extends React.Component {
   // console.log(this.state.amounts);
   // console.log(this.state.dates);
   // console.log(this.state.descriptions)
-}
+  } 
+
+  deleteTransaction(description) {
+    const ref = firestore().collection('Users').doc(auth().currentUser.email)
+      .collection('Transactions').where('description', '==', description);
+
+    ref.get().then(function(querySnapshot) {
+      querySnapshot.forEach(function(doc) {
+        console.log(doc);
+        doc.ref.delete();
+      });
+    });
+    console.log('Transaction deleted');
+    Alert.alert('Transaction successfully deleted');
+    this.setModalVisible(false);
+  }
 
   render() {
     const{modalVisible} = this.state;
@@ -150,9 +167,20 @@ class DashboardScreen extends React.Component {
           }}
           >
             <Text styles={styles.title}> Transactions: </Text>
-            <Text styles={styles.modalText}>
+            <FlatList 
+                      data={this.state.trans}
+                      keyExtractor={(x,i) => i}
+                      renderItem={({item}) => 
+                      <Text style={styles.transList}>
+                        Amount: {item.amount} Date: {item.date} Description: {item.description} 
+                        <Button styles= {styles.buttonContainer} title= 'Delete' onPress={() => this.deleteTransaction(item.description)}> 
+                          Delete transaction</Button>
+                      </Text>}>
+
+            </FlatList>
+            {/* <Text styles={styles.modalText}>
               {JSON.stringify(this.state.trans)}
-            </Text>
+            </Text> */}
             {/* <Text style={styles.modalText}> 
               {this.state.dates}</Text>
 
@@ -168,7 +196,7 @@ class DashboardScreen extends React.Component {
                 onPress={() => this.setModalVisible(!modalVisible)}
               >
                 <Text style={styles.text}>Close</Text>
-              </TouchableOpacity>
+              </TouchableOpacity> 
            
           </Modal>
         {/* <Text style={{fontSize: 20, fontWeight: 'bold'}}>
@@ -214,6 +242,15 @@ class DashboardScreen extends React.Component {
 export default DashboardScreen;
 
 const styles = StyleSheet.create({
+  button: {
+    color: colors.primary,
+    paddingLeft: 10,
+
+  },  
+  transList: {
+    color: colors.primary,
+    padding: 10
+  },
   titleText: {
     fontFamily: 'Montserrat-SemiBold',
     fontSize: 100,
@@ -282,7 +319,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     fontSize: 15,
     fontFamily: "Montserrat-Medium",
-    color: colors.background,
+    color: colors.primary,
   },
   modalText: {
     fontSize: 15,
@@ -304,7 +341,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#61dafb",
     color: "#20232a",
     textAlign: "center",
-    fontSize: 100,
+    fontSize: 200,
    // fontWeight: "bold"
   }
 });
