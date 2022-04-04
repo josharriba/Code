@@ -264,7 +264,9 @@ class StockData extends React.Component {
             this.setModalVisible(!modalVisible);
           }}
           >
+             <View style = {styles.container}>
               <Text style={styles.favText}>Favorites:</Text>
+            <View style = {styles.favContainer}>
             <FlatList 
                       data={this.state.favorites}
                       keyExtractor={item => item.id}
@@ -274,12 +276,14 @@ class StockData extends React.Component {
                         <TouchableOpacity 
                         styles= {styles.delContainer} 
                         // color={colors.primary}
-                        title= "Delete"
+                        // title= "Delete"
                         onPress={() => this.deleteFavorite(item)}
                         > 
                         <Text style={styles.delText}>Delete</Text>
                           </TouchableOpacity>
-                      </Text>}></FlatList>
+                      </Text>}>
+              </FlatList>
+              </View>
             {/* <Text style={styles.modalText}> 
               {JSON.stringify(this.state.favorites)}</Text> */}
             
@@ -290,7 +294,7 @@ class StockData extends React.Component {
               >
                 <Text style={styles.text}>Close</Text>
               </TouchableOpacity>
-           
+              </View>
           </Modal>
         <TextInput 
           placeholder="Enter stock symbol. (i.e. 'MSFT')"
