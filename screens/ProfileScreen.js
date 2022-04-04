@@ -170,19 +170,7 @@ class ProfileScreen extends React.Component {
             title="Update address" 
             onPress={() => this.updateAddress()}>
               <Text style={styles.buttonText2}>Update Address</Text>
-          </TouchableOpacity>
-
-<<<<<<< HEAD
-          {/* <TouchableOpacity 
-            style={styles.buttonContainer} 
-            title="Home"
-            onPress={() => this.props.navigation.navigate('Home')}
-            >
-              <Text style={styles.buttonText}>Home</Text>
-          </TouchableOpacity> */}
-=======
-        
->>>>>>> bd5bb100182936d193b0da24ea37eb7186c99206
+          </TouchableOpacity>        
 
           <TouchableOpacity 
             style={styles.buttonContainer2} 

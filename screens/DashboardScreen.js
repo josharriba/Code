@@ -263,8 +263,8 @@ const styles = StyleSheet.create({
       left: 10,
     fontSize: 12,
     fontFamily: "Montserrat-Medium",
-    color: colors.background,
-    
+    color: colors.secondary,
+    backgroundColor: colors.background
   },
   button: {
     color: colors.primary,

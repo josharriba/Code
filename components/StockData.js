@@ -433,6 +433,7 @@ const styles = StyleSheet.create({
     width: 70,
     elevation: 8,
     color: colors.primary,
+    backgroundColor: colors.background,
     borderRadius: 10,
     paddingVertical: 10,
     paddingHorizontal: 14
@@ -523,7 +524,8 @@ const styles = StyleSheet.create({
       left: 10,
     fontSize: 15,
     fontFamily: "Montserrat-Medium",
-    color: colors.background,
+    color: colors.secondary,
+    backgroundColor: colors.background
     
   },
   text1: {
