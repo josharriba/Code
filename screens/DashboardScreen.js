@@ -179,35 +179,69 @@ class DashboardScreen extends React.Component {
                       keyExtractor={(x,i) => i}
                       renderItem={({item}) => 
                       <Text style={styles.transList}>
-                        Category: {item.category} {'\n'} Amount: {item.amount} {'\n'} Date: {item.date} {'\n'} Description: {item.description} {'\n'}
-                          <TouchableOpacity 
-                              style={styles.buttonContainer2} 
-                              title="Delete"
-                              onPress={() => this.deleteTransaction(item.description)}
-                              >
-                              <Text style={styles.buttonText}> Delete </Text>
+                        Category: {<Text style={styles.subtitle}>{item.category}</Text>}{"\n"}Amount: {<Text style={styles.subtitle}>{item.amount}</Text>}{"\n"}Date: {<Text style={styles.subtitle}>{item.date}</Text>}{"\n"}Description: {<Text style={styles.subtitle}>{item.description}</Text>} 
+                        <TouchableOpacity
+                        styles= {styles.delContainer} 
+                        title= 'Delete' 
+                        onPress={() => this.deleteTransaction(item.description)}
+                        > 
+                            <Text style={styles.delText}>Delete</Text>
                           </TouchableOpacity>
-                      </Text>}>
+                      </Text>
+                    }>
 
             </FlatList>
-            <TouchableOpacity
-              style={styles.buttonContainer1}
-              title="close"
+            {/* <Text styles={styles.modalText}>
+              {JSON.stringify(this.state.trans)}
+            </Text> */}
+            {/* <Text style={styles.modalText}> 
+              {this.state.dates}</Text>
+
+              <Text style={styles.modalText}> 
+              {this.state.descriptions}</Text>
+
+              <Text style={styles.modalText}> 
+              {this.state.amounts}</Text> */}
+            
+          <TouchableOpacity
+            style={styles.buttonContainer1}
+            title="close"
                 onPress={() => this.setModalVisible(!modalVisible)}
               >
                 <Text style={styles.text}>Close</Text>
               </TouchableOpacity> 
            
           </Modal>
-     
-        <TouchableOpacity 
-            style={styles.buttonContainer} 
-            title="Show Transactions"
-            onPress={() => this.getTransactions()}
-            >
-              <Text style={styles.buttonText}>Show Transactions</Text>
-              </TouchableOpacity>
-      
+        {/* <Text style={{fontSize: 20, fontWeight: 'bold'}}>
+          Recent Transactions: {toString(db.state.trans)}
+        </Text> */}
+        <TouchableOpacity
+          style={styles.transButton}
+          onPress={() => this.getTransactions()}
+        >
+          <Text style={styles.text}>Show Transactions</Text>
+        </TouchableOpacity>
+        
+        {/* <Button
+          title="Login"
+          onPress={() => this.props.navigation.navigate('Login')}
+        />
+        <Button
+          title="Stocks"
+          onPress={() => this.props.navigation.navigate('Stocks')}
+        />
+        <Button
+          title="Finances"
+          onPress={() => this.props.navigation.navigate('Finances')}
+        />
+        <Button
+          title="Profile"
+          onPress={() => this.props.navigation.navigate('Profile')}
+        />
+        <Button
+          title="News"
+          onPress={() => this.props.navigation.navigate('News')}
+        /> */}
       </View>
     );
   }
@@ -216,6 +250,22 @@ class DashboardScreen extends React.Component {
 export default DashboardScreen;
 
 const styles = StyleSheet.create({
+  delContainer: {
+    width: 70,
+    color: colors.primary,
+    paddingHorizontal: 14
+  },
+  delText: {
+    textAlign: 'center',
+    justifyContent: 'center',
+    //position: 'absolute',
+      top: 5,
+      left: 10,
+    fontSize: 12,
+    fontFamily: "Montserrat-Medium",
+    color: colors.background,
+    
+  },
   button: {
     color: colors.primary,
     paddingLeft: 10,
@@ -223,9 +273,7 @@ const styles = StyleSheet.create({
   },  
   transList: {
     color: colors.primary,
-    padding: 10, 
-    fontSize: 16, 
-    borderBottomColor: colors.secondary
+    padding: 10
   },
   titleText: {
     fontFamily: 'Montserrat-SemiBold',
@@ -239,7 +287,8 @@ const styles = StyleSheet.create({
   },
   subtitle: {
     fontFamily: 'sans-serif',
-    fontSize: 15,
+    fontSize: 13,
+    color: 'grey'
   },
   container: {
     flex: 1,
@@ -253,7 +302,7 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     position: 'absolute',
-      top: "15%",
+      top: 580,
       left: 45,
       backgroundColor: colors.background,
       borderRadius: 10,
@@ -261,14 +310,13 @@ const styles = StyleSheet.create({
       paddinghorizontal: 20,
       width: 300
   },
-  buttonContainer2: {
-      top: 10,
-      left: 45,
-      backgroundColor: colors.background,
+  transButton: {
+      top: '5%',
+      backgroundColor: colors.secondary,
       borderRadius: 10,
       paddingVertical: 10,
       paddinghorizontal: 20,
-      width: 150, 
+      width: 300
   },
   buttonContainer1: {
     position: 'absolute',
@@ -330,10 +378,11 @@ const styles = StyleSheet.create({
     borderWidth: 4,
     borderColor: "#20232a",
     borderRadius: 6,
-    backgroundColor: "#61dafb",
+    // backgroundColor: "#61dafb",
     color: "#20232a",
     textAlign: "center",
-    fontSize: 200,
+    justifyContent: 'center'
+    // fontSize: 200,
    // fontWeight: "bold"
   }
 });
