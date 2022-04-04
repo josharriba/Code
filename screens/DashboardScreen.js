@@ -30,6 +30,7 @@ class DashboardScreen extends React.Component {
        dates: [],
        descriptions: [],
        amounts: [], 
+       categories: [],
        trans: []
      };
     // console.log(db.state.trans)
@@ -50,11 +51,12 @@ class DashboardScreen extends React.Component {
       .collection('Transactions').get()
       .then(querySnapshot => {
           querySnapshot.forEach(doc => {
-              const{date, description, amount} = doc.data();
+              const{date, description, amount, category} = doc.data();
               this.state.transactions.push({
                   date, 
                   description, 
-                  amount
+                  amount, 
+                  category
               }); 
           });
         this.mapTransactions();
@@ -75,11 +77,12 @@ class DashboardScreen extends React.Component {
       .collection('Transactions').get()
       .then(querySnapshot => {
           querySnapshot.forEach(doc => {
-              const{date, description, amount} = doc.data();
+              const{date, description, amount, category} = doc.data();
               this.state.transactions.push({
                   date, 
                   description, 
-                  amount
+                  amount, 
+                  category
               }); 
           });
         this.mapTransactions();
@@ -106,6 +109,10 @@ class DashboardScreen extends React.Component {
 
     amounts: this.state.transactions.map(function(item) {
       return item['amount'];
+    }),
+
+    categories: this.state.transactions.map(function(item) {
+      return item['category'];
     }),
 
     trans:  this.state.transactions.map(function(item) {
@@ -172,7 +179,7 @@ class DashboardScreen extends React.Component {
                       keyExtractor={(x,i) => i}
                       renderItem={({item}) => 
                       <Text style={styles.transList}>
-                        Amount: {item.amount} Date: {item.date} Description: {item.description} 
+                        Category: {item.category} Amount: {item.amount} Date: {item.date} Description: {item.description} 
                         <Button styles= {styles.buttonContainer} title= 'Delete' onPress={() => this.deleteTransaction(item.description)}> 
                           Delete transaction</Button>
                       </Text>}>

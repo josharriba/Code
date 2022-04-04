@@ -118,11 +118,12 @@ class FirebaseHandler extends React.Component {
         .then(() => console.log('User signed out!'));
     }
 
-    enterTransaction(date, description, amount) {
+    enterTransaction(date, description, amount, category) {
        userList.doc(auth().currentUser.email).collection('Transactions').add({
             date: date,
             description: description,
-            amount: amount
+            amount: amount, 
+            category: category
          });
     }
 

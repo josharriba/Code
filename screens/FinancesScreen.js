@@ -2,7 +2,8 @@ import React from 'react';
   import { Alert, StyleSheet, Modal, Button, TouchableOpacity, Text, View, TouchableHighlight, TextInput, StackNavigator } from 'react-native';
 import db from '../components/FirebaseHandler'
 import colors from '../assets/colors/colors';
-
+import Dropdown from 'react-native-element-dropdown'
+import {Picker} from '@react-native-picker/picker'
 
 class FinancesScreen extends React.Component {
 
@@ -12,17 +13,34 @@ class FinancesScreen extends React.Component {
       date: '',
       description: '',
       amount: '',
+      category: [
+        {label: 'Housing', value: 'housing', key:1},
+        {label: 'Transportation', value: 'transportation', key:2},
+        {label: 'Food', value: 'food', key:3},
+        {label: 'Insurance', value: 'insurance', key:4},
+        {label: 'Savings', value: 'savings', key:5},
+        {label: 'Miscelaneous bills', value: 'miscelaneous bills', key:6},
+        {label: 'Personal/hobby', value: 'personal', key:7},
+        {label: 'Select a category', value: 'Enter a category for your transaction', key:8},
+      ],
+      selected: 'Enter a category for your transaction'
     }
   }
-
+  
   enterTransaction() {
-    db.enterTransaction(this.state.date, this.state.description, this.state.amount);
+    db.enterTransaction(this.state.date, this.state.description, this.state.amount, this.state.selected);
     this.setState({
       date: '',
       description: '',
-      amount: ''
+      amount: '', 
+      selected: 'Enter a category for your transaction'
     })
     Alert.alert('Transaction successfully recorded.');
+  }
+
+  async onValueChange(value) {
+    this.setState({ selected: value });
+    console.log(this.state.selected);
   }
 
   updateInput = (val, prop) => {
@@ -55,6 +73,23 @@ class FinancesScreen extends React.Component {
             <Button title="Profile"
             onPress={() => this.props.navigation.navigate('Profile')}
             /> */}
+             <Picker
+              prompt="Select a transaction category"
+              mode="dropdown"
+              style={{height: 50, width:200, padding:200}}
+              
+              selectedValue={this.state.selected}
+              onValueChange={this.onValueChange.bind(this)}
+            >
+              {this.state.category.map((item, index) => (
+                <Picker.Item
+                  color= {colors.primary}
+                  label={item.label}
+                  value={item.value}
+                  index={index}
+                />
+              ))}
+          </Picker>
             <TextInput 
               style={styles.textContainer}
               placeholder="date"
@@ -76,6 +111,8 @@ class FinancesScreen extends React.Component {
               value = {this.state.amount}
               onChangeText={(input) => this.updateInput(input, 'amount')}
             />
+           
+
             <TouchableOpacity 
             style={styles.buttonContainer1}
             //title="Enter transaction"
