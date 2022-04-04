@@ -72,10 +72,12 @@ class FinancesScreen extends React.Component {
               mode="dropdown"
               style={{
                 height: 50, 
-                width:200, 
-                padding:200, 
+                width: 300, 
+                 
                 position: "absolute",
-                  top: "5%"}}
+                  top: "41%",
+                backgroundColor: colors.background
+                }}
               
               selectedValue={this.state.selected}
               onValueChange={this.onValueChange.bind(this)}
@@ -252,9 +254,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     fontSize: 12,
     fontFamily: "Montserrat-Medium",
-    color: colors.background,
+    color: colors.secondary,
     position: 'absolute',
-    top: 280,
+    top: "55%",
     //marginLeft: '30%'
   },
 

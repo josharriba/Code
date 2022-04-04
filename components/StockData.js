@@ -18,7 +18,8 @@ class StockData extends React.Component {
       modalVisible: false,
       favoritesCalled: false, 
       timeSeriesType: '', 
-      favoriteList: ''
+      favoriteList: '', 
+      search: false
     }
   }
   
@@ -132,7 +133,12 @@ class StockData extends React.Component {
 }
 
   componentDidMount() {
-    this.fetchStock();
+    this.setState({
+      search: false,
+      stockSymbol: '',
+      stockChartYValues: [],
+      stockCharYValues: []
+    });
   }
 
   fetchStock() {
@@ -168,7 +174,8 @@ class StockData extends React.Component {
         pointerToThis.setState({
           stockChartXValues: stockChartXValuesFunction,
           stockChartYValues: stockChartYValuesFunction, 
-          timeSeriesType: 'Daily'
+          timeSeriesType: 'Daily',
+          search: true
         });
       });
     
@@ -176,7 +183,7 @@ class StockData extends React.Component {
 
   render() {
     const {modalVisible} = this.state;
-    if(this.state.stockSymbol == '') {
+    if(this.state.search == false || this.state.stockChartXValues == []) {
       return (
         <View style = {styles.container}>
           <Modal

@@ -179,68 +179,35 @@ class DashboardScreen extends React.Component {
                       keyExtractor={(x,i) => i}
                       renderItem={({item}) => 
                       <Text style={styles.transList}>
-                        Category: {item.category} Amount: {item.amount} Date: {item.date} Description: {item.description} 
-                        <Button styles= {styles.buttonContainer} title= 'Delete' onPress={() => this.deleteTransaction(item.description)}> 
-                          Delete transaction</Button>
+                        Category: {item.category} {'\n'} Amount: {item.amount} {'\n'} Date: {item.date} {'\n'} Description: {item.description} {'\n'}
+                          <TouchableOpacity 
+                              style={styles.buttonContainer2} 
+                              title="Delete"
+                              onPress={() => this.deleteTransaction(item.description)}
+                              >
+                              <Text style={styles.buttonText}> Delete </Text>
+                          </TouchableOpacity>
                       </Text>}>
 
             </FlatList>
-            {/* <Text styles={styles.modalText}>
-              {JSON.stringify(this.state.trans)}
-            </Text> */}
-            {/* <Text style={styles.modalText}> 
-              {this.state.dates}</Text>
-
-              <Text style={styles.modalText}> 
-              {this.state.descriptions}</Text>
-
-              <Text style={styles.modalText}> 
-              {this.state.amounts}</Text> */}
-            
-          <TouchableOpacity
-            style={styles.buttonContainer1}
-            title="close"
+            <TouchableOpacity
+              style={styles.buttonContainer1}
+              title="close"
                 onPress={() => this.setModalVisible(!modalVisible)}
               >
                 <Text style={styles.text}>Close</Text>
               </TouchableOpacity> 
            
           </Modal>
-        {/* <Text style={{fontSize: 20, fontWeight: 'bold'}}>
-          Recent Transactions: {toString(db.state.trans)}
-        </Text> */}
-        <Button
-          style={styles.buttonContainer}
-          title="Show Transactions"
-          onPress={() => this.getTransactions()}
-        />
+     
         <TouchableOpacity 
             style={styles.buttonContainer} 
-            title="Home"
-            onPress={() => this.props.navigation.navigate('Home')}
+            title="Show Transactions"
+            onPress={() => this.getTransactions()}
             >
-              <Text style={styles.buttonText}>Home</Text>
+              <Text style={styles.buttonText}>Show Transactions</Text>
               </TouchableOpacity>
-        {/* <Button
-          title="Login"
-          onPress={() => this.props.navigation.navigate('Login')}
-        />
-        <Button
-          title="Stocks"
-          onPress={() => this.props.navigation.navigate('Stocks')}
-        />
-        <Button
-          title="Finances"
-          onPress={() => this.props.navigation.navigate('Finances')}
-        />
-        <Button
-          title="Profile"
-          onPress={() => this.props.navigation.navigate('Profile')}
-        />
-        <Button
-          title="News"
-          onPress={() => this.props.navigation.navigate('News')}
-        /> */}
+      
       </View>
     );
   }
@@ -256,7 +223,9 @@ const styles = StyleSheet.create({
   },  
   transList: {
     color: colors.primary,
-    padding: 10
+    padding: 10, 
+    fontSize: 16, 
+    borderBottomColor: colors.secondary
   },
   titleText: {
     fontFamily: 'Montserrat-SemiBold',
@@ -284,13 +253,22 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     position: 'absolute',
-      top: 580,
+      top: "15%",
       left: 45,
       backgroundColor: colors.background,
       borderRadius: 10,
       paddingVertical: 10,
       paddinghorizontal: 20,
       width: 300
+  },
+  buttonContainer2: {
+      top: 10,
+      left: 45,
+      backgroundColor: colors.background,
+      borderRadius: 10,
+      paddingVertical: 10,
+      paddinghorizontal: 20,
+      width: 150, 
   },
   buttonContainer1: {
     position: 'absolute',

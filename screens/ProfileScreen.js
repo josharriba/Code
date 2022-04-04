@@ -172,13 +172,13 @@ class ProfileScreen extends React.Component {
               <Text style={styles.buttonText2}>Update Address</Text>
           </TouchableOpacity>
 
-          <TouchableOpacity 
+          {/* <TouchableOpacity 
             style={styles.buttonContainer} 
             title="Home"
             onPress={() => this.props.navigation.navigate('Home')}
             >
               <Text style={styles.buttonText}>Home</Text>
-          </TouchableOpacity>
+          </TouchableOpacity> */}
 
           <TouchableOpacity 
             style={styles.buttonContainer2} 
@@ -226,7 +226,8 @@ class ProfileScreen extends React.Component {
       borderBottomWidth: .8,
       borderBottomLeftRadius: 100,
       borderBottomRightRadius: 100,
-      marginBottom: 20
+      marginBottom: 20,
+      top: 22
     },
     buttonContainer: {
       position: 'absolute',
