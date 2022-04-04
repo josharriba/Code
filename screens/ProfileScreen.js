@@ -172,6 +172,7 @@ class ProfileScreen extends React.Component {
               <Text style={styles.buttonText2}>Update Address</Text>
           </TouchableOpacity>
 
+<<<<<<< HEAD
           {/* <TouchableOpacity 
             style={styles.buttonContainer} 
             title="Home"
@@ -179,6 +180,9 @@ class ProfileScreen extends React.Component {
             >
               <Text style={styles.buttonText}>Home</Text>
           </TouchableOpacity> */}
+=======
+        
+>>>>>>> bd5bb100182936d193b0da24ea37eb7186c99206
 
           <TouchableOpacity 
             style={styles.buttonContainer2} 
@@ -215,6 +219,7 @@ class ProfileScreen extends React.Component {
       //paddingVertical: 10,
     },
     textContainer: {
+      top: '5%',
       textAlign: 'center',
       justifyContent: 'center',
       fontSize: 14,
@@ -230,7 +235,7 @@ class ProfileScreen extends React.Component {
       top: 22
     },
     buttonContainer: {
-      position: 'absolute',
+     //position: 'absolute',
       top: 550,
       left: 45,
       backgroundColor: colors.background,
@@ -240,6 +245,7 @@ class ProfileScreen extends React.Component {
       width: 300
     },
     buttonContainer1: {
+      top: '5%',
       elevation: 8,
       backgroundColor: colors.secondary,
       borderRadius: 8,
