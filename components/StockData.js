@@ -315,12 +315,6 @@ class StockData extends React.Component {
               rangeselector: {buttons: [
                 {
                   count: 1,
-                  label: '1 week',
-                  step: 'week',
-                  stepmode: 'backward'
-                },
-                {
-                  count: 1,
                   label: '1 month',
                   step: 'month',
                   stepmode: 'backward'

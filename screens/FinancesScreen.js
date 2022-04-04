@@ -21,7 +21,7 @@ class FinancesScreen extends React.Component {
         {label: 'Savings', value: 'savings', key:5},
         {label: 'Miscelaneous bills', value: 'miscelaneous bills', key:6},
         {label: 'Personal/hobby', value: 'personal', key:7},
-        {label: 'Select a category', value: 'Enter a category for your transaction', key:8},
+        {label: 'Select a category from this menu', value: 'Enter a category for your transaction', key:8},
       ],
       selected: 'Enter a category for your transaction'
     }
@@ -58,12 +58,6 @@ class FinancesScreen extends React.Component {
             >
               <Text style={styles.buttonText}>Home</Text>
           </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.buttonContainer2}
-            onPress={() => this.props.navigation.navigate('Budgeting')}
-            >
-              <Text style={styles.buttonText}>Budgeting</Text>
-          </TouchableOpacity>
             {/* <Button title="Stocks"
             onPress={() => this.props.navigation.navigate('Stocks')}
             />
@@ -76,7 +70,12 @@ class FinancesScreen extends React.Component {
              <Picker
               prompt="Select a transaction category"
               mode="dropdown"
-              style={{height: 50, width:200, padding:200}}
+              style={{
+                height: 50, 
+                width:200, 
+                padding:200, 
+                position: "absolute",
+                  top: "5%"}}
               
               selectedValue={this.state.selected}
               onValueChange={this.onValueChange.bind(this)}
@@ -199,7 +198,7 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     position: 'absolute',
-      top: 540,
+      top: "75%",
       left: 45,
       backgroundColor: colors.background,
       borderRadius: 10,
@@ -209,7 +208,7 @@ const styles = StyleSheet.create({
   },
   buttonContainer1: {
     position: 'absolute',
-      top: 220,
+      top: "60%",
       left: 45,
     elevation: 8,
     backgroundColor: colors.secondary,
