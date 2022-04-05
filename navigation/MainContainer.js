@@ -58,6 +58,8 @@ export default function MainContainer() {
                             iconName = focused ? 'clipboard' : 'clipboard-outline';
                         } else if (rn === "News")   {
                             iconName = focused ? 'newspaper' : 'newspaper-outline';
+                        } else if (rn === "Signup")   {
+                            iconName = focused ? 'add' : 'add-outline';
                         }
 
                         return <Ionicons name={iconName} size={size} color={color}/>;
@@ -72,6 +74,7 @@ export default function MainContainer() {
             <Tab.Screen name="Login" component={LoginScreen} options={{tabBarStyle: {display: "none"}}} />
             <Tab.Screen name="Dashboard" component={DashboardScreen} />
             <Tab.Screen name="News" component={NewsScreen} />
+            <Tab.Screen name="Signup" component={SignupScreen} options={{tabBarStyle: {dispaly: "none"}}} />
 
             </Tab.Navigator>
         </NavigationContainer>
