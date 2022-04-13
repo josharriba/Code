@@ -76,7 +76,8 @@ class FinancesScreen extends React.Component {
                  
                 position: "absolute",
                   top: "41%",
-                backgroundColor: colors.background
+                backgroundColor: colors.background,
+                
                 }}
               
               selectedValue={this.state.selected}

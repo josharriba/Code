@@ -1,9 +1,10 @@
 //profile page 
 import React from 'react';
-  import { StyleSheet, Button, Text, View, TouchableOpacity, TouchableHighlight, TextInput, StackNavigator, Alert } from 'react-native';
+  import { StyleSheet, Button, KeyboardAvoidingView, Text, View, TouchableOpacity, TouchableHighlight, TextInput, StackNavigator, Alert, Body } from 'react-native';
 import db from '../components/FirebaseHandler'
 import colors from './assets/colors/colors';
 import auth from '@react-native-firebase/auth';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import firestore from '@react-native-firebase/firestore'
 import TouchHistoryMath from 'react-native/Libraries/Interaction/TouchHistoryMath';
 
@@ -125,9 +126,28 @@ class ProfileScreen extends React.Component {
   }
 
     render() {
+      
       return(
-        <View style={styles.container}>
+        
+        <KeyboardAwareScrollView 
+        style={{ backgroundColor: 'white' }}
+        contentContainerStyle={styles.container1}
+        resetScrollToCoords={{ x: 0, y: 0 }}>
+        <View>
+        
+
           <Text style={styles.text}>Name: {this.state.name}</Text>
+          <Text style={styles.text}>Phone Number: {this.state.phoneNum}</Text>
+          <Text style={styles.text}>Address: {this.state.address}</Text>
+
+          <TouchableOpacity 
+            style={styles.buttonContainer2} 
+            title="Delete Account"
+            onPress={() => this.deleteAccountAlert()}
+            >
+              <Text style={styles.buttonText3}>Delete Account</Text>
+          </TouchableOpacity>
+        
           <TextInput 
             style={styles.textContainer}
             placeholder="update your name" 
@@ -142,7 +162,7 @@ class ProfileScreen extends React.Component {
               <Text style={styles.buttonText2}>Update Name</Text>
           </TouchableOpacity>
 
-          <Text style={styles.text1}>Phone Number: {this.state.phoneNum}</Text>
+          
           <TextInput 
             style={styles.textContainer}
             placeholder="update your phone number" 
@@ -157,7 +177,7 @@ class ProfileScreen extends React.Component {
               <Text style={styles.buttonText2}>Update Phone Number</Text>
           </TouchableOpacity> 
 
-          <Text style={styles.text2}>Address: {this.state.address}</Text>
+          
           <TextInput 
             style={styles.textContainer}
             placeholder="update your address" 
@@ -172,13 +192,7 @@ class ProfileScreen extends React.Component {
               <Text style={styles.buttonText2}>Update Address</Text>
           </TouchableOpacity>
 
-          <TouchableOpacity 
-            style={styles.buttonContainer2} 
-            title="Delete Account"
-            onPress={() => this.deleteAccountAlert()}
-            >
-              <Text style={styles.buttonText3}>Delete Account</Text>
-          </TouchableOpacity>
+      
             {/* <Button title="Stocks"
             onPress={() => this.props.navigation.navigate('Stocks')}
             />
@@ -191,23 +205,26 @@ class ProfileScreen extends React.Component {
             <Button title="Delete Account" onPress={() => this.deleteAccountAlert()}
             /> */}
 
-
+    
         </View>
+        </KeyboardAwareScrollView>
+        
         );
     }
   }
 
   const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      alignItems:'center', 
+    
+    container1: {
+     flex: 1,
+      padding: 15,
+      justifyContent: 'center',
       backgroundColor: "white", 
-      justifyContent:'center'
-      
-      //paddingVertical: 10,
+      //marginBottom: 0,
+      marginTop: -110,
     },
     textContainer: {
-      top: '5%',
+      top: '10%',
       textAlign: 'center',
       justifyContent: 'center',
       fontSize: 14,
@@ -220,27 +237,30 @@ class ProfileScreen extends React.Component {
       borderBottomLeftRadius: 100,
       borderBottomRightRadius: 100,
       marginBottom: 20,
-      top: 22
     },
     buttonContainer: {
-     //position: 'absolute',
+     position: 'absolute',
       top: 550,
       left: 45,
       backgroundColor: colors.background,
       borderRadius: 10,
       paddingVertical: 10,
       paddinghorizontal: 20,
-      width: 300
+      width: 300,
+      marginBottom: 30
     },
     buttonContainer1: {
-      top: '5%',
+      //position: 'absolute',
+      top: '10%',
       elevation: 8,
+      marginLeft: '14%',
       backgroundColor: colors.secondary,
       borderRadius: 8,
       paddingVertical: 10,
       paddingHorizontal: 14,
       marginTop: 4,
-      marginBottom: 4
+      marginBottom: 4,
+      width: 260
     },
     buttonText: {
       textAlign: 'center',
@@ -252,15 +272,16 @@ class ProfileScreen extends React.Component {
         color: colors.primary
     },
     buttonContainer2: {
-      position: 'absolute',
-      top: 110,
-      left: 35,
-      elevation: 2,
+      //position: 'absolute',
+      top: '5%',
+      //left: 35,
+      elevation: 7,
       backgroundColor: "darkred",
       borderRadius: 10,
-      paddingVertical: 6,
-      paddingHorizontal: 10,
-      marginBottom: 0
+      paddingVertical: 2,
+      paddingHorizontal: 3,
+      // marginBottom: 0,
+      width: 80
     },
     buttonText1: {
       padding: 5,
@@ -287,20 +308,18 @@ class ProfileScreen extends React.Component {
       color: "white"
     },
     text: {
-      position: 'absolute',
-      top: 0,
-      marginTop: 20,
+     // position: 'absolute',
+      alignItems: 'flex-start',
+      marginTop: 7,
       //textAlign: 'center',
       justifyContent: 'center',
       fontSize: 15,
       fontFamily: "Montserrat-SemiBold",
-      height: 40, width: "100%",
-      borderRadius: 5,
-      paddingHorizontal: 20,
-      marginLeft:'30%'
+      paddingHorizontal: 10,
+      marginLeft:'0%'
     },
     text1: {
-      position: 'absolute',
+      //position: 'absolute',
       top: 30,
       marginTop: 20,
       //textAlign: 'center',
@@ -313,7 +332,7 @@ class ProfileScreen extends React.Component {
       marginLeft:'30%'
     },
     text2: {
-      position: 'absolute',
+      //position: 'absolute',
       top: 60,
       marginTop: 20,
       //textAlign: 'center',

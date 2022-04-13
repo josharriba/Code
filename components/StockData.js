@@ -434,13 +434,14 @@ const styles = StyleSheet.create({
     paddingHorizontal: 14
   },
   delContainer: {
-    width: 70,
+    //width: 70,
     elevation: 8,
-    color: colors.primary,
     backgroundColor: colors.background,
     borderRadius: 10,
     paddingVertical: 10,
-    paddingHorizontal: 14
+    paddingHorizontal: 14,
+    marginTop: 4,
+    marginBottom: 4
   },
   buttonContainer1: {
     elevation: 8,

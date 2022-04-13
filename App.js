@@ -13,6 +13,7 @@
  import auth from '@react-native-firebase/auth';
  import firestore from '@react-native-firebase/firestore';
  import {StyleSheet, Button, Text, View, TextInput} from 'react-native';
+ import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
  
  
  import LoginScreen from './screens/LoginScreen';
