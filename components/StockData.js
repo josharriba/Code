@@ -29,7 +29,13 @@ class StockData extends React.Component {
   }
 
   addFavorite() {
-    db.addFavoriteStock(this.state.stockSymbol);
+    if(this.state.stockCharXValues == []) {
+      db.addFavoriteStock(this.state.stockSymbol);
+    }
+    else{
+      Alert.alert("The stock symbol you entered is invalid")
+    }
+    
   }
 
   getFavoriteStocks() {
