@@ -24,7 +24,7 @@ import { Colors } from 'react-native/Libraries/NewAppScreen';
     }
 
     login = () => {
-      if(this.state.email === '' && this.state.password === '') {
+      if(this.state.email === '' || this.state.password === '') {
         Alert.alert('Enter email and password to signin')
       } 
       else {
@@ -33,8 +33,7 @@ import { Colors } from 'react-native/Libraries/NewAppScreen';
         .signInWithEmailAndPassword(this.state.email, this.state.password)
         .then((res) => {
             this.currUser = auth().currentUser.email;
-            userName  = db.getName();
-            this.props.navigation.navigate('Home', {username: userName}); 
+            //this.props.navigation.navigate('Home'); 
             console.log('User logged in successfully')
         })
         .catch((error) => {
@@ -45,7 +44,10 @@ import { Colors } from 'react-native/Libraries/NewAppScreen';
             }
             if(errorCode === 'auth/invalid-user-token' || errorCode === 'auth/user-token-expired' || errorCode === 'auth/invalid-email') {
               Alert.alert('Invalid email. Please try again!')
-            }   
+            }  
+            else {
+              Alert.alert(errorMessage);
+            } 
         });
         this.setState({
           email: '', 

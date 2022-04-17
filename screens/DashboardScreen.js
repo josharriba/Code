@@ -173,56 +173,62 @@ class DashboardScreen extends React.Component {
     // this.setModalVisible(false);
   }
 
-  render() {
-    // const{modalVisible} = this.state;
-    return (
-      <View style={{flex: 1, backgroundColor:"white", alignItems: 'center'}}>
-        {/* <Modal
-          animationType="slide"
-          visible={modalVisible}
-          presentationStyle="fullScreen"
-          onRequestClose={() => {
-            Alert.alert("Modal has been closed.");
-            this.setModalVisible(!modalVisible);
-          }}
-          > */}
-            <Text styles={styles.title}> Transactions: </Text>
-            <FlatList 
-                      data={this.state.trans}
-                      keyExtractor={(x,i) => i}
-                      renderItem={({item}) => 
-                      <Text style={styles.transList}>
-                        Category: {<Text style={styles.subtitle}>{item.category}</Text>}{"\n"}Amount: {<Text style={styles.subtitle}>{item.amount}</Text>}{"\n"}Date: {<Text style={styles.subtitle}>{item.date}</Text>}{"\n"}Description: {<Text style={styles.subtitle}>{item.description}</Text>} 
-                        <TouchableOpacity
-                        styles= {styles.delContainer} 
-                        title= 'Delete' 
-                        onPress={() => this.deleteTransaction(item.id)}
-                        > 
-                            <Text style={styles.delText}>Delete</Text>
-                          </TouchableOpacity>
-                      </Text>
-                    }>
+    render() {
+      return(
+        <Transactions> </Transactions>
+      )
+    }
 
-            </FlatList>
-          {/* <TouchableOpacity
-            style={styles.buttonContainer1}
-            title="close"
-                onPress={() => this.setModalVisible(!modalVisible)}
-              >
-                <Text style={styles.text}>Close</Text>
-              </TouchableOpacity>  */}
+  // render() {
+  //   // const{modalVisible} = this.state;
+  //   return (
+  //     <View style={{flex: 1, backgroundColor:"white", alignItems: 'center'}}>
+  //       {/* <Modal
+  //         animationType="slide"
+  //         visible={modalVisible}
+  //         presentationStyle="fullScreen"
+  //         onRequestClose={() => {
+  //           Alert.alert("Modal has been closed.");
+  //           this.setModalVisible(!modalVisible);
+  //         }}
+  //         > */}
+  //           <Text styles={styles.title}> Transactions: </Text>
+  //           <FlatList 
+  //                     data={this.state.trans}
+  //                     keyExtractor={(x,i) => i}
+  //                     renderItem={({item}) => 
+  //                     <Text style={styles.transList}>
+  //                       Category: {<Text style={styles.subtitle}>{item.category}</Text>}{"\n"}Amount: {<Text style={styles.subtitle}>{item.amount}</Text>}{"\n"}Date: {<Text style={styles.subtitle}>{item.date}</Text>}{"\n"}Description: {<Text style={styles.subtitle}>{item.description}</Text>} 
+  //                       <TouchableOpacity
+  //                       styles= {styles.delContainer} 
+  //                       title= 'Delete' 
+  //                       onPress={() => this.deleteTransaction(item.id)}
+  //                       > 
+  //                           <Text style={styles.delText}>Delete</Text>
+  //                         </TouchableOpacity>
+  //                     </Text>
+  //                   }>
+
+  //           </FlatList>
+  //         {/* <TouchableOpacity
+  //           style={styles.buttonContainer1}
+  //           title="close"
+  //               onPress={() => this.setModalVisible(!modalVisible)}
+  //             >
+  //               <Text style={styles.text}>Close</Text>
+  //             </TouchableOpacity>  */}
            
-          {/* </Modal> */}
-        {/* <TouchableOpacity
-          style={styles.transButton}
-          onPress={() => this.getTransactions()}
-        >
-          <Text style={styles.text}>Show Transactions</Text>
-        </TouchableOpacity> */}
+  //         {/* </Modal> */}
+  //       {/* <TouchableOpacity
+  //         style={styles.transButton}
+  //         onPress={() => this.getTransactions()}
+  //       >
+  //         <Text style={styles.text}>Show Transactions</Text>
+  //       </TouchableOpacity> */}
         
-      </View>
-    );
-  }
+  //     </View>
+  //   );
+  // }
 }
 
 export default DashboardScreen;
