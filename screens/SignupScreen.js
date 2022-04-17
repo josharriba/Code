@@ -38,6 +38,7 @@ import { Colors } from 'react-native/Libraries/NewAppScreen';
                 password: '',
                 age: ''
             })
+            Alert.alert("Account successfully created. Please sign in")
             this.props.navigation.navigate('Login')
         }
     }

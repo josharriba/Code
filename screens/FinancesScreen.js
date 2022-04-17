@@ -13,6 +13,7 @@ class FinancesScreen extends React.Component {
       date: '',
       description: '',
       amount: '',
+      id: '',
       category: [
         {label: 'Housing', value: 'housing', key:1},
         {label: 'Transportation', value: 'transportation', key:2},
@@ -28,14 +29,19 @@ class FinancesScreen extends React.Component {
   }
   
   enterTransaction() {
-    db.enterTransaction(this.state.date, this.state.description, this.state.amount, this.state.selected);
-    this.setState({
-      date: '',
-      description: '',
-      amount: '', 
-      selected: 'Enter a category for your transaction'
-    })
-    Alert.alert('Transaction successfully recorded.');
+    if (this.state.date == '' || this.state.description == '' || this.state.amount == '') {
+      Alert.alert("You cannot leave any information blank!");
+    }
+    else {
+      db.enterTransaction(this.state.date, this.state.description, this.state.amount, this.state.selected);
+      this.setState({
+        date: '',
+        description: '',
+        amount: '', 
+        selected: 'Enter a category for your transaction'
+      })
+      Alert.alert('Transaction successfully recorded.');
+    }
   }
 
   async onValueChange(value) {

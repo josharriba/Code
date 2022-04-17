@@ -2,6 +2,7 @@ import React from 'react';
 import {Alert} from 'react-native'
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore'
+import uuid from 'react-native-uuid'
 
 class FirebaseHandler extends React.Component {
    
@@ -111,6 +112,7 @@ class FirebaseHandler extends React.Component {
         userList.doc(auth().currentUser.email).delete().then((res) => {
             console.log('User data deleted from app');
         })
+        auth().currentUser.delete()
     }
 
     signOut() {
@@ -123,7 +125,8 @@ class FirebaseHandler extends React.Component {
             date: date,
             description: description,
             amount: amount, 
-            category: category
+            category: category, 
+            id: uuid.v4()
          });
     }
 

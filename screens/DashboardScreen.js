@@ -18,6 +18,7 @@ import colors from '../assets/colors/colors';
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore'
 
+
 class DashboardScreen extends React.Component {
   constructor() {
     super();
@@ -31,6 +32,7 @@ class DashboardScreen extends React.Component {
        descriptions: [],
        amounts: [], 
        categories: [],
+       ids: [],
        trans: []
      };
     // console.log(db.state.trans)
@@ -55,12 +57,13 @@ class DashboardScreen extends React.Component {
       .collection('Transactions').get()
       .then(querySnapshot => {
           querySnapshot.forEach(doc => {
-              const{date, description, amount, category} = doc.data();
+              const{date, description, amount, category, id} = doc.data();
               this.state.transactions.push({
                   date, 
                   description, 
                   amount, 
-                  category
+                  category, 
+                  id
               }); 
           });
         this.mapTransactions();
@@ -81,12 +84,13 @@ class DashboardScreen extends React.Component {
       .collection('Transactions').get()
       .then(querySnapshot => {
           querySnapshot.forEach(doc => {
-              const{date, description, amount, category} = doc.data();
+              const{date, description, amount, category, id} = doc.data();
               this.state.transactions.push({
                   date, 
                   description, 
                   amount, 
-                  category
+                  category, 
+                  id
               }); 
           });
         this.mapTransactions();
@@ -119,6 +123,10 @@ class DashboardScreen extends React.Component {
       return item['category'];
     }),
 
+    ids: this.state.transactions.map(function(item) {
+      return item['id'];
+    }),
+
     trans:  this.state.transactions.map(function(item) {
       //console.log(item);
       return item
@@ -149,9 +157,9 @@ class DashboardScreen extends React.Component {
   // console.log(this.state.descriptions)
   } 
 
-  deleteTransaction(description) {
+  deleteTransaction(id) {
     const ref = firestore().collection('Users').doc(auth().currentUser.email)
-      .collection('Transactions').where('description', '==', description);
+      .collection('Transactions').where('id', '==', id);
 
     ref.get().then(function(querySnapshot) {
       querySnapshot.forEach(function(doc) {
@@ -161,6 +169,7 @@ class DashboardScreen extends React.Component {
     });
     console.log('Transaction deleted');
     Alert.alert('Transaction successfully deleted');
+    this.getTransactions();
     // this.setModalVisible(false);
   }
 
@@ -187,7 +196,7 @@ class DashboardScreen extends React.Component {
                         <TouchableOpacity
                         styles= {styles.delContainer} 
                         title= 'Delete' 
-                        onPress={() => this.deleteTransaction(item.description)}
+                        onPress={() => this.deleteTransaction(item.id)}
                         > 
                             <Text style={styles.delText}>Delete</Text>
                           </TouchableOpacity>
@@ -222,7 +231,8 @@ const styles = StyleSheet.create({
   delContainer: {
     width: 70,
     color: colors.primary,
-    paddingHorizontal: 14
+    paddingHorizontal: 14, 
+    left: "80%"
   },
   delText: {
     textAlign: 'center',
