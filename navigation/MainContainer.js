@@ -2,7 +2,7 @@ import * as React from 'react';
 import {View, Text} from 'react-native';
 
 import { NavigationContainer } from '@react-navigation/native';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { BottomTabBar, createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 //screens
@@ -42,8 +42,6 @@ export default function MainContainer() {
                     tabBarIcon: ({focused, color, size}) => {
                         let iconName;
                         let rn = route.name;
-
-
                         if (route.name === "Home")    {
                             iconName = focused ? 'home' : 'home-outline';
                         } else if (rn === "Stocks") {
@@ -52,15 +50,11 @@ export default function MainContainer() {
                             iconName = focused ? 'cash' : 'cash-outline';
                         } else if (rn === "Profile")    {
                             iconName = focused ? 'person' : 'person-outline';
-                        } else if (rn === "Login")  {
-                            iconName = focused ? 'log-in' : 'log-in-outline';
-                        } else if (rn === "Dashboard")  {
+                        }  else if (rn === "Dashboard")  {
                             iconName = focused ? 'clipboard' : 'clipboard-outline';
                         } else if (rn === "News")   {
                             iconName = focused ? 'newspaper' : 'newspaper-outline';
-                        } else if (rn === "Signup")   {
-                            iconName = focused ? 'add' : 'add-outline';
-                        }
+                        } 
 
                         return <Ionicons name={iconName} size={size} color={color}/>;
                     },
@@ -71,10 +65,11 @@ export default function MainContainer() {
             <Tab.Screen name="Stocks" component={StocksScreen} options={{headerShown: false}} />
             <Tab.Screen name="Finances" component={FinancesScreen} />
             <Tab.Screen name="Profile" component={ProfileScreen} />
-            <Tab.Screen name="Login" component={LoginScreen} options={{tabBarStyle: {display: "none"}}} />
+            <Tab.Screen name="Login" component={LoginScreen} options={{tabBarStyle: {display: "none"}, tabBarButton: () => null}} />
+            <Tab.Screen name="Signup" component={SignupScreen} options={{tabBarStyle: {display: "none"}, tabBarButton: () => null}} />
             <Tab.Screen name="Dashboard" component={DashboardScreen} />
             <Tab.Screen name="News" component={NewsScreen} />
-            <Tab.Screen name="Signup" component={SignupScreen} options={{tabBarStyle: {dispaly: "none"}}} />
+            
 
             </Tab.Navigator>
         </NavigationContainer>
