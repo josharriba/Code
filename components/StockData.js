@@ -30,10 +30,10 @@ class StockData extends React.Component {
 
   addFavorite() {
     if(this.state.stockCharXValues == []) {
-      db.addFavoriteStock(this.state.stockSymbol);
+      Alert.alert("The stock symbol you entered is invalid")
     }
     else{
-      Alert.alert("The stock symbol you entered is invalid")
+      db.addFavoriteStock(this.state.stockSymbol);
     }
     
   }
