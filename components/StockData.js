@@ -197,7 +197,7 @@ class StockData extends React.Component {
           visible={modalVisible}
           presentationStyle="fullScreen"
           onRequestClose={() => {
-            Alert.alert("Modal has been closed.");
+            Alert.alert("Favorites has been closed.");
             this.setModalVisible(!modalVisible);
           }}
           >
@@ -460,7 +460,7 @@ const styles = StyleSheet.create({
   },
   closeContainer: {
     position: 'absolute',
-      top: 670,
+      top: "90%",
       left: 75,
     justifyContent: 'center',
     elevation: 8,
