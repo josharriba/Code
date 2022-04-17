@@ -77,7 +77,7 @@ import { Colors } from 'react-native/Libraries/NewAppScreen';
             maxLength={18}
             secureTextEntry={true}
                 />
-        <Text style = {styles.text}>Your password must be at least 6 characters long with at least one number</Text>
+        <Text style = {styles.text}>Your password must be at least 6 characters long</Text>
       <TextInput style = {styles.text}
            placeholder="Age"
            placeholderTextColor = {"lightgray"}

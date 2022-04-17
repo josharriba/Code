@@ -13,12 +13,30 @@ import {
   Alert
 } from 'react-native';
 
+import {Picker} from '@react-native-picker/picker'
+
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 import colors from '../assets/colors/colors';
 
 function Transactions() {
   const [transactions, setTransactions] = useState([]);
+  const [modalVisible, setModalVisible] = useState(false);
+  const [modalDate, setModalDate] = useState();
+  const [modalDescription, setModalDescription] = useState();
+  const [modalCategory, setModalCategory] = useState();
+  const [modalAmount, setModalAmount] = useState();
+  const [modalID, setModalID] = useState();
+  const categories = [
+    {label: 'Housing', value: 'housing', key:1},
+    {label: 'Transportation', value: 'transportation', key:2},
+    {label: 'Food', value: 'food', key:3},
+    {label: 'Insurance', value: 'insurance', key:4},
+    {label: 'Savings', value: 'savings', key:5},
+    {label: 'Miscelaneous bills', value: 'miscelaneous bills', key:6},
+    {label: 'Personal/hobby', value: 'personal', key:7},
+    {label: 'Miscelaneous', value: 'miscelaneous', key:8},
+  ];
 
     useEffect(() => {
       const subscriber = firestore().collection('Users').doc(auth().currentUser.email)
@@ -50,10 +68,111 @@ function Transactions() {
     Alert.alert('Transaction successfully deleted');
   }
 
+  function updateTransaction(id, date, description, amount, category) {
+    setModalDate(date);
+    setModalDescription(description);
+    setModalAmount(amount);
+    setModalCategory(category);
+    setModalID(id);
+    setModalVisible(true)
+  }
+
+  function editTransaction(id, date, description, amount, category) {
+    setModalVisible(false);
+    const ref = firestore().collection('Users').doc(auth().currentUser.email)
+      .collection('Transactions').where('id', '==', id);
+
+    ref.get().then(function(querySnapshot) {
+      querySnapshot.forEach(function(doc) {
+        console.log(doc);
+        doc.ref.update({
+            date: date,
+            description: description,
+            amount: amount,
+            category: category
+        })
+      });
+    });
+  }
+
     
     return (
       <View style={{flex: 1, backgroundColor:"white", alignItems: 'center'}}>
             <Text styles={styles.title}> Transactions: </Text>
+            <Modal
+              visible={modalVisible}
+              onRequestClose={() => {
+                editTransaction(modalID, modalDate, modalDescription, modalAmount, modalCategory)
+                setModalVisible(!modalVisible)
+              }}
+              >
+                <Text style={{position: 'absolute', top:"55%", left:"1%"}}>
+                  Category: 
+              </Text>
+                <Picker
+              prompt="Select a transaction category"
+              mode="dropdown"
+              style={{
+                height: 50, 
+                width: 300, 
+                 
+                position: "absolute",
+                  top: "60%",
+                backgroundColor: colors.background,
+                
+                }}
+              selectedValue={modalCategory}
+              onValueChange={setModalCategory}
+            >
+              {categories.map((item, index) => (
+                <Picker.Item
+                  color= {colors.primary}
+                  label={item.label}
+                  value={item.value}
+                  index={index}
+                />
+              ))}
+          </Picker>
+          <Text style={{position: 'absolute', top:"10%", left:"1%"}}>
+            Date:
+          </Text>
+            <TextInput 
+              style={styles.textContainer}
+              placeholder="date"
+              placeholderTextColor="lightgrey"
+              value = {modalDate}
+              onChangeText={setModalDate}
+            />
+             <Text style={{position: 'absolute', top:"25%", left:"1%"}}>
+            Description:
+            </Text>
+            <TextInput 
+              style={styles.textContainer1}
+              placeholder="description"
+              placeholderTextColor="lightgrey"
+              value = {modalDescription}
+              onChangeText={setModalDescription}
+            />
+             <Text style={{position: 'absolute', top:"40%", left:"1%"}}>
+            Amount:
+            </Text>
+            <TextInput 
+              style={styles.textContainer2}
+              placeholder="amount"
+              placeholderTextColor="lightgrey"
+              value = {modalAmount}
+              onChangeText={setModalAmount}
+            />
+              <TouchableOpacity
+                    styles= {styles.buttonContainer} 
+                    title= 'Update transaction' 
+                    onPress={() => editTransaction(modalID, modalDate, modalDescription, modalAmount, modalCategory)}
+                    > 
+                    <Text style={styles.buttonText}>Save</Text>
+
+              </TouchableOpacity>
+            </Modal>
+
             <FlatList 
                       data={transactions}
                       keyExtractor={(x,i) => i}
@@ -66,6 +185,14 @@ function Transactions() {
                         onPress={() => deleteTransaction(item.id)}
                         > 
                             <Text style={styles.delText}>Delete</Text>
+
+                          </TouchableOpacity>
+                          <TouchableOpacity
+                            styles= {styles.editContainer} 
+                            title= 'Edit' 
+                            onPress={() => updateTransaction(item.id, item.date, item.description, item.amount, item.category)}
+                            > 
+                            <Text style={styles.editText}>Edit</Text>
                           </TouchableOpacity>
                       </Text>
                     }>
@@ -85,6 +212,23 @@ const styles = StyleSheet.create({
     paddingHorizontal: 14, 
     left: "80%"
   },
+  editContainer: {
+    width: 70,
+    color: colors.primary,
+    paddingHorizontal: 14, 
+    left: 15
+  },
+  editText: {
+    textAlign: 'center',
+    justifyContent: 'center',
+    //position: 'absolute',
+      top: 5,
+      left: 15,
+    fontSize: 12,
+    fontFamily: "Montserrat-Medium",
+    color: colors.secondary,
+    backgroundColor: colors.background
+  },
   delText: {
     textAlign: 'center',
     justifyContent: 'center',
@@ -96,24 +240,9 @@ const styles = StyleSheet.create({
     color: colors.secondary,
     backgroundColor: colors.background
   },
-  button: {
-    color: colors.primary,
-    paddingLeft: 10,
-
-  },  
   transList: {
     color: colors.primary,
-    padding: 10
-  },
-  titleText: {
-    fontFamily: 'Montserrat-SemiBold',
-    fontSize: 100,
-    fontWeight: 'bold',
-  },
-  ticker: {
-    fontFamily: 'sans-serif',
-    fontSize: 15,
-    fontWeight: 'bold',
+    padding: 15
   },
   subtitle: {
     fontFamily: 'sans-serif',
@@ -125,50 +254,22 @@ const styles = StyleSheet.create({
     padding: 10,
     backgroundColor: "white"
   },
-  square: {
-    width: 30,
-    height: 12,
-    backgroundColor: "gray"
-  },
   buttonContainer: {
-    position: 'absolute',
-      top: 580,
-      left: 45,
-      backgroundColor: colors.background,
-      borderRadius: 10,
-      paddingVertical: 10,
-      paddinghorizontal: 20,
-      width: 300
-  },
-  transButton: {
-      top: '5%',
-      backgroundColor: colors.secondary,
-      borderRadius: 10,
-      paddingVertical: 10,
-      paddinghorizontal: 20,
-      width: 300
-  },
-  buttonContainer1: {
-    position: 'absolute',
-      top: 590,
-      left: 45,
-    elevation: 8,
-    backgroundColor: colors.secondary,
-    borderRadius: 10,
-    paddingVertical: 10,
-    paddingHorizontal: 14,
-    marginTop: 4,
-    marginBottom: 4,
-    width: 300
+    width: "100%",
+    height: 75,
+    color: colors.primary,
+    position: 'relative',
+    top:10,
   },
   buttonText: {
     textAlign: 'center',
     justifyContent: 'center',
-      padding: 5,
-      //marginLeft: '40%',
-      fontFamily: "Montserrat-Medium",
-      fontSize: 20,
-      color: colors.primary
+    position: 'relative',
+      top: 475,
+    fontSize: 12,
+    fontFamily: "Montserrat-Medium",
+    color: colors.secondary,
+    backgroundColor: colors.background
   },
   buttonText2: {
     padding: 5,
@@ -177,30 +278,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     color: colors.primary
   },
-  text1: {
-    textAlign: 'center',
-    justifyContent: 'center',
-    fontSize: 15,
-    fontFamily: "Montserrat-Medium",
-    color: colors.primary,
-  },
-  text: {
-    textAlign: 'center',
-    justifyContent: 'center',
-    fontSize: 15,
-    fontFamily: "Montserrat-Medium",
-    color: colors.background,
-  },
-  modalText: {
-    fontSize: 15,
-    fontFamily: "Montserrat-Medium",
-    height: "90%", width: "100%",
-    borderRadius: 5,
-    paddingHorizontal: 20,
-    borderColor: 'lightgray',
-    borderWidth: 1,
-    marginBottom: 20,
-  },
+
   title: {
     fontFamily: "Montserrat-SemiBold",
     marginTop: 16,
@@ -214,5 +292,56 @@ const styles = StyleSheet.create({
     justifyContent: 'center'
     // fontSize: 200,
    // fontWeight: "bold"
-  }
+  },
+  textContainer: {
+    position: 'absolute',
+      top: "10%",
+      //left: 45,
+    textAlign: 'center',
+    justifyContent: 'center',
+    fontSize: 14,
+    fontFamily: "Montserrat-Medium",
+    height: 50, width: "100%",
+    borderRadius: 5,
+    paddingHorizontal: 20,
+    borderBottomColor: 'lightgray',
+    borderBottomWidth: .8,
+    borderBottomLeftRadius: 100,
+    borderBottomRightRadius: 100,
+    marginBottom: 20
+  },
+  textContainer1: {
+    position: 'absolute',
+      top: "25%",
+      //left: 45,
+    textAlign: 'center',
+    justifyContent: 'center',
+    fontSize: 14,
+    fontFamily: "Montserrat-Medium",
+    height: 50, width: "100%",
+    borderRadius: 5,
+    paddingHorizontal: 20,
+    borderBottomColor: 'lightgray',
+    borderBottomWidth: .8,
+    borderBottomLeftRadius: 100,
+    borderBottomRightRadius: 100,
+    marginBottom: 20
+  },
+  textContainer2: {
+    position: 'absolute',
+      top: "40%",
+      //left: 45,
+    textAlign: 'center',
+    justifyContent: 'center',
+    fontSize: 14,
+    fontFamily: "Montserrat-Medium",
+    height: 50, width: "100%",
+    borderRadius: 5,
+    paddingHorizontal: 20,
+    borderBottomColor: 'lightgray',
+    borderBottomWidth: .8,
+    borderBottomLeftRadius: 100,
+    borderBottomRightRadius: 100,
+    marginBottom: 20
+  },
 });

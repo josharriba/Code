@@ -9,38 +9,7 @@ class StocksScreen extends React.Component {
       return(
         <View style={styles.container}>
             
-          <StockData />
-          
-          {/*<TouchableOpacity 
-            style={styles.buttonContainer} 
-            title="Home"
-            onPress={() => this.props.navigation.navigate('Home')}
-            >
-              <Text style={styles.buttonText}>Home</Text>
-              </TouchableOpacity>
-      */}
-            {/* <TouchableOpacity
-            style={styles.buttonContainer1} 
-            title="Login"
-            onPress={() => this.props.navigation.navigate('Login')}
-            >
-               <Text style={styles.buttonText}>Login</Text>
-               </TouchableOpacity>
-            <TouchableOpacity
-            style={styles.buttonContainer2} 
-            title="Dashboard"
-            onPress={() => this.props.navigation.navigate('Dashboard')}
-            >
-              <Text style={styles.buttonText}>Dashboard</Text>
-              </TouchableOpacity>
-            <TouchableOpacity
-            style={styles.buttonContainer3} 
-            title="Finances"
-            onPress={() => this.props.navigation.navigate('Finances')}
-            >
-              <Text style={styles.buttonText}>Finances</Text>
-              </TouchableOpacity> */}
-            
+          <StockData />           
 
         </View>
         );

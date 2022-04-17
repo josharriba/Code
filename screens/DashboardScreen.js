@@ -173,6 +173,8 @@ class DashboardScreen extends React.Component {
     // this.setModalVisible(false);
   }
 
+ 
+
     render() {
       return(
         <Transactions> </Transactions>
