@@ -22,9 +22,9 @@ class FinancesScreen extends React.Component {
         {label: 'Savings', value: 'savings', key:5},
         {label: 'Miscelaneous bills', value: 'miscelaneous bills', key:6},
         {label: 'Personal/hobby', value: 'personal', key:7},
-        {label: 'Select a category from this menu', value: 'Enter a category for your transaction', key:8},
+        {label: 'Miscelaneous', value: 'miscelaneous', key:8},
       ],
-      selected: 'Enter a category for your transaction'
+      selected: 'miscelaneous'
     }
   }
   
