@@ -25,7 +25,7 @@ class DashboardScreen extends React.Component {
     // db.getTransactions();
      this.state = {
        transactions: [], 
-       modalVisible: false,
+      //  modalVisible: false,
        transactionsCalled: false, 
        dates: [],
        descriptions: [],
@@ -36,8 +36,12 @@ class DashboardScreen extends React.Component {
     // console.log(db.state.trans)
   }
 
-  setModalVisible = (visible) => {
-    this.setState({modalVisible: visible});
+  // setModalVisible = (visible) => {
+  //   this.setState({modalVisible: visible});
+  // }
+
+  componentDidMount() {
+    this.getTransactions();
   }
 
   getTransactions() {
@@ -45,7 +49,7 @@ class DashboardScreen extends React.Component {
       this.setState({
         transactions: []
       });
-      this.setModalVisible(true);
+      // this.setModalVisible(true);
       //console.log(auth().currentUser.email)
       firestore().collection('Users').doc(auth().currentUser.email)
       .collection('Transactions').get()
@@ -72,7 +76,7 @@ class DashboardScreen extends React.Component {
       this.setState({
         transactionsCalled: true
       });
-      this.setModalVisible(true);
+      // this.setModalVisible(true);
       firestore().collection('Users').doc(auth().currentUser.email)
       .collection('Transactions').get()
       .then(querySnapshot => {
@@ -157,14 +161,14 @@ class DashboardScreen extends React.Component {
     });
     console.log('Transaction deleted');
     Alert.alert('Transaction successfully deleted');
-    this.setModalVisible(false);
+    // this.setModalVisible(false);
   }
 
   render() {
-    const{modalVisible} = this.state;
+    // const{modalVisible} = this.state;
     return (
       <View style={{flex: 1, backgroundColor:"white", alignItems: 'center'}}>
-        <Modal
+        {/* <Modal
           animationType="slide"
           visible={modalVisible}
           presentationStyle="fullScreen"
@@ -172,7 +176,7 @@ class DashboardScreen extends React.Component {
             Alert.alert("Modal has been closed.");
             this.setModalVisible(!modalVisible);
           }}
-          >
+          > */}
             <Text styles={styles.title}> Transactions: </Text>
             <FlatList 
                       data={this.state.trans}
@@ -191,57 +195,22 @@ class DashboardScreen extends React.Component {
                     }>
 
             </FlatList>
-            {/* <Text styles={styles.modalText}>
-              {JSON.stringify(this.state.trans)}
-            </Text> */}
-            {/* <Text style={styles.modalText}> 
-              {this.state.dates}</Text>
-
-              <Text style={styles.modalText}> 
-              {this.state.descriptions}</Text>
-
-              <Text style={styles.modalText}> 
-              {this.state.amounts}</Text> */}
-            
-          <TouchableOpacity
+          {/* <TouchableOpacity
             style={styles.buttonContainer1}
             title="close"
                 onPress={() => this.setModalVisible(!modalVisible)}
               >
                 <Text style={styles.text}>Close</Text>
-              </TouchableOpacity> 
+              </TouchableOpacity>  */}
            
-          </Modal>
-        {/* <Text style={{fontSize: 20, fontWeight: 'bold'}}>
-          Recent Transactions: {toString(db.state.trans)}
-        </Text> */}
-        <TouchableOpacity
+          {/* </Modal> */}
+        {/* <TouchableOpacity
           style={styles.transButton}
           onPress={() => this.getTransactions()}
         >
           <Text style={styles.text}>Show Transactions</Text>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
         
-        {/* <Button
-          title="Login"
-          onPress={() => this.props.navigation.navigate('Login')}
-        />
-        <Button
-          title="Stocks"
-          onPress={() => this.props.navigation.navigate('Stocks')}
-        />
-        <Button
-          title="Finances"
-          onPress={() => this.props.navigation.navigate('Finances')}
-        />
-        <Button
-          title="Profile"
-          onPress={() => this.props.navigation.navigate('Profile')}
-        />
-        <Button
-          title="News"
-          onPress={() => this.props.navigation.navigate('News')}
-        /> */}
       </View>
     );
   }
