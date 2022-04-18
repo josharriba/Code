@@ -1,9 +1,10 @@
 import React from 'react';
-  import { Alert, StyleSheet, Modal, Button, TouchableOpacity, Text, View, TouchableHighlight, TextInput, StackNavigator } from 'react-native';
+  import { Alert, StyleSheet, Modal, Button, TouchableOpacity, KeyboardAvoidingView, Text, View, TouchableHighlight, TextInput, StackNavigator } from 'react-native';
 import db from '../components/FirebaseHandler'
 import colors from '../assets/colors/colors';
 import Dropdown from 'react-native-element-dropdown'
 import {Picker} from '@react-native-picker/picker'
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 
 class FinancesScreen extends React.Component {
 
@@ -51,31 +52,44 @@ class FinancesScreen extends React.Component {
 
     render() {
       return(
-        <View style={{flex: 1, alignItems:'center', backgroundColor: 'white',justifyContent:'center'}}>
-          <TouchableOpacity 
-            style={styles.buttonContainer} 
-            onPress={() => this.props.navigation.navigate('Home')}
-            >
-              <Text style={styles.buttonText}>Home</Text>
-          </TouchableOpacity>
-            {/* <Button title="Stocks"
-            onPress={() => this.props.navigation.navigate('Stocks')}
+        <KeyboardAwareScrollView 
+       // style={styles.container1}
+        style={{backgroundColor: 'white'}} 
+        contentContainerStyle={styles.container1}
+        //resetScrollToCoords={{ x: 0, y: 0 }}>
+        >
+          <View style={styles.container}>
+            <TextInput 
+              style={styles.textContainer}
+              placeholder="date"
+              placeholderTextColor="lightgrey"
+              value = {this.state.date}
+              onChangeText={(input) => this.updateInput(input, 'date')}
             />
-            <Button title="Dashboard"
-            onPress={() => this.props.navigation.navigate('Dashboard')}
+            <TextInput 
+              style={styles.textContainer}
+              placeholder="description"
+              placeholderTextColor="lightgrey"
+              value = {this.state.description}
+              onChangeText={(input) => this.updateInput(input, 'description')}
             />
-            <Button title="Profile"
-            onPress={() => this.props.navigation.navigate('Profile')}
-            /> */}
+            <TextInput 
+              style={styles.textContainer}
+              placeholder="amount"
+              placeholderTextColor="lightgrey"
+              value = {this.state.amount}
+              onChangeText={(input) => this.updateInput(input, 'amount')}
+            />
+            <View style={styles.container}>
              <Picker
               prompt="Select a transaction category"
               mode="dropdown"
               style={{
-                height: 50, 
+                height: 30, 
                 width: 300, 
-                 
-                position: "absolute",
-                  top: "41%",
+                alignSelf: 'center',
+                //position: "absolute",
+                  top: '10%',
                 backgroundColor: colors.background,
                 
                 }}
@@ -92,27 +106,7 @@ class FinancesScreen extends React.Component {
                 />
               ))}
           </Picker>
-            <TextInput 
-              style={styles.textContainer}
-              placeholder="date"
-              placeholderTextColor="lightgrey"
-              value = {this.state.date}
-              onChangeText={(input) => this.updateInput(input, 'date')}
-            />
-            <TextInput 
-              style={styles.textContainer1}
-              placeholder="description"
-              placeholderTextColor="lightgrey"
-              value = {this.state.description}
-              onChangeText={(input) => this.updateInput(input, 'description')}
-            />
-            <TextInput 
-              style={styles.textContainer2}
-              placeholder="amount"
-              placeholderTextColor="lightgrey"
-              value = {this.state.amount}
-              onChangeText={(input) => this.updateInput(input, 'amount')}
-            />
+           
            
 
             <TouchableOpacity 
@@ -122,11 +116,17 @@ class FinancesScreen extends React.Component {
             >
               <Text style={styles.text}>Enter Transaction</Text>
               </TouchableOpacity>
+            
+            
+            </View>
+            
+            </View>
             <Text
-              style={[styles.textContainer3,styles.text1]}>
+              style={styles.text1}>
               You can view your transactions on the Dashboard Screen
             </Text>
-        </View>
+          </KeyboardAwareScrollView>
+          
         );
     }
 }
@@ -141,12 +141,21 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    padding: 10,
-    backgroundColor: "white"
+    //padding: 24,
+    backgroundColor: "white",
+    fontFamily: 'Montserrat-Medium'
   },
+  container1: {
+    flex: 1,
+     padding: 15,
+     justifyContent: 'center',
+     backgroundColor: "white", 
+     //marginBottom: 0,
+     //marginTop: -110,
+   },
   textContainer: {
-    position: 'absolute',
-      top: 20,
+    //position: 'absolute',
+      top: '0%',
       //left: 45,
     textAlign: 'center',
     justifyContent: 'center',
@@ -163,10 +172,10 @@ const styles = StyleSheet.create({
   },
   textContainer1: {
     position: 'absolute',
-      top: 80,
+      top: '20%',
       //left: 45,
     textAlign: 'center',
-    justifyContent: 'center',
+    //justifyContent: 'center',
     fontSize: 14,
     fontFamily: "Montserrat-Medium",
     height: 50, width: "100%",
@@ -195,25 +204,22 @@ const styles = StyleSheet.create({
     borderBottomRightRadius: 100,
     marginBottom: 20
   },
-  textContainer3: {
-    position: 'absolute',
-    top: 100,
-  },
   buttonContainer: {
-    position: 'absolute',
-      top: "75%",
+   // position: 'absolute',
+      top: '-40%',
       left: 45,
       backgroundColor: colors.background,
       borderRadius: 10,
-      paddingVertical: 10,
+      paddingVertical: 20,
       paddinghorizontal: 20,
       width: 300
   },
   buttonContainer1: {
-    position: 'absolute',
-      top: "60%",
-      left: 45,
+    //position: 'absolute',
+      top: "20%",
+      
     elevation: 8,
+    alignSelf: 'center',
     backgroundColor: colors.secondary,
     borderRadius: 10,
     paddingVertical: 10,
@@ -223,7 +229,7 @@ const styles = StyleSheet.create({
     width: 300
   },
   buttonContainer2: {
-    position: 'absolute',
+    //position: 'absolute',
       top: 450,
       left: 45,
     backgroundColor: "lightgray",
@@ -251,13 +257,14 @@ const styles = StyleSheet.create({
     //marginLeft: '30%'
   },
   text1: {
-    textAlign: 'center',
+  //postion: 'absolute',
+      top: '-45%',
+    alignSelf: 'center',
     justifyContent: 'center',
     fontSize: 12,
     fontFamily: "Montserrat-Medium",
-    color: colors.secondary,
-    position: 'absolute',
-    top: "55%",
+    color: colors.primary,
+    
     //marginLeft: '30%'
   },
 
