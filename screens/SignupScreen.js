@@ -12,7 +12,8 @@ import { Colors } from 'react-native/Libraries/NewAppScreen';
             name:'',
             email: '',
             password: '',
-            age: ''
+            age: '', 
+            digit: /^[0-9\b]+$/
         }  
       }
 
@@ -20,6 +21,14 @@ import { Colors } from 'react-native/Libraries/NewAppScreen';
         const state = this.state;
         state[prop] = val;
         this.setState(state);
+    }
+
+    updateInputNum = (val, prop) => {
+      if(this.state.digit.test(val)){
+        const state = this.state;
+        state[prop] = val;
+        this.setState(state);
+      }
     }
 
     registerNewUser = () => {
@@ -38,7 +47,8 @@ import { Colors } from 'react-native/Libraries/NewAppScreen';
                 password: '',
                 age: ''
             })
-            this.props.navigation.navigate('Login')
+            Alert.alert("Account successfully created. You will be signed in")
+            // this.props.navigation.navigate('Login')
         }
     }
 
@@ -55,9 +65,10 @@ import { Colors } from 'react-native/Libraries/NewAppScreen';
             placeholder="Email"
             placeholderTextColor = {"lightgray"}
             value = {this.state.email}
+            keyboardType="email-address"
             onChangeText={(input) => this.updateInput(input, 'email')}
                 />
-                <Text style = {styles.text} >Please enter your password in all lowercase</Text>
+                <Text style = {styles.text} >Please enter your email in all lowercase</Text>
         <TextInput style = {styles.text}
             placeholder="Password"
             placeholderTextColor = {"lightgray"}
@@ -66,12 +77,13 @@ import { Colors } from 'react-native/Libraries/NewAppScreen';
             maxLength={18}
             secureTextEntry={true}
                 />
-        <Text style = {styles.text}>Your password must be at least 6 characters long with at least one number</Text>
+        <Text style = {styles.text}>Your password must be at least 6 characters long</Text>
       <TextInput style = {styles.text}
            placeholder="Age"
            placeholderTextColor = {"lightgray"}
            value = {this.state.age}
-           onChangeText={(input) => this.updateInput(input, 'age')}
+           keyboardType="numeric"
+           onChangeText={(input) => this.updateInputNum(input, 'age')}
             />
 
     <TouchableOpacity

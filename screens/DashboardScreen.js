@@ -18,6 +18,7 @@ import colors from '../assets/colors/colors';
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore'
 
+
 class DashboardScreen extends React.Component {
   constructor() {
     super();
@@ -25,19 +26,24 @@ class DashboardScreen extends React.Component {
     // db.getTransactions();
      this.state = {
        transactions: [], 
-       modalVisible: false,
+      //  modalVisible: false,
        transactionsCalled: false, 
        dates: [],
        descriptions: [],
        amounts: [], 
        categories: [],
+       ids: [],
        trans: []
      };
     // console.log(db.state.trans)
   }
 
-  setModalVisible = (visible) => {
-    this.setState({modalVisible: visible});
+  // setModalVisible = (visible) => {
+  //   this.setState({modalVisible: visible});
+  // }
+
+  componentDidMount() {
+    this.getTransactions();
   }
 
   getTransactions() {
@@ -45,18 +51,19 @@ class DashboardScreen extends React.Component {
       this.setState({
         transactions: []
       });
-      this.setModalVisible(true);
+      // this.setModalVisible(true);
       //console.log(auth().currentUser.email)
       firestore().collection('Users').doc(auth().currentUser.email)
       .collection('Transactions').get()
       .then(querySnapshot => {
           querySnapshot.forEach(doc => {
-              const{date, description, amount, category} = doc.data();
+              const{date, description, amount, category, id} = doc.data();
               this.state.transactions.push({
                   date, 
                   description, 
                   amount, 
-                  category
+                  category, 
+                  id
               }); 
           });
         this.mapTransactions();
@@ -72,17 +79,18 @@ class DashboardScreen extends React.Component {
       this.setState({
         transactionsCalled: true
       });
-      this.setModalVisible(true);
+      // this.setModalVisible(true);
       firestore().collection('Users').doc(auth().currentUser.email)
       .collection('Transactions').get()
       .then(querySnapshot => {
           querySnapshot.forEach(doc => {
-              const{date, description, amount, category} = doc.data();
+              const{date, description, amount, category, id} = doc.data();
               this.state.transactions.push({
                   date, 
                   description, 
                   amount, 
-                  category
+                  category, 
+                  id
               }); 
           });
         this.mapTransactions();
@@ -115,6 +123,10 @@ class DashboardScreen extends React.Component {
       return item['category'];
     }),
 
+    ids: this.state.transactions.map(function(item) {
+      return item['id'];
+    }),
+
     trans:  this.state.transactions.map(function(item) {
       //console.log(item);
       return item
@@ -145,9 +157,9 @@ class DashboardScreen extends React.Component {
   // console.log(this.state.descriptions)
   } 
 
-  deleteTransaction(description) {
+  deleteTransaction(id) {
     const ref = firestore().collection('Users').doc(auth().currentUser.email)
-      .collection('Transactions').where('description', '==', description);
+      .collection('Transactions').where('id', '==', id);
 
     ref.get().then(function(querySnapshot) {
       querySnapshot.forEach(function(doc) {
@@ -157,94 +169,68 @@ class DashboardScreen extends React.Component {
     });
     console.log('Transaction deleted');
     Alert.alert('Transaction successfully deleted');
-    this.setModalVisible(false);
+    this.getTransactions();
+    // this.setModalVisible(false);
   }
 
-  render() {
-    const{modalVisible} = this.state;
-    return (
-      <View style={{flex: 1, backgroundColor:"white", alignItems: 'center'}}>
-        <Modal
-          animationType="slide"
-          visible={modalVisible}
-          presentationStyle="fullScreen"
-          onRequestClose={() => {
-            Alert.alert("Modal has been closed.");
-            this.setModalVisible(!modalVisible);
-          }}
-          >
-            <Text styles={styles.title}> Transactions: </Text>
-            <FlatList 
-                      data={this.state.trans}
-                      keyExtractor={(x,i) => i}
-                      renderItem={({item}) => 
-                      <Text style={styles.transList}>
-                        Category: {<Text style={styles.subtitle}>{item.category}</Text>}{"\n"}Amount: {<Text style={styles.subtitle}>{item.amount}</Text>}{"\n"}Date: {<Text style={styles.subtitle}>{item.date}</Text>}{"\n"}Description: {<Text style={styles.subtitle}>{item.description}</Text>} 
-                        <TouchableOpacity
-                        styles= {styles.delContainer} 
-                        title= 'Delete' 
-                        onPress={() => this.deleteTransaction(item.description)}
-                        > 
-                            <Text style={styles.delText}>Delete</Text>
-                          </TouchableOpacity>
-                      </Text>
-                    }>
+ 
 
-            </FlatList>
-            {/* <Text styles={styles.modalText}>
-              {JSON.stringify(this.state.trans)}
-            </Text> */}
-            {/* <Text style={styles.modalText}> 
-              {this.state.dates}</Text>
+    render() {
+      return(
+        <Transactions> </Transactions>
+      )
+    }
 
-              <Text style={styles.modalText}> 
-              {this.state.descriptions}</Text>
+  // render() {
+  //   // const{modalVisible} = this.state;
+  //   return (
+  //     <View style={{flex: 1, backgroundColor:"white", alignItems: 'center'}}>
+  //       {/* <Modal
+  //         animationType="slide"
+  //         visible={modalVisible}
+  //         presentationStyle="fullScreen"
+  //         onRequestClose={() => {
+  //           Alert.alert("Modal has been closed.");
+  //           this.setModalVisible(!modalVisible);
+  //         }}
+  //         > */}
+  //           <Text styles={styles.title}> Transactions: </Text>
+  //           <FlatList 
+  //                     data={this.state.trans}
+  //                     keyExtractor={(x,i) => i}
+  //                     renderItem={({item}) => 
+  //                     <Text style={styles.transList}>
+  //                       Category: {<Text style={styles.subtitle}>{item.category}</Text>}{"\n"}Amount: {<Text style={styles.subtitle}>{item.amount}</Text>}{"\n"}Date: {<Text style={styles.subtitle}>{item.date}</Text>}{"\n"}Description: {<Text style={styles.subtitle}>{item.description}</Text>} 
+  //                       <TouchableOpacity
+  //                       styles= {styles.delContainer} 
+  //                       title= 'Delete' 
+  //                       onPress={() => this.deleteTransaction(item.id)}
+  //                       > 
+  //                           <Text style={styles.delText}>Delete</Text>
+  //                         </TouchableOpacity>
+  //                     </Text>
+  //                   }>
 
-              <Text style={styles.modalText}> 
-              {this.state.amounts}</Text> */}
-            
-          <TouchableOpacity
-            style={styles.buttonContainer1}
-            title="close"
-                onPress={() => this.setModalVisible(!modalVisible)}
-              >
-                <Text style={styles.text}>Close</Text>
-              </TouchableOpacity> 
+  //           </FlatList>
+  //         {/* <TouchableOpacity
+  //           style={styles.buttonContainer1}
+  //           title="close"
+  //               onPress={() => this.setModalVisible(!modalVisible)}
+  //             >
+  //               <Text style={styles.text}>Close</Text>
+  //             </TouchableOpacity>  */}
            
-          </Modal>
-        {/* <Text style={{fontSize: 20, fontWeight: 'bold'}}>
-          Recent Transactions: {toString(db.state.trans)}
-        </Text> */}
-        <TouchableOpacity
-          style={styles.transButton}
-          onPress={() => this.getTransactions()}
-        >
-          <Text style={styles.text}>Show Transactions</Text>
-        </TouchableOpacity>
+  //         {/* </Modal> */}
+  //       {/* <TouchableOpacity
+  //         style={styles.transButton}
+  //         onPress={() => this.getTransactions()}
+  //       >
+  //         <Text style={styles.text}>Show Transactions</Text>
+  //       </TouchableOpacity> */}
         
-        {/* <Button
-          title="Login"
-          onPress={() => this.props.navigation.navigate('Login')}
-        />
-        <Button
-          title="Stocks"
-          onPress={() => this.props.navigation.navigate('Stocks')}
-        />
-        <Button
-          title="Finances"
-          onPress={() => this.props.navigation.navigate('Finances')}
-        />
-        <Button
-          title="Profile"
-          onPress={() => this.props.navigation.navigate('Profile')}
-        />
-        <Button
-          title="News"
-          onPress={() => this.props.navigation.navigate('News')}
-        /> */}
-      </View>
-    );
-  }
+  //     </View>
+  //   );
+  // }
 }
 
 export default DashboardScreen;
@@ -253,7 +239,8 @@ const styles = StyleSheet.create({
   delContainer: {
     width: 70,
     color: colors.primary,
-    paddingHorizontal: 14
+    paddingHorizontal: 14, 
+    left: "80%"
   },
   delText: {
     textAlign: 'center',

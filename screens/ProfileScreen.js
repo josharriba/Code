@@ -19,6 +19,7 @@ class ProfileScreen extends React.Component {
       nameInput: '',
       phoneNumInput: '',
       addressInput: '',
+      digit: /^[0-9\b]+$/
     }
   }
 
@@ -83,18 +84,28 @@ class ProfileScreen extends React.Component {
     this.setState(state);
   }
 
+  updateInputPhoneNum = (val, prop) => {
+    if(this.state.digit.test(val)){
+      const state = this.state;
+      state[prop] = val;
+      this.setState(state);
+    }
+  }
+
   updateName() {
     db.getName();
     if(this.state.nameInput == '') {
       Alert.alert('Name cannot be empty')
     }
-    firestore().collection('Users').doc(auth().currentUser.email).update({
-      name: this.state.nameInput
-    })
-    db.getName()
-    this.setState({
-      name: this.state.nameInput
-    })
+    else {
+      firestore().collection('Users').doc(auth().currentUser.email).update({
+        name: this.state.nameInput
+      })
+      db.getName()
+      this.setState({
+        name: this.state.nameInput
+      })
+    }
   } 
   
   updatePhoneNum() {
@@ -102,13 +113,15 @@ class ProfileScreen extends React.Component {
     if(this.state.phoneNumInput == '') {
       Alert.alert('Phone number cannot be empty')
     }
-    firestore().collection('Users').doc(auth().currentUser.email).update({
-      phoneNum: this.state.phoneNumInput
-    })
-    db.getPhoneNum()
-    this.setState({
-      phoneNum: this.state.phoneNumInput
-    })
+    else{
+      firestore().collection('Users').doc(auth().currentUser.email).update({
+        phoneNum: this.state.phoneNumInput
+      })
+      db.getPhoneNum()
+      this.setState({
+        phoneNum: this.state.phoneNumInput
+      })
+    }
   }
 
   updateAddress() {
@@ -116,13 +129,15 @@ class ProfileScreen extends React.Component {
     if(this.state.addressInput == '') {
       Alert.alert('Address cannot be empty')
     }
-    firestore().collection('Users').doc(auth().currentUser.email).update({
-      address: this.state.addressInput
-    })
-    db.getAddress()
-    this.setState({
-      address: this.state.addressInput
-    })
+    else{
+      firestore().collection('Users').doc(auth().currentUser.email).update({
+        address: this.state.addressInput
+      })
+      db.getAddress()
+      this.setState({
+        address: this.state.addressInput
+      })
+    }
   }
 
     render() {
@@ -167,7 +182,8 @@ class ProfileScreen extends React.Component {
             style={styles.textContainer}
             placeholder="update your phone number" 
             value = {this.state.phoneNumInput} 
-            onChangeText={(input) => this.updateInput(input, 'phoneNumInput')}>
+            keyboardType="numeric"
+            onChangeText={(input) => this.updateInputPhoneNum(input, 'phoneNumInput')}>
           </TextInput> 
           <TouchableOpacity 
             style={styles.buttonContainer1}
