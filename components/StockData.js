@@ -29,7 +29,8 @@ class StockData extends React.Component {
   }
 
   addFavorite() {
-    if(this.state.stockCharXValues == []) {
+    console.log(this.state.stockChartXValues.length)
+    if(this.state.stockChartXValues.length == 0) {
       Alert.alert("The stock symbol you entered is invalid")
     }
     else{
@@ -58,7 +59,7 @@ class StockData extends React.Component {
               //     symbol
               // }); 
           });
-          console.log(this.state.favorites);
+         // console.log(this.state.favorites);
       })
       .catch((error) => {
           const errorCode = error.code;
@@ -79,7 +80,7 @@ class StockData extends React.Component {
       .then(querySnapshot => {
           querySnapshot.forEach(doc => {
               const{symbol} = doc.data();
-               console.log(symbol)
+               //console.log(symbol)
               this.setState({
                 favorites: this.state.favorites.concat(symbol)
               })
@@ -88,7 +89,7 @@ class StockData extends React.Component {
               //     symbol
               // }); 
           });
-          console.log(this.state.favorites);
+         // console.log(this.state.favorites);
       })
       .catch((error) => {
           const errorCode = error.code;
@@ -113,7 +114,7 @@ class StockData extends React.Component {
     // this.state.favoriteList = this.state.favorites.map(function(item) {
     //   return item['symbol'];
     // });
-   console.log(this.state.favoriteList);
+   //console.log(this.state.favoriteList);
   }
 
   deleteFavorite(symbol) {
@@ -122,7 +123,7 @@ class StockData extends React.Component {
 
     ref.get().then(function(querySnapshot) {
       querySnapshot.forEach(function(doc) {
-        console.log(doc);
+        //console.log(doc);
         doc.ref.delete();
       });
     });
@@ -175,7 +176,7 @@ class StockData extends React.Component {
             data['Time Series (Daily)'][key]['1. open']
           );
         }
-        console.log(stockChartXValuesFunction);
+        //console.log(stockChartXValuesFunction);
 
         pointerToThis.setState({
           stockChartXValues: stockChartXValuesFunction,
