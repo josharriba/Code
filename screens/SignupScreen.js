@@ -112,10 +112,11 @@ const styles = StyleSheet.create({
       fontFamily: 'Montserrat-Medium'
     },
     buttonContainer: {
-        position: 'absolute',
-        top: 400,
-        left: 45,
+        //position: 'absolute',
+        top: 40,
+        //left: 45,
         backgroundColor: colors.background,
+        alignSelf:'center',
         borderRadius: 10,
         paddingVertical: 10,
         paddinghorizontal: 20,

@@ -81,7 +81,7 @@ import { Colors } from 'react-native/Libraries/NewAppScreen';
       <Text style={styles.buttonText}>login</Text>
         
       </TouchableOpacity>
-      </View>
+      
       
       <TouchableOpacity
           style={styles.buttonContainer}
@@ -89,9 +89,8 @@ import { Colors } from 'react-native/Libraries/NewAppScreen';
         >
       <Text style={styles.buttonText2}>create account</Text>
       </TouchableOpacity>
-      {/* <Button title="Create Account"
-        color = {colors.secondary}
-        onPress={() => {{this.props.navigation.navigate('Signup')}}} /> */}
+      </View>
+   
   </View>
   );
  }
@@ -115,9 +114,10 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     paddinghorizontal: 14,
     width: 300,
-    position: 'absolute',
-        top: 270,
-        left: 46,
+    alignSelf: 'center',
+    //position: 'absolute',
+        top: 30,
+    //    left: 46,
   },
   buttonContainer2: {
     elevation: 8,
@@ -125,10 +125,11 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     paddingVertical: 10,
     paddinghorizontal: 10,
+    alignself: 'center',
     width: 300,
-    position: 'absolute',
-        top: 23,
-        left: 22,
+    //position: 'absolute',
+        top: 0,
+    //    left: 22,
   },
   buttonText: {
     padding: 5,
