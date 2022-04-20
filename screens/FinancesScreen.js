@@ -67,7 +67,7 @@ class FinancesScreen extends React.Component {
           <View style={styles.container}>
             <TextInput 
               style={styles.textContainer}
-              placeholder="date"
+              placeholder="date (mm/dd/yy)"
               placeholderTextColor="lightgrey"
               value = {this.state.date}
               onChangeText={(input) => this.updateInput(input, 'date')}
@@ -81,7 +81,7 @@ class FinancesScreen extends React.Component {
             />
             <TextInput 
               style={styles.textContainer}
-              placeholder="amount"
+              placeholder="amount (ex. $25.95)"
               placeholderTextColor="lightgrey"
               value = {this.state.amount}
               onChangeText={(input) => this.updateInput(input, 'amount')}
@@ -223,6 +223,7 @@ const styles = StyleSheet.create({
   buttonContainer1: {
     //position: 'absolute',
       top: "20%",
+      
       
     elevation: 8,
     alignSelf: 'center',
