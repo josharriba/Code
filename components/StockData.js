@@ -203,8 +203,9 @@ class StockData extends React.Component {
           }}
           >
             <View style = {styles.container}>
-              <Text style={styles.favText}>Favorites:</Text>
-            <View style = {styles.favContainer}>
+              
+            <ScrollView contentContainerStyle = {styles.favContainer}>
+            <Text style={styles.favText}>Favorites:</Text>
             <FlatList 
                       data={this.state.favorites}
                       keyExtractor={item => item.id}
@@ -221,7 +222,7 @@ class StockData extends React.Component {
                           </TouchableOpacity>
                       </Text>}>
               </FlatList>
-              </View>
+              </ScrollView>
           
             <TouchableOpacity
             style={styles.closeContainer}
@@ -272,8 +273,9 @@ class StockData extends React.Component {
           }}
           >
              <View style = {styles.container}>
-              <Text style={styles.favText}>Favorites:</Text>
-            <View style = {styles.favContainer}>
+              
+            <ScrollView contentContainerStyle = {styles.favContainer}>
+            <Text style={styles.favText}>Favorites:</Text>
             <FlatList 
                       data={this.state.favorites}
                       keyExtractor={item => item.id}
@@ -290,7 +292,7 @@ class StockData extends React.Component {
                           </TouchableOpacity>
                       </Text>}>
               </FlatList>
-              </View>
+              </ScrollView>
             {/* <Text style={styles.modalText}> 
               {JSON.stringify(this.state.favorites)}</Text> */}
             
@@ -409,13 +411,13 @@ const styles = StyleSheet.create({
     backgroundColor: "white"
   },
   favContainer: {
-    position: 'absolute',
-      top: 40,
+    //position: 'absolute',
+      //top: 40,
      left: 40,
     justifyContent: 'center',
     textAlign: 'center',
     flex: 1,
-    padding: 10,
+    //padding: 10,
     backgroundColor: "white",
     width: 300
   },
@@ -460,11 +462,12 @@ const styles = StyleSheet.create({
     marginBottom: 4
   },
   closeContainer: {
-    position: 'absolute',
-      top: "90%",
-      left: 75,
+    //position: 'absolute',
+      //top: "0%",
+      //left: 75,
     justifyContent: 'center',
     elevation: 8,
+    alignSelf:'center',
     backgroundColor: colors.secondary,
     borderRadius: 10,
     paddingVertical: 5,
@@ -549,12 +552,12 @@ const styles = StyleSheet.create({
     //marginLeft: '30%'
   },
   favText: {
-    position: 'absolute',
-      top: 10,
-      left: 150,
+    //position: 'absolute',
+      top: -5,
+      //left: 150,
     textAlign: 'center',
     justifyContent: 'center',
-    fontSize: 15,
+    fontSize: 20,
     fontFamily: "Montserrat-Medium",
     color: colors.primary,
     //marginLeft: '30%'
