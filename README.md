@@ -6,9 +6,8 @@ This is a personal finance app for Android mobile devices. The app will allow us
 Our final demo video will replace this placeholder above.
 
 
-
-
-                        ![image](https://user-images.githubusercontent.com/58493059/164344689-b2cd1afc-6e6f-4409-b4bf-7dcefadbd3bc.png)
+# Take control of your money!
+![image](https://user-images.githubusercontent.com/58493059/164344689-b2cd1afc-6e6f-4409-b4bf-7dcefadbd3bc.png)
 
 
 [ABOUT](https://sccapstone.github.io/Orco/about)
