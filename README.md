@@ -1,4 +1,5 @@
 # Orco Financial Management App
+![orcologo](https://user-images.githubusercontent.com/58493059/164344575-8026d77a-cc90-4f1b-98cf-dc2bd443ea5a.png)
 
 ![placeholder-image](https://user-images.githubusercontent.com/77368286/164344125-31dcbd0e-cb11-4972-a16d-aea4a554ad76.png)
 Our final demo video will replace this placeholder above.
