@@ -8,13 +8,13 @@ Our final demo video will replace this placeholder above.
 
 ### Take control of your money!
 
-![image](https://user-images.githubusercontent.com/58493059/164344689-b2cd1afc-6e6f-4409-b4bf-7dcefadbd3bc.png)
+![happy](https://user-images.githubusercontent.com/58493059/164344689-b2cd1afc-6e6f-4409-b4bf-7dcefadbd3bc.png)
 
 ### Keep up to date with the latest news in the world of finance
-![image](https://user-images.githubusercontent.com/77368286/164345665-fff15de5-0908-4a47-9681-c5e67bfefcba.png)
+![news](https://user-images.githubusercontent.com/77368286/164345665-fff15de5-0908-4a47-9681-c5e67bfefcba.png)
 
 ### Keep track of your transactions
-![image](https://user-images.githubusercontent.com/77368286/164347055-09f6b213-58fd-4e48-9275-d37a9e59ba45.png)
+![transactions](https://user-images.githubusercontent.com/77368286/164347692-7c8e94af-13e6-41a2-bd48-c8c188ba9609.png)
 
 
 
