@@ -2,7 +2,7 @@
 [ABOUT](https://sccapstone.github.io/Orco/about)
 
 
-This is a personal finance app for Android mobile devices. The app will allow users to keep track of their savings and expenses as well as invest in the stock market and learn more about the financial world with up-to-date news articles that are uploaded into the app.
+This is a personal finance app for Android mobile devices. The app will allow users to keep track of their expenses as well as view current prices in the stock market and learn more about the financial world with up-to-date news articles that are uploaded into the app.
 
 
 ![placeholder-image](https://user-images.githubusercontent.com/77368286/164344125-31dcbd0e-cb11-4972-a16d-aea4a554ad76.png)
