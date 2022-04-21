@@ -25,7 +25,7 @@ Our final demo video will replace this placeholder above.
 
 # How to get the app
 
-- We will provide a .apk binary file in our github [github repository](https://github.com/SCCapstone/Orco/) that can be run on an Android device or emulator. 
+- We will provide an .apk file in our [github repository](https://github.com/SCCapstone/Orco/) that can be run on an Android device or emulator. 
     - Open Android Studio and select Profile or Debug APK
     - Select the APK file from where you have saved it on your computer and click OK.
     - Navigate through the login screen and start to use the app
