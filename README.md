@@ -6,15 +6,15 @@ This is a personal finance app for Android mobile devices. The app will allow us
 Our final demo video will replace this placeholder above.
 
 
-# Take control of your money!
+### Take control of your money!
 ![image](https://user-images.githubusercontent.com/58493059/164344689-b2cd1afc-6e6f-4409-b4bf-7dcefadbd3bc.png)
 
 
 [ABOUT](https://sccapstone.github.io/Orco/about)
 
-# Deployment
+# How to get the app
 
-- We will provide a .apk binary file that can be run on an Android device or emulator. 
+- We will provide a .apk binary file in our github [github repository](https://github.com/SCCapstone/Orco/) that can be run on an Android device or emulator. 
     - Open Android Studio and select Profile or Debug APK
     - Select the APK file from where you have saved it on your computer and click OK.
     - Navigate through the login screen and start to use the app
