@@ -7,9 +7,9 @@ Our final demo video will replace this placeholder above.
 
 
 ### Take control of your money!
-<p align="center">
-    (https://user-images.githubusercontent.com/58493059/164344689-b2cd1afc-6e6f-4409-b4bf-7dcefadbd3bc.png)
-</p>
+
+![image](https://user-images.githubusercontent.com/58493059/164344689-b2cd1afc-6e6f-4409-b4bf-7dcefadbd3bc.png)
+
 ### Keep up to date with the latest news in the world of finance
 ![image](https://user-images.githubusercontent.com/77368286/164345665-fff15de5-0908-4a47-9681-c5e67bfefcba.png)
 
