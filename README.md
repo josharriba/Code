@@ -1,4 +1,5 @@
 # Orco Financial Management App
+[ABOUT](https://sccapstone.github.io/Orco/about)
 This is a personal finance app for Android mobile devices. The app will allow users to keep track of their savings and expenses as well as invest in the stock market and learn more about the financial world with up-to-date news articles that are uploaded into the app.
 
 
@@ -28,4 +29,3 @@ Our final demo video will replace this placeholder above.
     - Navigate through the login screen and start to use the app
         - You can either use sample login info that we will provide or create a new account to start using the app.
 
-[ABOUT](https://sccapstone.github.io/Orco/about)
