@@ -7,6 +7,10 @@ import db from './FirebaseHandler'
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore'
 
+/*
+      Stock data component to deal with all alpha vantage api calls as well as 
+      the users favorite stocks
+*/
 class StockData extends React.Component {
   constructor(props) {
     super(props);
@@ -24,10 +28,17 @@ class StockData extends React.Component {
   }
   
 
+  /*
+      changes whether the modal is visible 
+  */
   setModalVisible = (visible) => {
     this.setState({modalVisible: visible});
   }
 
+  /*
+      if it is valid, this will invoke the firebase handler to add the 
+      stock symbol to favorites
+  */
   addFavorite() {
     console.log(this.state.stockChartXValues.length)
     if(this.state.stockChartXValues.length == 0) {
@@ -39,6 +50,10 @@ class StockData extends React.Component {
     
   }
 
+  /*
+      reads all of the current user's favorites stocks stored in firestore
+      and adds the stock symbols to a list that is stored in the state
+  */
   getFavoriteStocks() {
     if(this.state.favoritesCalled == true) {
       this.setState({
@@ -54,10 +69,6 @@ class StockData extends React.Component {
               this.setState({
                 favorites: this.state.favorites.concat(symbol)
               })
-
-              // this.state.favorites.push({
-              //     symbol
-              // }); 
           });
          // console.log(this.state.favorites);
       })
@@ -67,7 +78,6 @@ class StockData extends React.Component {
           alert(errorMessage);
           throw error;
       });
-     // this.mapFavorites();
     }
     else {
       this.setState({
@@ -80,16 +90,10 @@ class StockData extends React.Component {
       .then(querySnapshot => {
           querySnapshot.forEach(doc => {
               const{symbol} = doc.data();
-               //console.log(symbol)
               this.setState({
                 favorites: this.state.favorites.concat(symbol)
               })
-
-              // this.state.favorites.push({
-              //     symbol
-              // }); 
           });
-         // console.log(this.state.favorites);
       })
       .catch((error) => {
           const errorCode = error.code;
@@ -97,26 +101,26 @@ class StockData extends React.Component {
           alert(errorMessage);
           throw error;
       });
-      //this.mapFavorites();
       this.setState({
         favoriteList: this.state.favorites
       })
     }
   }
 
+  /*
+      mapping the favorite states to a new list
+  */
   mapFavorites() {
     this.setState({
       favoriteList: this.state.favorites.map(function(item) {
       return item['symbol'];
     })
      })
-
-    // this.state.favoriteList = this.state.favorites.map(function(item) {
-    //   return item['symbol'];
-    // });
-   //console.log(this.state.favoriteList);
   }
 
+  /*
+      deletes a stock from the favorites lis
+  */
   deleteFavorite(symbol) {
     const ref = firestore().collection('Users').doc(auth().currentUser.email)
       .collection('Favorite Stocks').where('symbol', '==', symbol);
@@ -148,6 +152,10 @@ class StockData extends React.Component {
     });
   }
 
+  /*
+      makes the api call and gets the stock prices for the 
+      stock symbol that the user entered
+  */
   fetchStock() {
     const pointerToThis = this;
     //console.log(pointerToThis);

@@ -3,6 +3,10 @@ import {Text, View, StyleSheet} from 'react-native'
 import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth'
 
+/*
+    This component gets the name of the current user that will be displayed on the homescreen
+    We use a useeffect so it will update automatically if it changes
+*/
 function Name() {
     const [name, setName] = useState(0);
 
