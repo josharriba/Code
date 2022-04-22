@@ -10,7 +10,6 @@ Our final demo video will replace this placeholder above.
 
 
 ### Take control of your money!
-
 ![happy](https://user-images.githubusercontent.com/58493059/164344689-b2cd1afc-6e6f-4409-b4bf-7dcefadbd3bc.png)
 
 ### Keep up to date with the latest news in the world of finance
@@ -18,6 +17,11 @@ Our final demo video will replace this placeholder above.
 
 ### Keep track of your transactions
 ![transactions](https://user-images.githubusercontent.com/77368286/164347692-7c8e94af-13e6-41a2-bd48-c8c188ba9609.png)
+
+### Search stock prices
+![Screen Shot 2022-04-21 at 11 40 07 PM](https://user-images.githubusercontent.com/37082925/164591744-68d5ceb4-6ccd-4385-ad7f-a6470a35b801.png)
+
+
 
 
 
