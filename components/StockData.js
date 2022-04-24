@@ -1,12 +1,16 @@
 import React from 'react';
-//import Plotly from 'react-native-plotly';
-import {View, Text, StyleSheet, TouchableOpacity, TextInput, Button, Alert, Modal} from 'react-native';
+import Plot from 'react-native-plotly';
+import {View, ScrollView, Text, StyleSheet, TouchableOpacity, TextInput, Button, Alert, Modal, FlatList} from 'react-native';
 import colors from '../assets/colors/colors';
 import db from './FirebaseHandler'
 // import Plot from 'react-plotly.js';
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore'
 
+/*
+      Stock data component to deal with all alpha vantage api calls as well as 
+      the users favorite stocks
+*/
 class StockData extends React.Component {
   constructor(props) {
     super(props);
@@ -16,75 +20,28 @@ class StockData extends React.Component {
       stockSymbol: '', 
       favorites: [], 
       modalVisible: false,
-      favoritesCalled: false
+      favoritesCalled: false, 
+      timeSeriesType: '', 
+      favoriteList: '', 
+      search: false, 
     }
   }
+  
 
-  setModalVisible = (visible) => {
-    this.setState({modalVisible: visible});
-  }
-
+  /*
+      if it is valid, this will invoke the firebase handler to add the 
+      stock symbol to favorites
+  */
   addFavorite() {
-    db.addFavoriteStock(this.state.stockSymbol);
-  }
-
-  getFavoriteStocks() {
-    if(this.state.favoritesCalled == true) {
-      this.setState({
-        favorites: []
-      });
-      this.setModalVisible(true);
-      firestore().collection('Users').doc(auth().currentUser.email)
-      .collection('Favorite Stocks').get()
-      .then(querySnapshot => {
-          querySnapshot.forEach(doc => {
-              const{symbol} = doc.data();
-              this.state.favorites.push({
-                  symbol
-              }); 
-          });
-          //console.log(this.state.favorites);
-      })
-      .catch((error) => {
-          const errorCode = error.code;
-          const errorMessage = error.message; 
-          alert(errorMessage);
-          throw error;
-      });
-      this.mapFavorites();
+    console.log(this.state.stockChartXValues.length)
+    if(this.state.stockChartXValues.length == 0) {
+      Alert.alert("The stock symbol you entered is invalid")
     }
-    else {
-      this.state.favoritesCalled = true;
-      
-      this.setModalVisible(true);
-      firestore().collection('Users').doc(auth().currentUser.email)
-      .collection('Favorite Stocks').get()
-      .then(querySnapshot => {
-          querySnapshot.forEach(doc => {
-              const{symbol} = doc.data();
-              this.state.favorites.push({
-                  symbol
-              }); 
-          });
-          //console.log(this.state.favorites);
-      })
-      .catch((error) => {
-          const errorCode = error.code;
-          const errorMessage = error.message; 
-          alert(errorMessage);
-          throw error;
-      });
-      this.mapFavorites();
+    else{
+      db.addFavoriteStock(this.state.stockSymbol);
     }
+    
   }
-
-  mapFavorites() {
-    this.state.favoriteList = this.state.favorites.map(function(item) {
-      return item['symbol'];
-    });
-    console.log(this.state.favoriteList);
-  }
-
 
   updateInput = (val, prop) => {
     const state = this.state;
@@ -93,12 +50,21 @@ class StockData extends React.Component {
 }
 
   componentDidMount() {
-    this.fetchStock();
+    this.setState({
+      search: false,
+      stockSymbol: '',
+      stockChartYValues: [],
+      stockCharYValues: []
+    });
   }
 
+  /*
+      makes the api call and gets the stock prices for the 
+      stock symbol that the user entered
+  */
   fetchStock() {
     const pointerToThis = this;
-    console.log(pointerToThis);
+    //console.log(pointerToThis);
     const API_KEY = 'ER1D6MX3FXC0EQJE';
     // let StockSymbol = 'FB';
     let API_Call = `https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=${this.state.stockSymbol}&outputsize=compact&apikey=${API_KEY}`;
@@ -115,7 +81,7 @@ class StockData extends React.Component {
         return response.json();
       })
       .then(function (data) {
-        console.log(data);
+       // console.log(data);
  
 
         for (var key in data['Time Series (Daily)']) {
@@ -124,43 +90,22 @@ class StockData extends React.Component {
             data['Time Series (Daily)'][key]['1. open']
           );
         }
-        console.log(stockChartXValuesFunction);
+        //console.log(stockChartXValuesFunction);
 
         pointerToThis.setState({
           stockChartXValues: stockChartXValuesFunction,
-          stockChartYValues: stockChartYValuesFunction
+          stockChartYValues: stockChartYValuesFunction, 
+          timeSeriesType: 'Daily',
+          search: true
         });
       });
     
   }
 
   render() {
-    const {modalVisible} = this.state;
-    if(this.state.stockSymbol == '') {
+    if(this.state.search == false || this.state.stockChartXValues == []) {
       return (
         <View style = {styles.container}>
-          <Modal
-          animationType="slide"
-          visible={modalVisible}
-          presentationStyle="fullScreen"
-          onRequestClose={() => {
-            Alert.alert("Modal has been closed.");
-            this.setModalVisible(!modalVisible);
-          }}
-          >
-            <Text styles={styles.title}> Favorites:</Text>
-            <Text style={styles.modalText}> 
-              {JSON.stringify(this.state.favoriteList)}</Text>
-            
-            <TouchableOpacity
-            style={styles.buttonContainer1}
-            title="close"
-                onPress={() => this.setModalVisible(!modalVisible)}
-              >
-                <Text style={styles.text}>Close</Text>
-              </TouchableOpacity>
-           
-          </Modal>
           <TextInput 
             style={styles.textContainer}
             placeholder="Enter stock symbol. (i.e. 'MSFT')" 
@@ -174,40 +119,16 @@ class StockData extends React.Component {
             onPress={() => this.fetchStock()}>
               <Text style={styles.text}>Search Stock</Text>
           </TouchableOpacity>
-          <TouchableOpacity 
-            style={styles.buttonContainer1} 
-            title="Show my favorite stocks" 
-            onPress={() => this.getFavoriteStocks()}>
-              <Text style={styles.text}>Show Favorites</Text>
-          </TouchableOpacity>
         </View>
       );
     }
     else {
       return (
         <View style = {styles.container}>
-          <Modal
-          animationType="slide"
-          visible={modalVisible}
-          presentationStyle="fullScreen"
-          onRequestClose={() => {
-            Alert.alert("Modal has been closed.");
-            this.setModalVisible(!modalVisible);
-          }}
-          >
-            <Text styles={styles.title}> Favorites:</Text>
-            <Text style={styles.modalText}> 
-              {JSON.stringify(this.state.favoriteList)}</Text>
-            
-            <TouchableOpacity
-            style={styles.buttonContainer1}
-            title="close"
-                onPress={() => this.setModalVisible(!modalVisible)}
-              >
-                <Text style={styles.text}>Close</Text>
-              </TouchableOpacity>
-           
-          </Modal>
+          <TouchableOpacity 
+            style={styles.stockContainer} 
+            >
+          </TouchableOpacity>
         <TextInput 
           placeholder="Enter stock symbol. (i.e. 'MSFT')"
           value = {this.state.stockSymbol} 
@@ -219,32 +140,66 @@ class StockData extends React.Component {
           onPress={() => this.fetchStock()}>
             <Text style={styles.text}>Search Stock</Text>
         </TouchableOpacity>
-        <TouchableOpacity 
-          style={styles.buttonContainer1}  
-          onPress={() => this.addFavorite()}>
-            <Text style={styles.text}>Add to Favorites</Text>
-        </TouchableOpacity>
-        <TouchableOpacity 
-          style={styles.buttonContainer1} 
-          onPress={() => this.getFavoriteStocks()}>
-            <Text style={styles.text}>Show Favorites</Text>
-        </TouchableOpacity>
-        <Text style={styles.titleText}> Stock Prices {'\n'}</Text>
-        <Text style={styles.ticker}> Symbol: {this.state.stockSymbol} </Text>
-        <Text style={styles.subtitle}> Date: {this.state.stockChartXValues[0]}</Text>
-        <Text style={styles.subtitle}> Price: {this.state.stockChartYValues[0]}</Text>
-        {/* <Plotly
+        
+        <Plot
           data={[
             {
               x: this.state.stockChartXValues,
               y: this.state.stockChartYValues,
               type: 'scatter',
               mode: 'lines+markers',
-              marker: {color: 'red'},
+              marker: {color: colors.primary},
+              name: this.state.stockSymbol, 
             }
           ]}
-          layout={{title: 'MSFT Stock Data', autosize: true}}
-        /> */}
+          layout={{
+            title: this.state.stockSymbol,  
+            xaxis: {
+              autorange: true,  
+              rangeselector: {buttons: [
+                {
+                  count: 1,
+                  label: '1 month',
+                  step: 'month',
+                  stepmode: 'backward'
+                },
+                {
+                  count: 6,
+                  label: '6 month',
+                  step: 'month',
+                  stepmode: 'backward'
+                },
+                {
+                  count: 12,
+                  label: '1 year',
+                  step: 'month',
+                  stepmode: 'backward'
+                },
+                {step: 'all'}
+              ]},
+            }, 
+            yaxis: {
+              autorange: true
+            }  
+          }}
+        /> 
+        <TouchableOpacity 
+          style={styles.buttonContainer1}  
+          onPress={() => this.addFavorite()}>
+            <Text style={styles.text}>Add to Favorites</Text>
+        </TouchableOpacity>
+
+        {/* <TouchableOpacity 
+            style={styles.buttonContainer2} 
+            title="Show my favorite stocks" 
+            onPress={() => this.props.navigation.navigate('FavoriteStocks')}>
+              <Text style={styles.text1}>Show Favorites</Text>
+          </TouchableOpacity>  */}
+        {/* <Text style={styles.titleText}> Stock Prices {'\n'}</Text>
+        <Text style={styles.ticker}> Symbol: {this.state.stockSymbol} </Text>
+        <Text style={styles.subtitle}> Date: {this.state.stockChartXValues[0]}</Text>
+        <Text style={styles.subtitle}> Price: {this.state.stockChartYValues[0]}</Text> */}
+       
       </View>
       );
     }
@@ -256,7 +211,7 @@ export default StockData;
 
 const styles = StyleSheet.create({
   titleText: {
-    marginTop: 25,
+    marginTop: 15,
     textAlign: 'center',
     justifyContent: 'center',
     fontFamily: 'Montserrat-Bold',
@@ -281,35 +236,100 @@ const styles = StyleSheet.create({
     padding: 10,
     backgroundColor: "white"
   },
+  favContainer: {
+    //position: 'absolute',
+      //top: 40,
+     left: 40,
+    justifyContent: 'center',
+    textAlign: 'center',
+    flex: 1,
+    //padding: 10,
+    backgroundColor: "white",
+    width: 300
+  },
   textContainer: {
     textAlign: 'center',
     justifyContent: 'center',
     fontSize: 14,
     fontFamily: "Montserrat-Medium",
-    height: 50, width: "100%",
+    height: 35, width: "100%",
     borderRadius: 5,
     paddingHorizontal: 20,
     borderBottomColor: 'lightgray',
     borderBottomWidth: 1,
     borderBottomLeftRadius: 10,
     borderBottomRightRadius: 10,
-    marginBottom: 20
+    marginBottom: 10
   },
   buttonContainer: {
     elevation: 8,
-    backgroundColor: colors.background,
+    color: colors.primary,
     borderRadius: 10,
     paddingVertical: 10,
     paddingHorizontal: 14
   },
-  buttonContainer1: {
+  delContainer: {
+    //width: 70,
     elevation: 8,
-    backgroundColor: colors.secondary,
+    backgroundColor: colors.background,
     borderRadius: 10,
     paddingVertical: 10,
     paddingHorizontal: 14,
     marginTop: 4,
     marginBottom: 4
+  },
+  buttonContainer1: {
+    elevation: 8,
+    backgroundColor: colors.secondary,
+    borderRadius: 10,
+    paddingVertical: 5,
+    paddingHorizontal: 14,
+    marginTop: 4,
+    marginBottom: 4
+  },
+  closeContainer: {
+    //position: 'absolute',
+      //top: "0%",
+      //left: 75,
+    justifyContent: 'center',
+    elevation: 8,
+    alignSelf:'center',
+    backgroundColor: colors.secondary,
+    borderRadius: 10,
+    paddingVertical: 5,
+    paddingHorizontal: 14,
+    marginTop: 4,
+    marginBottom: 4,
+    width: 250,
+    height: 40
+  },
+  buttonContainer2: {
+    top: 5,
+    elevation: 8,
+    backgroundColor: colors.secondary,
+    borderRadius: 10,
+    paddingVertical: 5,
+    paddingHorizontal: 14,
+    marginTop: 4,
+    marginBottom: 4
+  },
+  stockContainer: {
+    textAlign: 'center',
+    justifyContent: 'center',
+    // backgroundColor: colors.background,
+    borderRadius: 10,
+    paddingVertical: 10,
+    paddinghorizontal: 20,
+    width: 300
+  },
+  homeText: {
+    textAlign: 'center',
+    justifyContent: 'center',
+      padding: 5,
+      //marginLeft: '40%',
+      fontFamily: "Montserrat-Medium",
+      fontSize: 20,
+      color: colors.primary
   },
   buttonText: {
     //textAlign: 'center',
@@ -333,6 +353,37 @@ const styles = StyleSheet.create({
     fontSize: 15,
     fontFamily: "Montserrat-Medium",
     color: colors.background,
+    //marginLeft: '30%'
+  },
+  delText: {
+    textAlign: 'center',
+    justifyContent: 'center',
+    //position: 'absolute',
+      top: 5,
+      left: 10,
+    fontSize: 15,
+    fontFamily: "Montserrat-Medium",
+    color: colors.secondary,
+    backgroundColor: colors.background
+    
+  },
+  text1: {
+    textAlign: 'center',
+    justifyContent: 'center',
+    fontSize: 15,
+    fontFamily: "Montserrat-Medium",
+    color: colors.background,
+    //marginLeft: '30%'
+  },
+  favText: {
+    //position: 'absolute',
+      top: -5,
+      //left: 150,
+    textAlign: 'center',
+    justifyContent: 'center',
+    fontSize: 20,
+    fontFamily: "Montserrat-Medium",
+    color: colors.primary,
     //marginLeft: '30%'
   },
   title: {

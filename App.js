@@ -13,6 +13,7 @@
  import auth from '@react-native-firebase/auth';
  import firestore from '@react-native-firebase/firestore';
  import {StyleSheet, Button, Text, View, TextInput} from 'react-native';
+ import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
  
  
  import LoginScreen from './screens/LoginScreen';
@@ -26,6 +27,8 @@
  import db from './components/FirebaseHandler';
  import NewsScreen from './screens/NewsScreen';
  import colors from './assets/colors/colors';
+
+ import MainContainer from './navigation/MainContainer';
  
  //import colors from './screens/assets/colors/colors';
  
@@ -52,9 +55,10 @@
    if (initializing) {
      return null;
    }
- 
-   return (
-     <NavigationContainer>
+   
+   if(!user) {
+     return(
+        <NavigationContainer>
        <Stack.Navigator
          initialRouteName={'Login'}
          screenOptions={{
@@ -67,22 +71,53 @@
              fontFamily: 'Montsesrrat-Medium'
            },
          }}>
-         <Stack.Screen name="Home" component={HomeScreen} />
+         {/* <Stack.Screen name="Home" component={HomeScreen} /> */}
          <Stack.Screen
            name="Login"
            component={LoginScreen}
            options={{title: 'Welcome! Please Login'}}
            fontFamily= 'Montsesrrat-Medium'
          />
-         <Stack.Screen name="Stocks" component={StocksScreen} />
-         <Stack.Screen name="Dashboard" component={DashboardScreen} />
-         <Stack.Screen name="Finances" component={FinancesScreen} />
-         <Stack.Screen name="Budgeting" component={BudgetingScreen} />
-         <Stack.Screen name="Profile" component={ProfileScreen} />
          <Stack.Screen name="Signup" component={SignupScreen} />
-         <Stack.Screen name="News" component={NewsScreen} />
        </Stack.Navigator>
+      
      </NavigationContainer>
-   );
+     )
+   }
+   else{
+    return (
+      <MainContainer></MainContainer>
+      //  <NavigationContainer>
+      //    <Stack.Navigator
+      //      initialRouteName={'Login'}
+      //      screenOptions={{
+      //        headerTitleAlign: 'center',
+      //        headerStyle: {
+      //          backgroundColor: "white",
+      //        },
+      //        headerTitleStyle: {
+      //          color: "gray",
+      //          fontFamily: 'Montsesrrat-Medium'
+      //        },
+      //      }}>
+      //      <Stack.Screen name="Home" component={HomeScreen} />
+      //      <Stack.Screen
+      //        name="Login"
+      //        component={LoginScreen}
+      //        options={{title: 'Welcome! Please Login'}}
+      //        fontFamily= 'Montsesrrat-Medium'
+      //      />
+      //      <Stack.Screen name="Stocks" component={StocksScreen} />
+      //      <Stack.Screen name="Dashboard" component={DashboardScreen} />
+      //      <Stack.Screen name="Finances" component={FinancesScreen} />
+      //      <Stack.Screen name="Budgeting" component={BudgetingScreen} />
+      //      <Stack.Screen name="Profile" component={ProfileScreen} />
+      //      <Stack.Screen name="Signup" component={SignupScreen} />
+      //      <Stack.Screen name="News" component={NewsScreen} />
+      //    </Stack.Navigator>
+        
+      //  </NavigationContainer>
+    );
+ }
  };
  export default App;

@@ -8,12 +8,14 @@ import {
   TouchableHighlight,
   TextInput,
   StackNavigator,
+  ScrollView
 } from 'react-native';
 import auth from '@react-native-firebase/auth'
 import firestore from '@react-native-firebase/firestore';
 import db from '../components/FirebaseHandler';
 import colors from './assets/colors/colors';
 import { Colors } from 'react-native/Libraries/NewAppScreen';
+import Name from '../components/Name'
 
 
 class HomeScreen extends React.Component {
@@ -23,7 +25,6 @@ class HomeScreen extends React.Component {
     this.state = {
       name: db.name,
     };
-    console.log(db.name)
   }
 
   signOut = () => {
@@ -35,9 +36,8 @@ class HomeScreen extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <Text style={styles.text}>
-          Welcome, {this.state.name} !
-        </Text>
+        <ScrollView>
+        <Name></Name> 
         <TouchableOpacity
           style={styles.buttonContainer}
           title="Profile"
@@ -80,6 +80,7 @@ class HomeScreen extends React.Component {
           >
             <Text style={styles.buttonText2}>Sign Out</Text>
             </TouchableOpacity>
+      </ScrollView>
       </View>
     );
   }

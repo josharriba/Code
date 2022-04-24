@@ -2,6 +2,12 @@ import React from 'react';
 import {Alert} from 'react-native'
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore'
+import uuid from 'react-native-uuid'
+
+/*
+    FirebaseHandler handles some of the app's interactions with 
+    the firebase auth and firestore data
+*/
 
 class FirebaseHandler extends React.Component {
    
@@ -19,60 +25,41 @@ class FirebaseHandler extends React.Component {
         flag = false;      
         loggedIn = false;
     }
+
+
     /*
-        moved auth for login to LoginScreen
-
-    doLogin(email, password) {
-        // console.log(email)
-        // console.log(password)
-        // this.currUser = null;
-        // this.currentUserData = null;
-        auth()
-        .signInWithEmailAndPassword(email, password)
-        .then((res) => {
-            this.loggedIn = true; 
-            this.currUser = auth().currentUser.email;
-            this.currentUserData = userList.doc(currUser);
-            this.flag = true;
-            console.log(this.currUser);
-            console.log(this.currentUserData);    
-            console.log('User logged in successfully')
-        })
-        .catch((error) => {
-            const errorCode = error.code;
-            const errorMessage = error.message; 
-            if(errorCode === 'auth/wrong-password' || errorCode == 'auth/invalid-password') {
-              Alert.alert('Invalid Password. Please try again!')
-            }
-            if(errorCode === 'auth/invalid-user-token' || errorCode === 'auth/user-token-expired' || errorCode === 'auth/invalid-email') {
-              Alert.alert('Invalid email. Please try again!')
-            }   
-        });
-    }
+        checkNewUser sets the firestore user document with the
+        name, email and age that the user entered
     */
+    checkNewUser(name, email, age) {
+        userList.doc(email).get().then((documentSnapshot) => {
+            if(documentSnapshot.exists) {
+                return;
+            }
+            else {
+                userList.doc(email).set({
+                    name: name,
+                    email: email,
+                    age: age
+                }) 
+            }
+        })
+    }
 
-    /* password must meet google's requirements for security
+    /* 
+        doSignup takes the email, password, name and age
+        that the user input and uses firebase auth to create a new 
+        account. It also passes the info to checkNewUser to create firestore doc
+
+        password must meet google's requirements for security
         the userList.add will still run if the auth() fails because password does not meet requirements
     */
     doSignup(email, password, name, age) {
-        userList.doc(email).set({
-            name: name,
-            email: email,
-            age: age
-        }) 
-        .then(() => {   
-            console.log('User signed up successfully')          
-        })
-        .catch((error) => {
-            const errorMessage = error.message; 
-            alert(errorMessage);
-            throw error;
-        });
-
-
+    
         auth()
         .createUserWithEmailAndPassword(email, password)
         .then((res) => {
+            this.checkNewUser(name, email, age);
             console.log('New user registered successfully')            
         })
         .catch((error) => {
@@ -80,75 +67,60 @@ class FirebaseHandler extends React.Component {
             const errorMessage = error.message; 
             alert(errorMessage);
             throw error;
-        });
+        });      
+
     }
 
+
+    /*
+        deleteUser deletes the user from the firestore database and the firestore auth
+    */
     deleteUser() {
-        /*TODO
+        /*
             need to delete user from firestore and from auth
         */
         userList.doc(auth().currentUser.email).delete().then((res) => {
             console.log('User data deleted from app');
         })
+        auth().currentUser.delete()
     }
 
+
+    //sign the user out with firebase auth
     signOut() {
         auth().signOut()
         .then(() => console.log('User signed out!'));
     }
 
-    enterTransaction(date, description, amount) {
+    /*
+        enterTransaction takes the date description, amount and category
+        of a transaction and adds a new doc to firestore database with 
+        that info and a unique id
+    */
+    enterTransaction(date, description, amount, category) {
        userList.doc(auth().currentUser.email).collection('Transactions').add({
             date: date,
             description: description,
-            amount: amount
+            amount: amount, 
+            category: category, 
+            id: uuid.v4()
          });
     }
 
+    /*
+        takes the stock symbol and makes a new firestore doc to save to favorites
+    */
     addFavoriteStock(symbol) {
         userList.doc(auth().currentUser.email).collection('Favorite Stocks').doc(symbol).set({
             symbol: symbol
         }, {merge: true})
+        Alert.alert("Favorite stock successfully added to favorites");
         console.log("successfully added stock to favorites")
     }
 
-   
-
-    /*if the transaction already exists in the transactions list, 
-        we dont need to add it again
-        
-
-        can use .orderBy(date) and .limit(#OfTransactionsToShow)
+    /*
+        Gets the name of the current user
     */
-    // getTransactions() {
-    //    //console.log(auth().currentUser.email)
-    //    transactions = [];
-    //     userList.doc(auth().currentUser.email)
-    //     .collection('Transactions').get()
-    //     .then(querySnapshot => {
-    //         querySnapshot.forEach(doc => {
-    //             const{date, description, amount} = doc.data();
-    //             transactions.push({
-    //                 date, 
-    //                 description, 
-    //                 amount
-    //             }); 
-    //         });
-    //         this.state.trans = transactions;
-    //         // this.setState({
-    //         //     trans: transactions,
-    //         // });
-    //        //console.log(this.state.trans);
-    //     })
-    //     .catch((error) => {
-    //         const errorCode = error.code;
-    //         const errorMessage = error.message; 
-    //         alert(errorMessage);
-    //         throw error;
-    //     });
-    //     //console.log(transactions);
-    // }
-
     getName() {
         userList.doc(auth().currentUser.email)
         .get()
@@ -159,6 +131,9 @@ class FirebaseHandler extends React.Component {
         });
     }
 
+     /*
+        Gets the phone number of the current user
+    */
     getPhoneNum() {
         userList.doc(auth().currentUser.email)
         .get()
@@ -167,6 +142,9 @@ class FirebaseHandler extends React.Component {
         })
     }
 
+     /*
+        Gets the address of the current user
+    */
     getAddress() {
         userList.doc(auth().currentUser.email)
         .get()
