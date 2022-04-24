@@ -9,7 +9,13 @@ class StocksScreen extends React.Component {
       return(
         <View style={styles.container}>
             
-          <StockData />           
+          <StockData />
+          <TouchableOpacity 
+            style={styles.buttonContainer1} 
+            title="Show my favorite stocks" 
+            onPress={() => this.props.navigation.navigate('FavoriteStocks')}>
+              <Text style={styles.text}>Show Favorites</Text>
+          </TouchableOpacity>           
 
         </View>
         );

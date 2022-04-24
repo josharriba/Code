@@ -21,6 +21,7 @@ import LoginScreen from '../screens/LoginScreen';
  import ProfileScreen from '../screens/ProfileScreen';
  import SignupScreen from '../screens/SignupScreen';
  import NewsScreen from '../screens/NewsScreen';
+ import FavoriteStocks from '../components/FavoriteStocks';
 
 
  import auth from '@react-native-firebase/auth';
@@ -69,6 +70,7 @@ export default function MainContainer() {
             <Tab.Screen name="Signup" component={SignupScreen} options={{tabBarStyle: {display: "none"}, tabBarButton: () => null}} />
             <Tab.Screen name="Dashboard" component={DashboardScreen} />
             <Tab.Screen name="News" component={NewsScreen} />
+            <Tab.Screen name="FavoriteStocks" component={FavoriteStocks} options={{tabBarStyle: {display:"none"}, tabBarButton: () => null}}/>
             
 
             </Tab.Navigator>

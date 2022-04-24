@@ -24,7 +24,6 @@ class HomeScreen extends React.Component {
     this.state = {
       name: db.name,
     };
-    console.log(db.name)
   }
 
   signOut = () => {

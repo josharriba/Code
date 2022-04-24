@@ -23,7 +23,8 @@ class StockData extends React.Component {
       favoritesCalled: false, 
       timeSeriesType: '', 
       favoriteList: '', 
-      search: false
+      search: false, 
+      navigation: this.props.navigation
     }
   }
   
@@ -197,51 +198,9 @@ class StockData extends React.Component {
   }
 
   render() {
-    const {modalVisible} = this.state;
     if(this.state.search == false || this.state.stockChartXValues == []) {
       return (
         <View style = {styles.container}>
-          <Modal
-          animationType="slide"
-          visible={modalVisible}
-          presentationStyle="fullScreen"
-          onRequestClose={() => {
-            Alert.alert("Favorites has been closed.");
-            this.setModalVisible(!modalVisible);
-          }}
-          >
-            <View style = {styles.container}>
-              
-            <ScrollView contentContainerStyle = {styles.favContainer}>
-            <Text style={styles.favText}>Favorites:</Text>
-            <FlatList 
-                      data={this.state.favorites}
-                      keyExtractor={item => item.id}
-                      renderItem={({item}) => 
-                      <Text style={styles.text1}>
-                        Symbol: {item}
-                        <TouchableOpacity 
-                        styles= {styles.delContainer} 
-                        // color={colors.primary}
-                        // title= "Delete"
-                        onPress={() => this.deleteFavorite(item)}
-                        > 
-                        <Text style={styles.delText}>Delete</Text>
-                          </TouchableOpacity>
-                      </Text>}>
-              </FlatList>
-              </ScrollView>
-          
-            <TouchableOpacity
-            style={styles.closeContainer}
-            title="close"
-                onPress={() => this.setModalVisible(!modalVisible)}
-              >
-                <Text style={styles.text}>Close</Text>
-              </TouchableOpacity>
-              </View>
-           
-          </Modal>
           <TextInput 
             style={styles.textContainer}
             placeholder="Enter stock symbol. (i.e. 'MSFT')" 
@@ -255,12 +214,6 @@ class StockData extends React.Component {
             onPress={() => this.fetchStock()}>
               <Text style={styles.text}>Search Stock</Text>
           </TouchableOpacity>
-          <TouchableOpacity 
-            style={styles.buttonContainer1} 
-            title="Show my favorite stocks" 
-            onPress={() => this.getFavoriteStocks()}>
-              <Text style={styles.text}>Show Favorites</Text>
-          </TouchableOpacity>
         </View>
       );
     }
@@ -271,48 +224,6 @@ class StockData extends React.Component {
             style={styles.stockContainer} 
             >
           </TouchableOpacity>
-          <Modal
-          animationType="slide"
-          visible={modalVisible}
-          presentationStyle="fullScreen"
-          onRequestClose={() => {
-            Alert.alert("Modal has been closed.");
-            this.setModalVisible(!modalVisible);
-          }}
-          >
-             <View style = {styles.container}>
-              
-            <ScrollView contentContainerStyle = {styles.favContainer}>
-            <Text style={styles.favText}>Favorites:</Text>
-            <FlatList 
-                      data={this.state.favorites}
-                      keyExtractor={item => item.id}
-                      renderItem={({item}) => 
-                      <Text style={styles.text1}>
-                        Symbol: {item}
-                        <TouchableOpacity 
-                        styles= {styles.delContainer} 
-                        // color={colors.primary}
-                        // title= "Delete"
-                        onPress={() => this.deleteFavorite(item)}
-                        > 
-                        <Text style={styles.delText}>Delete</Text>
-                          </TouchableOpacity>
-                      </Text>}>
-              </FlatList>
-              </ScrollView>
-            {/* <Text style={styles.modalText}> 
-              {JSON.stringify(this.state.favorites)}</Text> */}
-            
-            <TouchableOpacity
-            style={styles.closeContainer}
-            title="close"
-                onPress={() => this.setModalVisible(!modalVisible)}
-              >
-                <Text style={styles.text}>Close</Text>
-              </TouchableOpacity>
-              </View>
-          </Modal>
         <TextInput 
           placeholder="Enter stock symbol. (i.e. 'MSFT')"
           value = {this.state.stockSymbol} 
