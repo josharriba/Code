@@ -11,7 +11,7 @@ class StocksScreen extends React.Component {
             
           <StockData />
           <TouchableOpacity 
-            style={styles.buttonContainer1} 
+            style={styles.buttonContainer2} 
             title="Show my favorite stocks" 
             onPress={() => this.props.navigation.navigate('FavoriteStocks')}>
               <Text style={styles.text}>Show Favorites</Text>
@@ -45,7 +45,7 @@ const styles = StyleSheet.create({
   },
   buttonContainer1: {
     position: 'absolute',
-    top: 460,
+    top: "95%",
     left: 45,
     backgroundColor: colors.background,
     borderRadius: 10,
@@ -54,14 +54,14 @@ const styles = StyleSheet.create({
     width: 300
   },
 buttonContainer2: {
-  position: 'absolute',
-  top: 520,
-  left: 45,
-  backgroundColor: colors.background,
+  top: 5,
+  elevation: 8,
+  backgroundColor: colors.secondary,
   borderRadius: 10,
   paddingVertical: 5,
-  paddinghorizontal: 20,
-  width: 300
+  paddingHorizontal: 14,
+  marginTop: 4,
+  marginBottom: 4
 },
 buttonContainer3: {
   position: 'absolute',
@@ -86,18 +86,11 @@ buttonContainer3: {
       backgroundColor: colors.primary
   },
   text: {
-      fontSize: 15,
-      fontFamily: "Montserrat-Medium",
-      height: 45, width: "100%",
-      paddingHorizontal: 20,
-      borderRadius: 5,
-      borderBottomColor: 'lightgray',
-      borderBottomWidth: 1,
-      borderBottomLeftRadius: 10,
-      borderBottomRightRadius: 10,
-      marginBottom: 15,
-      //backgroundColor: 'lightgray'
-      
+    textAlign: 'center',
+    justifyContent: 'center',
+    fontSize: 15,
+    fontFamily: "Montserrat-Medium",
+    color: colors.background,      
   },
 });
 

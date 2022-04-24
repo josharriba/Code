@@ -95,17 +95,19 @@ export default function FavoriteStocks() {
         <View>
             <Text style={styles.favText}>Favorites:</Text>
             <TouchableOpacity 
-                    styles= {styles.delContainer} 
+                    styles= {styles.closeContainer} 
                     onPress={() => navigation.navigate("Stocks")}
                     > 
-                    <Text style={styles.delText}>Back to Stock Screen</Text>
+                    <Text style={styles.closeText}>Back to Stock Screen</Text>
                 </TouchableOpacity>
             <FlatList 
+                      contentContainerStyle={{paddingBottom: 50, paddingTop:10}}
                       data={favorites}
                       keyExtractor={item => item.id}
                       scrollEnabled={true}
                       renderItem={({item}) => 
-                      <View>
+                      <View style={{padding:5, borderBottomWidth: 5, 
+                                    borderBottomColor: colors.secondary}}>
                       <Text style={styles.text1}>
                         Symbol: {item}
                         </Text>
@@ -256,7 +258,11 @@ const styles = StyleSheet.create({
       paddingVertical: 10,
       paddingHorizontal: 14,
       marginTop: 4,
-      marginBottom: 4
+      marginBottom: 4, 
+      width: 50, 
+      justifyContent: 'center',
+      alignContent:'center',
+      alignItems:'center'
     },
     viewContainer: {
         //width: 70,
@@ -278,23 +284,21 @@ const styles = StyleSheet.create({
       marginBottom: 4
     },
     closeContainer: {
-      //position: 'absolute',
-        //top: "0%",
-        //left: 75,
-      justifyContent: 'center',
-      elevation: 8,
-      alignSelf:'center',
-      backgroundColor: colors.background,
-      borderRadius: 10,
-      paddingVertical: 15,
-      paddingHorizontal: 14,
-      marginTop: 4,
-      marginBottom: 4,
-      width: 250,
-      height: 50
-    },
+        top: 5,
+        elevation: 8,
+        backgroundColor: colors.secondary,
+        borderRadius: 10,
+        paddingVertical: 5,
+        paddingHorizontal: 14,
+        marginTop: 4,
+        marginBottom: 4
+      },
     closeText: {
-        
+        textAlign: 'center',
+        justifyContent: 'center',
+        fontSize: 15,
+        fontFamily: "Montserrat-Medium",
+        color: colors.primary,  
     },
     buttonContainer2: {
       position: 'absolute',
@@ -359,8 +363,8 @@ const styles = StyleSheet.create({
       fontSize: 15,
       fontFamily: "Montserrat-Medium",
       color: colors.secondary,
-      backgroundColor: colors.background
-      
+      backgroundColor: colors.background,
+      width: 300
     },
     viewText: {
         textAlign: 'center',
@@ -371,8 +375,8 @@ const styles = StyleSheet.create({
         fontSize: 15,
         fontFamily: "Montserrat-Medium",
         color: colors.secondary,
-        backgroundColor: colors.background
-        
+        backgroundColor: colors.background,
+        width: 300
       },
     text1: {
       textAlign: 'center',

@@ -24,17 +24,9 @@ class StockData extends React.Component {
       timeSeriesType: '', 
       favoriteList: '', 
       search: false, 
-      navigation: this.props.navigation
     }
   }
   
-
-  /*
-      changes whether the modal is visible 
-  */
-  setModalVisible = (visible) => {
-    this.setState({modalVisible: visible});
-  }
 
   /*
       if it is valid, this will invoke the firebase handler to add the 
@@ -50,93 +42,6 @@ class StockData extends React.Component {
     }
     
   }
-
-  /*
-      reads all of the current user's favorites stocks stored in firestore
-      and adds the stock symbols to a list that is stored in the state
-  */
-  getFavoriteStocks() {
-    if(this.state.favoritesCalled == true) {
-      this.setState({
-        favorites: []
-      });
-      this.setModalVisible(true);
-      firestore().collection('Users').doc(auth().currentUser.email)
-      .collection('Favorite Stocks').get()
-      .then(querySnapshot => {
-          querySnapshot.forEach(doc => {
-              const{symbol} = doc.data();
-    
-              this.setState({
-                favorites: this.state.favorites.concat(symbol)
-              })
-          });
-         // console.log(this.state.favorites);
-      })
-      .catch((error) => {
-          const errorCode = error.code;
-          const errorMessage = error.message; 
-          alert(errorMessage);
-          throw error;
-      });
-    }
-    else {
-      this.setState({
-        favoritesCalled: true
-      });
-      
-      this.setModalVisible(true);
-      firestore().collection('Users').doc(auth().currentUser.email)
-      .collection('Favorite Stocks').get()
-      .then(querySnapshot => {
-          querySnapshot.forEach(doc => {
-              const{symbol} = doc.data();
-              this.setState({
-                favorites: this.state.favorites.concat(symbol)
-              })
-          });
-      })
-      .catch((error) => {
-          const errorCode = error.code;
-          const errorMessage = error.message; 
-          alert(errorMessage);
-          throw error;
-      });
-      this.setState({
-        favoriteList: this.state.favorites
-      })
-    }
-  }
-
-  /*
-      mapping the favorite states to a new list
-  */
-  mapFavorites() {
-    this.setState({
-      favoriteList: this.state.favorites.map(function(item) {
-      return item['symbol'];
-    })
-     })
-  }
-
-  /*
-      deletes a stock from the favorites lis
-  */
-  deleteFavorite(symbol) {
-    const ref = firestore().collection('Users').doc(auth().currentUser.email)
-      .collection('Favorite Stocks').where('symbol', '==', symbol);
-
-    ref.get().then(function(querySnapshot) {
-      querySnapshot.forEach(function(doc) {
-        //console.log(doc);
-        doc.ref.delete();
-      });
-    });
-    console.log('Favorite deleted');
-    Alert.alert('Favorite successfully deleted');
-    this.setModalVisible(false);
-  }
-
 
   updateInput = (val, prop) => {
     const state = this.state;
@@ -283,15 +188,17 @@ class StockData extends React.Component {
           onPress={() => this.addFavorite()}>
             <Text style={styles.text}>Add to Favorites</Text>
         </TouchableOpacity>
-        <TouchableOpacity 
-          style={styles.buttonContainer1} 
-          onPress={() => this.getFavoriteStocks()}>
-            <Text style={styles.text}>Show Favorites</Text>
-        </TouchableOpacity>
-        <Text style={styles.titleText}> Stock Prices {'\n'}</Text>
+
+        {/* <TouchableOpacity 
+            style={styles.buttonContainer2} 
+            title="Show my favorite stocks" 
+            onPress={() => this.props.navigation.navigate('FavoriteStocks')}>
+              <Text style={styles.text1}>Show Favorites</Text>
+          </TouchableOpacity>  */}
+        {/* <Text style={styles.titleText}> Stock Prices {'\n'}</Text>
         <Text style={styles.ticker}> Symbol: {this.state.stockSymbol} </Text>
         <Text style={styles.subtitle}> Date: {this.state.stockChartXValues[0]}</Text>
-        <Text style={styles.subtitle}> Price: {this.state.stockChartYValues[0]}</Text>
+        <Text style={styles.subtitle}> Price: {this.state.stockChartYValues[0]}</Text> */}
        
       </View>
       );
@@ -397,9 +304,7 @@ const styles = StyleSheet.create({
     height: 40
   },
   buttonContainer2: {
-    position: 'absolute',
-      top: 100,
-      left: 45,
+    top: 5,
     elevation: 8,
     backgroundColor: colors.secondary,
     borderRadius: 10,
@@ -467,7 +372,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     fontSize: 15,
     fontFamily: "Montserrat-Medium",
-    color: colors.primary,
+    color: colors.background,
     //marginLeft: '30%'
   },
   favText: {
