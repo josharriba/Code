@@ -68,6 +68,16 @@ class ProfileScreen extends React.Component {
     );
   }
 
+  signOutAlert = () => {
+    Alert.alert('Sign out', 'Are you sure you want to sign out?',
+      [
+        {text: 'Yes', onPress: () => this.signOut()},
+        {text: 'No', onPress: () => console.log('user not signed out'),style: 'cancel'},
+      ],
+      {cancelable: true}
+    );
+  }
+
   deleteAccount = () => {
     db.deleteUser();
     this.props.navigation.navigate('Login');
@@ -155,13 +165,25 @@ class ProfileScreen extends React.Component {
           <Text style={styles.text}>Phone Number: {this.state.phoneNum}</Text>
           <Text style={styles.text}>Address: {this.state.address}</Text>
 
-          <TouchableOpacity 
-            style={styles.buttonContainer2} 
-            title="Delete Account"
-            onPress={() => this.deleteAccountAlert()}
-            >
-              <Text style={styles.buttonText3}>Delete Account</Text>
-          </TouchableOpacity>
+          <View style={{flexDirection:'row'}}> 
+
+            <TouchableOpacity 
+              style={styles.buttonContainer2} 
+              title="Delete Account"
+              onPress={() => this.deleteAccountAlert()}
+              >
+                <Text style={styles.buttonText3}>Delete Account</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity 
+              style={styles.buttonContainer2} 
+              title="Sign out"
+              onPress={() => this.signOutAlert()}
+              >
+                <Text style={styles.buttonText3}>Sign Out</Text>
+            </TouchableOpacity>
+
+          </View>
         
           <TextInput 
             style={styles.textContainer}
@@ -290,6 +312,18 @@ class ProfileScreen extends React.Component {
     buttonContainer2: {
       //position: 'absolute',
       top: '5%',
+      //left: 35,
+      elevation: 7,
+      backgroundColor: "darkred",
+      borderRadius: 10,
+      paddingVertical: 2,
+      paddingHorizontal: 3,
+      // marginBottom: 0,
+      width: 80
+    },
+    buttonContainer3: {
+      //position: 'absolute',
+      top: '7%',
       //left: 35,
       elevation: 7,
       backgroundColor: "darkred",

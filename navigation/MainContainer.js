@@ -59,7 +59,6 @@ export default function MainContainer() {
 
                         return <Ionicons name={iconName} size={size} color={color}/>;
                     },
-                
                 })}
             >
             <Tab.Screen name="Home" component={HomeScreen}/>
@@ -70,8 +69,7 @@ export default function MainContainer() {
             <Tab.Screen name="Signup" component={SignupScreen} options={{tabBarStyle: {display: "none"}, tabBarButton: () => null}} />
             <Tab.Screen name="Dashboard" component={DashboardScreen} />
             <Tab.Screen name="News" component={NewsScreen} />
-            <Tab.Screen name="FavoriteStocks" component={FavoriteStocks} options={{tabBarStyle: {display:"none"}, tabBarButton: () => null}}/>
-            
+            <Tab.Screen name="FavoriteStocks" component={FavoriteStocks} options={{tabBarStyle: {display:"none"}, tabBarButton: () => null}}/>            
 
             </Tab.Navigator>
         </NavigationContainer>

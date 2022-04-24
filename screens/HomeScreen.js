@@ -8,6 +8,7 @@ import {
   TouchableHighlight,
   TextInput,
   StackNavigator,
+  ScrollView
 } from 'react-native';
 import auth from '@react-native-firebase/auth'
 import firestore from '@react-native-firebase/firestore';
@@ -35,6 +36,7 @@ class HomeScreen extends React.Component {
   render() {
     return (
       <View style={styles.container}>
+        <ScrollView>
         <Name></Name> 
         <TouchableOpacity
           style={styles.buttonContainer}
@@ -78,6 +80,7 @@ class HomeScreen extends React.Component {
           >
             <Text style={styles.buttonText2}>Sign Out</Text>
             </TouchableOpacity>
+      </ScrollView>
       </View>
     );
   }
