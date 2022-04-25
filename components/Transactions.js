@@ -94,7 +94,8 @@ function Transactions() {
               date: date,
               description: description,
               amount: amount,
-              category: category
+              category: category, 
+              sortValue: sortVal
           })
         });
       });
