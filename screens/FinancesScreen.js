@@ -6,6 +6,9 @@ import Dropdown from 'react-native-element-dropdown'
 import {Picker} from '@react-native-picker/picker'
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 
+/*
+    Finances screen allows user to enter transactions
+*/
 class FinancesScreen extends React.Component {
 
   constructor() {
@@ -29,6 +32,10 @@ class FinancesScreen extends React.Component {
     }
   }
   
+  /*
+    if user has non-empty date, description and amount and date is formatted properly, 
+    then call FirebaseHandler enter transaction to enter transaction
+  */
   enterTransaction() {
     if (this.state.date == '' || this.state.description == '' || this.state.amount == '') {
       Alert.alert("You cannot leave any information blank!");
@@ -50,11 +57,17 @@ class FinancesScreen extends React.Component {
     }
   }
 
+  /*
+    change value of dropdown selection for transaction category
+  */
   async onValueChange(value) {
     this.setState({ selected: value });
     console.log(this.state.selected);
   }
 
+  /*
+    update input for text fields
+  */
   updateInput = (val, prop) => {
     const state = this.state;
     state[prop] = val;
@@ -62,6 +75,9 @@ class FinancesScreen extends React.Component {
 }
 
     render() {
+      /*
+          render text fields for user to enter transaction
+      */
       return(
         <KeyboardAwareScrollView 
        // style={styles.container1}

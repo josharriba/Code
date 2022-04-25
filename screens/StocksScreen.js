@@ -4,6 +4,11 @@ import React from 'react';
 import StockData from '../components/StockData'
 import colors from './assets/colors/colors';
 
+/*
+  This is our main stocks screen. It renders the StockData component from ../components/StockData.js
+  We also have a button to allow users to navigate to their favorites stock page, which
+  is another screen/component located in ../components/FavoriteStocks.js
+*/
 class StocksScreen extends React.Component {
     render() {
       return(

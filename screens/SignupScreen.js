@@ -5,6 +5,10 @@ import db from '../components/FirebaseHandler';
 import colors from './assets/colors/colors';
 import { Colors } from 'react-native/Libraries/NewAppScreen';
 
+/*
+  This is our signup screen. We require users to enter name, email, password and age
+  and then we create an account if requirements as described below are met
+*/
   class SignupScreen extends React.Component {
    constructor(){
     super();
@@ -17,12 +21,20 @@ import { Colors } from 'react-native/Libraries/NewAppScreen';
         }  
       }
 
+    /*
+      Update the input values of the text input
+    */
     updateInput = (val, prop) => {
         const state = this.state;
         state[prop] = val;
         this.setState(state);
     }
 
+    /*
+      Update input values of text input for numbers
+      requires that the input is a digit, as described with the 
+      digit regex state variable
+    */
     updateInputNum = (val, prop) => {
       if(this.state.digit.test(val)){
         const state = this.state;
@@ -31,6 +43,11 @@ import { Colors } from 'react-native/Libraries/NewAppScreen';
       }
     }
 
+    /*
+        If the email, password and name are non-empty, the age is > 18
+        then we call FirebaseHandler.js doSignup, which then will check for valid
+        email and password and then create account and user data documents
+    */
     registerNewUser = () => {
         if(this.state.email === '' || this.state.password === '' || this.state.name === '') {
             Alert.alert('Please enter your name, email, and password to signup')
@@ -53,6 +70,11 @@ import { Colors } from 'react-native/Libraries/NewAppScreen';
     }
 
   render() {
+    /*
+      We render text inputs for email, password, name and age
+      We also have some text instructions that give the guidelines for
+      entering valid email and passwords
+    */
    return (
         <View style = {styles.container}>
             <TextInput style = {styles.text}

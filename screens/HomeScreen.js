@@ -18,6 +18,10 @@ import { Colors } from 'react-native/Libraries/NewAppScreen';
 import Name from '../components/Name'
 
 
+/*
+    Home scren of our app. It contains buttons to navigate to each
+    of the major screens of our app.
+*/
 class HomeScreen extends React.Component {
   constructor(props) {
     super(props);
@@ -27,6 +31,10 @@ class HomeScreen extends React.Component {
     };
   }
 
+  /*
+    signOut function called if user signs out
+    use auth to sign out and redirect user to login screen
+  */
   signOut = () => {
     //db.signOut();
     auth().signOut().then(() => console.log('User signed out!'))
@@ -34,6 +42,11 @@ class HomeScreen extends React.Component {
   };
 
   render() {
+    /*
+      render the Name component from  ../components/Name.js 
+      to display the current user's name in a welcome message
+      Also render buttons to navigate to each of the major screens
+    */
     return (
       <View style={styles.container}>
         <ScrollView>

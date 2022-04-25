@@ -19,6 +19,12 @@ import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore'
 
 
+/*
+  Dashboard screen displays transactions of current user. Also allows users to edit existing transactions
+
+  NOTE: the functions in this component are never called: they have been moved to the Transactions component
+  in ../components/Transactions.js
+*/
 class DashboardScreen extends React.Component {
   constructor() {
     super();

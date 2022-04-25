@@ -7,6 +7,9 @@ import colors from './assets/colors/colors';
 import { Colors } from 'react-native/Libraries/NewAppScreen';
 
 
+/*
+    Login screen allows user to enter email and password and then signs in if valid account
+*/
   class LoginScreen extends React.Component {
    constructor(){
     super();
@@ -17,12 +20,20 @@ import { Colors } from 'react-native/Libraries/NewAppScreen';
         }  
       }
 
+    /*
+        Update the inputs of the email and password text fields
+    */
     updateInput = (val, prop) => {
         const state = this.state;
         state[prop] = val;
         this.setState(state);
     }
 
+    /*
+      If user enters non-empty email and password, 
+      try firebase auth().signInWithEmailAndPassword
+      user will successfully be logged in if no errors are caught
+    */
     login = () => {
       if(this.state.email === '' || this.state.password === '') {
         Alert.alert('Enter email and password to signin')
@@ -36,6 +47,10 @@ import { Colors } from 'react-native/Libraries/NewAppScreen';
             //this.props.navigation.navigate('Home'); 
             console.log('User logged in successfully')
         })
+        /*
+          Catch all auth related errors
+          invalid email, invalid password, etc
+        */
         .catch((error) => {
             const errorCode = error.code;
             const errorMessage = error.message; 
@@ -49,6 +64,9 @@ import { Colors } from 'react-native/Libraries/NewAppScreen';
               Alert.alert(errorMessage);
             } 
         });
+        /*
+          reset state so if user logs out they see blank data in text field
+        */
         this.setState({
           email: '', 
           password: ''
@@ -57,6 +75,9 @@ import { Colors } from 'react-native/Libraries/NewAppScreen';
     }
 
   render() {
+    /*
+      render email and password text field and login button
+    */
    return (
     <View style = {styles.container}>
        <TextInput style = {styles.text}

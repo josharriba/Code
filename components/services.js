@@ -1,5 +1,9 @@
 import {API_KEY, endpoint, country} from '../Newsconfig';
 
+/*
+    This is an async function to fetch news articles
+    Ineteracts with ../Screens/NewsScreen.js
+*/
 export async function services(category = 'general') {
   let articles = await fetch(
     `${endpoint}?country=${country}&category=${category}`,

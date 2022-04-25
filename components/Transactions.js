@@ -19,6 +19,10 @@ import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 import colors from '../assets/colors/colors';
 
+/*
+  Function to get users transactions
+  This component gets rendered on the dashbaord screen
+*/
 function Transactions() {
   const [transactions, setTransactions] = useState([]);
   const [modalVisible, setModalVisible] = useState(false);
@@ -38,6 +42,12 @@ function Transactions() {
     {label: 'Miscelaneous', value: 'miscelaneous', key:8},
   ];
 
+  /*
+    we use useEffect to automatically update transactions with any changes made by the user
+
+    We get the transactions from firestore database. we query for transactions, 
+    ordered by date in descending order and then we push the data into list
+  */
     useEffect(() => {
       const subscriber = firestore().collection('Users').doc(auth().currentUser.email)
       .collection('Transactions').orderBy('sortValue', 'desc')
@@ -54,6 +64,10 @@ function Transactions() {
       return () => subscriber();
     }, []);
 
+  /*
+      function to delete transaction
+      matches with transaction unique id so only one transaction is deleted each time
+  */
   function deleteTransaction(id) {
     const ref = firestore().collection('Users').doc(auth().currentUser.email)
       .collection('Transactions').where('id', '==', id);
@@ -68,6 +82,9 @@ function Transactions() {
     Alert.alert('Transaction successfully deleted');
   }
 
+  /*
+    update useState variables
+  */
   function updateTransaction(id, date, description, amount, category) {
     setModalDate(date);
     setModalDescription(description);
@@ -77,6 +94,12 @@ function Transactions() {
     setModalVisible(true)
   }
 
+/*
+    edits the transaction in firebase data
+    first we find the firestore document that matches with the unique
+    id that the user wishes to edit. then we update the values of that 
+    document with the new values
+*/
   function editTransaction(id, date, description, amount, category) {
     setModalVisible(false);
     const ref = firestore().collection('Users').doc(auth().currentUser.email)
@@ -106,6 +129,12 @@ function Transactions() {
     return (
       <View style={{flex: 1, backgroundColor:"white", alignItems: 'center'}}>
             <Text styles={styles.title}> Transactions: </Text>
+            {/*
+              Modal will show when user presses edit transaction button
+
+              Modal will be a popup that shows text input fields for editing transaction
+              When editing transaction, current transaciton data will be in the text input fields initially
+            */}
             <Modal
               visible={modalVisible}
               onRequestClose={() => {
@@ -180,6 +209,9 @@ function Transactions() {
               </TouchableOpacity>
             </Modal>
 
+            {/*
+              Display the list of user transactions in a flatlist
+            */}
             <FlatList 
                       data={transactions}
                       keyExtractor={(x,i) => i}

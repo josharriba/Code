@@ -18,6 +18,13 @@ import {
 import moment from 'moment';
 import colors from './assets/colors/colors';
 
+/*
+  Component to display news data
+  We use useEffect to automatically keep the app up to date
+  with new news articles
+  We use the services component in ../components/services.js
+  to search for business news and dispay the news articles
+*/
 export default function NewsScreen() {
   const [newsData, setNewsData] = useState([]);
   useEffect(() => {

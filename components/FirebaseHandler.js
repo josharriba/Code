@@ -96,6 +96,8 @@ class FirebaseHandler extends React.Component {
         enterTransaction takes the date description, amount and category
         of a transaction and adds a new doc to firestore database with 
         that info and a unique id
+        Also use the date to create a sortvalue so we can sort
+        the transactions in order of dates when they are displayed to user
     */
     enterTransaction(date, description, amount, category) {
        dateSplit = date.split("/");

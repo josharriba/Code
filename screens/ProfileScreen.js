@@ -8,6 +8,11 @@ import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import firestore from '@react-native-firebase/firestore'
 import TouchHistoryMath from 'react-native/Libraries/Interaction/TouchHistoryMath';
 
+/*
+  Profile Screen
+  We allow users to view and edit their name, address, and phone number
+  We also allow users to sign out or delete their account
+*/
 class ProfileScreen extends React.Component {
 
   constructor() {
@@ -23,6 +28,9 @@ class ProfileScreen extends React.Component {
     }
   }
 
+  /*
+    Gets the data for the current user when component mounts
+  */
   componentDidMount() {
     userList = firestore().collection('Users');
     userList.doc(auth().currentUser.email)
@@ -47,17 +55,13 @@ class ProfileScreen extends React.Component {
               address: documentSnapshot.data().address
             })
         })
-    
-    // this.setState({
-    //   name: nameDB,
-    //   phoneNum: phoneDB, 
-    //   address: addressDB, 
-    // })
-    // console.log(this.state.name);
-    // console.log(this.state.address);
-    // console.log(this.state.phoneNum);
   }
   
+  /*
+    This function runs when the user clicks the deleteAccount button. They will 
+    first be prompted asking if they would like to delete their account 
+    before proceeding
+  */
   deleteAccountAlert = () => {
     Alert.alert('Delete account', 'Are you sure you want to delete your account? This action cannot be undone.',
       [
@@ -68,6 +72,10 @@ class ProfileScreen extends React.Component {
     );
   }
 
+  /*
+    This function runs when the user clicks the signout button. They will
+    first be prompted asking if they would like to signout before proceeding
+  */
   signOutAlert = () => {
     Alert.alert('Sign out', 'Are you sure you want to sign out?',
       [
@@ -78,22 +86,39 @@ class ProfileScreen extends React.Component {
     );
   }
 
+  /*
+    If user wishes to delete account, FirebaseHander will run deleteAccount funciton
+    which will delete the user from firebase auth and firestore use data
+  */
   deleteAccount = () => {
     db.deleteUser();
     this.props.navigation.navigate('Login');
   }
 
+  /*
+    If the user wishes to sign out, FirebaseHandler will run signOut function
+    which will sign the current user out using firebase auth
+  */
   signOut = () => {
     db.signOut();
     this.props.navigation.navigate('Login');
   }
 
+  /*
+    Update input for text input
+  */
   updateInput = (val, prop) => {
     const state = this.state;
     state[prop] = val;
     this.setState(state);
   }
 
+  /*
+    Update input for phone numbers
+    we require users to enter only digits, so we check 
+   that the input is indeed a digit using the digit 
+   regex state variable
+  */
   updateInputPhoneNum = (val, prop) => {
     if(this.state.digit.test(val)){
       const state = this.state;
@@ -102,6 +127,11 @@ class ProfileScreen extends React.Component {
     }
   }
 
+  /*
+    Updates the name of the current user if input is non-empty
+    This function runs when the user clicks update name button
+    New data will be saved in firestore database in same location as old name
+  */
   updateName() {
     db.getName();
     if(this.state.nameInput == '') {
@@ -118,6 +148,12 @@ class ProfileScreen extends React.Component {
     }
   } 
   
+   /*
+    Updates the phone number of the current user if input is non-empty
+    This function runs when the user clicks update phone number button
+    New data will be saved in firestore database in same location as old phone num if one exists
+    or will create new field for phone number in user data
+  */
   updatePhoneNum() {
     db.getPhoneNum();
     if(this.state.phoneNumInput == '') {
@@ -134,6 +170,12 @@ class ProfileScreen extends React.Component {
     }
   }
 
+   /*
+    Updates the address of the current user if input is non-empty
+    This function runs when the user clicks update address button
+    New data will be saved in firestore database in same location as old address if one exists
+    or will create new field for address in user data
+  */
   updateAddress() {
     db.getAddress();
     if(this.state.addressInput == '') {
@@ -151,7 +193,11 @@ class ProfileScreen extends React.Component {
   }
 
     render() {
-      
+      /*
+        Render current name, address and phone number,
+                delete account button, signout button,
+                text fields and buttons to update data
+      */
       return(
         
         <KeyboardAwareScrollView 

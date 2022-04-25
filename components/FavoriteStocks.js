@@ -9,6 +9,12 @@ import firestore from '@react-native-firebase/firestore'
 import {useNavigation} from '@react-navigation/native'
 
 
+/*
+  This is a function to keep track of users favorite stocks
+  allows users to search the price of stocks in their favorites
+  list by pressing a button. 
+  Users can also delete stocks from their favorites list
+*/
 export default function FavoriteStocks() {
     const [favorites, setFavorites] = useState([]);
     const [xValues, setxValues] = useState([]);
@@ -67,7 +73,7 @@ export default function FavoriteStocks() {
     }
 
     /*
-        This is a funciton to fetch stock data of user-specified stocksssssssssssss
+        This is a funciton to fetch stock data of user-specified stock symbol
         it uses alphavantage api to fetch stock data.
     */
     function fetchStock() {
@@ -101,6 +107,10 @@ export default function FavoriteStocks() {
                 <Text style={styles.closeText}>Back to Stock Screen</Text>
               </TouchableOpacity>
 
+            {/*
+                We use a flatlist to organize the favorite stocks into a list 
+                and display them on screen
+            */}
             <FlatList 
                       contentContainerStyle={{paddingBottom: 50, paddingTop:10}}
                       data={favorites}
@@ -112,6 +122,11 @@ export default function FavoriteStocks() {
                       <Text style={styles.text1}>
                         Symbol: {item}
                         </Text>
+
+                        {/*
+                            Buttons to call the deleteFavorite and viewPrice functions as 
+                            described above
+                        */}
                         <TouchableOpacity 
                         styles= {styles.delContainer} 
                         onPress={() => deleteFavorite(item)}
@@ -129,6 +144,10 @@ export default function FavoriteStocks() {
                     }>
             </FlatList>
 
+        {/*
+            Modal will trigger when the user selects to view the price
+            of a favorite stock
+        */}
         <Modal
         animationType="slide"
         visible={modalVisible}
@@ -137,6 +156,11 @@ export default function FavoriteStocks() {
             setModalVisible(!modalVisible)
         }}>
         
+        {/*
+            We use the plotly library to plot the stock data
+            the range selector buttons allow users to 
+            select a date range for viewing the price of the stock
+        */}
             <Plot
             data={[
                 {

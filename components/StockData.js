@@ -49,6 +49,10 @@ class StockData extends React.Component {
     this.setState(state);
 }
 
+/*
+  clear the state variables for the stock symbol and stock data
+  when the component mounts
+*/
   componentDidMount() {
     this.setState({
       search: false,
@@ -70,11 +74,6 @@ class StockData extends React.Component {
     let API_Call = `https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=${this.state.stockSymbol}&outputsize=compact&apikey=${API_KEY}`;
     let stockChartXValuesFunction = [];
     let stockChartYValuesFunction = [];
-
-    //need to have an alert if they enter invalid stock symbol
-    // if(this.state.stockChartXValues == null) {
-    //   Alert.alert("The stock symbol that you entered was invalid. Please try again!")
-    // }
 
     fetch(API_Call)
       .then(function (response) {
@@ -103,6 +102,10 @@ class StockData extends React.Component {
   }
 
   render() {
+    /*
+        if the user hasn't searched anything, we only allow them
+        to enter stock symbol to search
+    */
     if(this.state.search == false || this.state.stockChartXValues == []) {
       return (
         <View style = {styles.container}>
@@ -122,6 +125,10 @@ class StockData extends React.Component {
         </View>
       );
     }
+    /*
+      if the user searches for a stock and a stock api call 
+      is made, then we change what is returned/displayed
+    */
     else {
       return (
         <View style = {styles.container}>
@@ -129,6 +136,7 @@ class StockData extends React.Component {
             style={styles.stockContainer} 
             >
           </TouchableOpacity>
+      
         <TextInput 
           placeholder="Enter stock symbol. (i.e. 'MSFT')"
           value = {this.state.stockSymbol} 
@@ -141,6 +149,11 @@ class StockData extends React.Component {
             <Text style={styles.text}>Search Stock</Text>
         </TouchableOpacity>
         
+          {/*
+            We use the plotly library to plot the stock data
+            the range selector buttons allow users to 
+            select a date range for viewing the price of the stock
+        */}
         <Plot
           data={[
             {
@@ -189,17 +202,6 @@ class StockData extends React.Component {
             <Text style={styles.text}>Add to Favorites</Text>
         </TouchableOpacity>
 
-        {/* <TouchableOpacity 
-            style={styles.buttonContainer2} 
-            title="Show my favorite stocks" 
-            onPress={() => this.props.navigation.navigate('FavoriteStocks')}>
-              <Text style={styles.text1}>Show Favorites</Text>
-          </TouchableOpacity>  */}
-        {/* <Text style={styles.titleText}> Stock Prices {'\n'}</Text>
-        <Text style={styles.ticker}> Symbol: {this.state.stockSymbol} </Text>
-        <Text style={styles.subtitle}> Date: {this.state.stockChartXValues[0]}</Text>
-        <Text style={styles.subtitle}> Price: {this.state.stockChartYValues[0]}</Text> */}
-       
       </View>
       );
     }
