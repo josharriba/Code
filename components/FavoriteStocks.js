@@ -92,14 +92,15 @@ export default function FavoriteStocks() {
       }
 
     return(
-        <View style = {{backgroundColor: 'white'}}>
+        <View style={{backgroundColor: 'white'}}>
             <Text style={styles.favText}>Favorites:</Text>
             <TouchableOpacity 
-                    styles= {styles.closeContainer} 
-                    onPress={() => navigation.navigate("Stocks")}
-                    > 
-                    <Text style={styles.closeText}>Back to Stock Screen</Text>
-                </TouchableOpacity>
+                  style= {styles.backCont} 
+                  onPress={() => navigation.navigate("Stocks")}
+                   > 
+                <Text style={styles.closeText}>Back to Stock Screen</Text>
+              </TouchableOpacity>
+
             <FlatList 
                       contentContainerStyle={{paddingBottom: 50, paddingTop:10}}
                       data={favorites}
@@ -124,6 +125,7 @@ export default function FavoriteStocks() {
                         <Text style={styles.viewText}>View Price</Text>
                           </TouchableOpacity>
                       </View>
+                  
                     }>
             </FlatList>
 
@@ -225,7 +227,7 @@ const styles = StyleSheet.create({
     
       flex: 1,
       //padding: 10,
-      backgroundColor: "white",
+      backgroundColor: "",
       width: 300
     },
     textContainer: {
@@ -282,21 +284,25 @@ const styles = StyleSheet.create({
       marginBottom: 4
     },
     closeContainer: {
-        top: 5,
-        elevation: 8,
+        //top: 5,
+        //elevation: 8,
         backgroundColor: colors.secondary,
-        borderRadius: 10,
-        paddingVertical: 5,
-        paddingHorizontal: 14,
-        marginTop: 4,
-        marginBottom: 4
       },
     closeText: {
         textAlign: 'center',
         justifyContent: 'center',
         fontSize: 15,
         fontFamily: "Montserrat-Medium",
-        color: colors.primary,  
+        color: colors.background,  
+        paddingVertical: 5,
+    },
+    backCont: {
+      alignSelf: 'center',
+      eleveation: 4,
+      backgroundColor: colors.secondary,
+      borderColor: 'black',
+      width: 300,
+      borderRadius: 5,
     },
     buttonContainer2: {
       position: 'absolute',
