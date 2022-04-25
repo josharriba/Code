@@ -98,12 +98,15 @@ class FirebaseHandler extends React.Component {
         that info and a unique id
     */
     enterTransaction(date, description, amount, category) {
+       dateSplit = date.split("/");
+       sortVal = dateSplit[2] + dateSplit[0] + dateSplit[1];
        userList.doc(auth().currentUser.email).collection('Transactions').add({
             date: date,
             description: description,
             amount: amount, 
             category: category, 
-            id: uuid.v4()
+            id: uuid.v4(), 
+            sortValue: sortVal
          });
     }
 

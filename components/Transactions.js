@@ -40,12 +40,12 @@ function Transactions() {
 
     useEffect(() => {
       const subscriber = firestore().collection('Users').doc(auth().currentUser.email)
-      .collection('Transactions')
+      .collection('Transactions').orderBy('sortValue', 'desc')
       .onSnapshot(querySnapshot => {
           const trans = [];
           querySnapshot.forEach(doc => {
-              const{date, description, amount, category, id} = doc.data();
-              trans.push({date, description, amount, category, id});
+              const{date, description, amount, category, id, sortValue} = doc.data();
+              trans.push({date, description, amount, category, id, sortValue});
               //console.log(doc.data())
               console.log(trans)
           });
@@ -81,18 +81,24 @@ function Transactions() {
     setModalVisible(false);
     const ref = firestore().collection('Users').doc(auth().currentUser.email)
       .collection('Transactions').where('id', '==', id);
-
-    ref.get().then(function(querySnapshot) {
-      querySnapshot.forEach(function(doc) {
-        console.log(doc);
-        doc.ref.update({
-            date: date,
-            description: description,
-            amount: amount,
-            category: category
-        })
+    if(date.length != 8) {
+      Alert.alert("Please enter a valid date! (mm/dd/yy)");
+    }
+    if(date.length == 8) {
+      dateSplit = date.split("/");
+      sortVal = dateSplit[2] + dateSplit[0] + dateSplit[1];
+      ref.get().then(function(querySnapshot) {
+        querySnapshot.forEach(function(doc) {
+          console.log(doc);
+          doc.ref.update({
+              date: date,
+              description: description,
+              amount: amount,
+              category: category
+          })
+        });
       });
-    });
+    }
   }
 
     

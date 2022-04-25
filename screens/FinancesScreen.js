@@ -34,14 +34,19 @@ class FinancesScreen extends React.Component {
       Alert.alert("You cannot leave any information blank!");
     }
     else {
-      db.enterTransaction(this.state.date, this.state.description, this.state.amount, this.state.selected);
-      this.setState({
-        date: '',
-        description: '',
-        amount: '', 
-        selected: 'Enter a category for your transaction'
-      })
-      Alert.alert('Transaction successfully recorded.');
+      if(this.state.date.length != 8) {
+        Alert.alert("Please enter a valid date! (mm/dd/yy)");
+      }
+      if(this.state.date.length == 8){
+        db.enterTransaction(this.state.date, this.state.description, this.state.amount, this.state.selected);
+        this.setState({
+          date: '',
+          description: '',
+          amount: '', 
+          selected: 'Enter a category for your transaction'
+        })
+        Alert.alert('Transaction successfully recorded.');
+      }
     }
   }
 
