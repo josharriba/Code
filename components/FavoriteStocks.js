@@ -92,7 +92,7 @@ export default function FavoriteStocks() {
       }
 
     return(
-        <View>
+        <View style = {{backgroundColor: 'white'}}>
             <Text style={styles.favText}>Favorites:</Text>
             <TouchableOpacity 
                     styles= {styles.closeContainer} 
@@ -106,7 +106,7 @@ export default function FavoriteStocks() {
                       keyExtractor={item => item.id}
                       scrollEnabled={true}
                       renderItem={({item}) => 
-                      <View style={{padding:5, borderBottomWidth: 5, 
+                      <View style={{padding:5, borderBottomWidth: 5, backgroundColor: 'white', 
                                     borderBottomColor: colors.secondary}}>
                       <Text style={styles.text1}>
                         Symbol: {item}
@@ -221,9 +221,8 @@ const styles = StyleSheet.create({
     favContainer: {
       //position: 'absolute',
         //top: 40,
-       left: 40,
-      justifyContent: 'center',
-      textAlign: 'center',
+      alignSelf: 'center',
+    
       flex: 1,
       //padding: 10,
       backgroundColor: "white",
@@ -260,12 +259,11 @@ const styles = StyleSheet.create({
       marginTop: 4,
       marginBottom: 4, 
       width: 50, 
-      justifyContent: 'center',
-      alignContent:'center',
-      alignItems:'center'
+      alignSelf: 'center'
     },
     viewContainer: {
         //width: 70,
+        alignSelf: 'center',
         elevation: 8,
         backgroundColor: colors.background,
         borderRadius: 10,
@@ -313,6 +311,7 @@ const styles = StyleSheet.create({
       marginBottom: 4
     },
     stockContainer: {
+      alignSelf: 'center',
       textAlign: 'center',
       justifyContent: 'center',
       // backgroundColor: colors.background,
@@ -355,6 +354,7 @@ const styles = StyleSheet.create({
       //marginLeft: '30%'
     },
     delText: {
+      alignSelf: 'center',
       textAlign: 'center',
       justifyContent: 'center',
       //position: 'absolute',
@@ -367,6 +367,7 @@ const styles = StyleSheet.create({
       width: 300
     },
     viewText: {
+        alignSelf: 'center',
         textAlign: 'center',
         justifyContent: 'center',
         //position: 'absolute',
