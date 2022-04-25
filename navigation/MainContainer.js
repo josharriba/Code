@@ -36,7 +36,14 @@ export default function MainContainer() {
     //user logged in
 
     return(
+        /*
+            We use navigation container to keep keep stack of all 
+            screens used in app
+        */
         <NavigationContainer>
+            {/*
+                set the icons to display for the navigation bar at the bottom of the screen
+            */}
             <Tab.Navigator
                 initialRouteName={"Home"}
                 screenOptions={({route}) => ({
@@ -61,6 +68,10 @@ export default function MainContainer() {
                     },
                 })}
             >
+                {/*
+                    Don't include navigation bar on the bottom of the screen on
+                    Login Screen, signup Screen, and Favorite stocks screen
+                */}
             <Tab.Screen name="Home" component={HomeScreen}/>
             <Tab.Screen name="Stocks" component={StocksScreen} options={{headerShown: false}} />
             <Tab.Screen name="Finances" component={FinancesScreen} />

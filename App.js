@@ -56,6 +56,10 @@
      return null;
    }
    
+   /*
+      if there is no user logged in, direct user to login screen
+      only screens available are login and signup if there is no user
+   */
    if(!user) {
      return(
         <NavigationContainer>
@@ -84,6 +88,13 @@
      </NavigationContainer>
      )
    }
+   /*
+      if there is a user logged in, get the mainContainer 
+      component from ../navigation/MainContainer.js
+      Initial screen is home screen
+      So if there is a user, they will be started on the home screen
+      without needing to log in
+   */
    else{
     return (
       <MainContainer></MainContainer>
