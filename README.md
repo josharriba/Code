@@ -4,9 +4,9 @@
 
 This is a personal finance app for Android mobile devices. The app will allow users to keep track of their expenses as well as view current prices in the stock market and learn more about the financial world with up-to-date news articles that are uploaded into the app.
 
+### Demo video
+https://user-images.githubusercontent.com/77368286/165200144-070370d7-e60d-429f-85b3-2c9d085081c6.mp4
 
-![placeholder-image](https://user-images.githubusercontent.com/77368286/164344125-31dcbd0e-cb11-4972-a16d-aea4a554ad76.png)
-Our final demo video will replace this placeholder above.
 
 
 ### Take control of your money!
