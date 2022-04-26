@@ -2,6 +2,7 @@ import SignupScreen from '../screens/SignupScreen';
 import LoginScreen from '../screens/LoginScreen';
 import FinancesScreen from '../screens/FinancesScreen';
 
+// Signup Screen - test for user sign up
 describe(SignupScreen.registerNewUser, () => {
     test("age should be 22", () => {
         const input = [
@@ -13,7 +14,7 @@ describe(SignupScreen.registerNewUser, () => {
     expect(SignupScreen.registerNewUser(input, "22")).toEqual(output);
 });
 
-// Login Screen - test for user logged in successfully
+// Login Screen - test for user logged in successfully 
 describe(LoginScreen.login, () => {
     test("user should be logged in", () =>  {
         const input = [
@@ -24,7 +25,7 @@ describe(LoginScreen.login, () => {
     expect(LoginScreen.login(username, password)).toEqual(output)
 });
 
-// Login Screen - test for blank inputs
+// Login Screen - test for blank inputs 
 describe(LoginScreen.login, () => {
     test("user should be logged in", () =>  {
         const input = [
@@ -35,7 +36,7 @@ describe(LoginScreen.login, () => {
     expect(LoginScreen.login(username, password)).toEqual(output)
 });
 
-// Finances Screen - test for blanks
+// Finances Screen - test for blanks 
 describe(FinancesScreen.enterTransaction, () => {
     test('transaction should not be left blank', () => {
         const input = [
@@ -46,7 +47,7 @@ describe(FinancesScreen.enterTransaction, () => {
     expect(FinancesScreen.enterTransaction(date, description, amount)).toEqual(output)
 });
 
-// Finances Screen - test for making sure an incorrect date format can't be entered
+// Finances Screen - test for making sure an incorrect date format can't be entered 
 describe(FinancesScreen.enterTransaction, () => {
     test('transaction should not be left blank', () => {
         const input = [
