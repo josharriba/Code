@@ -69,7 +69,6 @@ export default function FavoriteStocks() {
         setxValues([]);
         setyValues([]);
         fetchStock();
-        setModalVisible(true);
     }
 
     /*
@@ -94,6 +93,7 @@ export default function FavoriteStocks() {
             }
             setxValues(x)
             setyValues(y)
+            setModalVisible(true);
           });
       }
 

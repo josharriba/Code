@@ -150,7 +150,7 @@ class FinancesScreen extends React.Component {
             </View>
             <Text
               style={styles.text1}>
-              You can view your transactions on the Dashboard Screen
+              View transactions on the Dashboard Screen
             </Text>
           </KeyboardAwareScrollView>
           
