@@ -5,7 +5,7 @@
 This is a personal finance app for Android mobile devices. The app will allow users to keep track of their expenses as well as view current prices in the stock market and learn more about the financial world with up-to-date news articles that are uploaded into the app.
 
 ### Demo video
-
+Please click the image below to access the demo video.
 [![Demo video](https://media.discordapp.net/attachments/882401239466389517/953079718381510696/killer-whale-dollar-sign-fishhook-260nw-1587335251.png)](https://user-images.githubusercontent.com/77368286/165200144-070370d7-e60d-429f-85b3-2c9d085081c6.mp4 "DemoVideo")
 
 
