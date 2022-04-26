@@ -13,6 +13,7 @@ describe(SignupScreen.registerNewUser, () => {
     expect(SignupScreen.registerNewUser(input, "22")).toEqual(output);
 });
 
+// Login Screen - test for user logged in successfully
 describe(LoginScreen.login, () => {
     test("user should be logged in", () =>  {
         const input = [
@@ -23,7 +24,18 @@ describe(LoginScreen.login, () => {
     expect(LoginScreen.login(username, password)).toEqual(output)
 });
 
-// test for blanks
+// Login Screen - test for blank inputs
+describe(LoginScreen.login, () => {
+    test("user should be logged in", () =>  {
+        const input = [
+            {username: "", password: ""}
+        ];
+        const output = ['Enter email and password to signin']
+    });
+    expect(LoginScreen.login(username, password)).toEqual(output)
+});
+
+// Finances Screen - test for blanks
 describe(FinancesScreen.enterTransaction, () => {
     test('transaction should not be left blank', () => {
         const input = [
@@ -34,7 +46,7 @@ describe(FinancesScreen.enterTransaction, () => {
     expect(FinancesScreen.enterTransaction(date, description, amount)).toEqual(output)
 });
 
-// test for making sure an incorrect date format can't be entered
+// Finances Screen - test for making sure an incorrect date format can't be entered
 describe(FinancesScreen.enterTransaction, () => {
     test('transaction should not be left blank', () => {
         const input = [
